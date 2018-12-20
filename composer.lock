@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "35d7377b4f5a0d5e0c8b8dc7357d3e2f",
+    "content-hash": "aafb056fabfdffc34dd0304a638842bd",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -2583,6 +2583,42 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2017-11-27T11:13:29+00:00"
+        },
+        {
+            "name": "titasgailius/search-relations",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TitasGailius/nova-search-relations.git",
+                "reference": "1e7408a678b9258537cb15ceb58a56016501243a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TitasGailius/nova-search-relations/zipball/1e7408a678b9258537cb15ceb58a56016501243a",
+                "reference": "1e7408a678b9258537cb15ceb58a56016501243a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Titasgailius\\SearchRelations\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova tool.",
+            "keywords": [
+                "laravel",
+                "nova",
+                "relations",
+                "search"
+            ],
+            "time": "2018-12-18T18:06:27+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

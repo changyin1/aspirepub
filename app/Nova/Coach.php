@@ -35,9 +35,12 @@ class Coach extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id'
     ];
 
+    public static $searchRelations = [
+        'user' => ['name', 'email'],
+    ];
     /**
      * Get the fields displayed by the resource.
      *
@@ -48,7 +51,7 @@ class Coach extends Resource
     {
         return [
             ID::make()->sortable()->hideFromIndex(),
-            BelongsTo::make('User')->rules('required'),
+            BelongsTo::make('User')->rules('required')->searchable(),
             Checkboxes::make('Languages')->options([
                 'french' => 'French',
                 'spanish' => 'Spanish',

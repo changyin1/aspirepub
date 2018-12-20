@@ -21,7 +21,12 @@ class Client extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
+
+    public function subtitle()
+    {
+        return "{$this->city}, {$this->country} ";
+    }
 
     /**
      * The columns that should be searched.
@@ -29,9 +34,9 @@ class Client extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id','name','city','country'
     ];
-
+    
     /**
      * Get the fields displayed by the resource.
      *
