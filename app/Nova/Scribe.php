@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\HasMany;
 use Silvanite\NovaFieldCheckboxes\Checkboxes;
 
 class Scribe extends Resource
@@ -23,7 +24,9 @@ class Scribe extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public function title() {
+        return $this->user->name;
+    }
 
     /**
      * The columns that should be searched.
@@ -49,6 +52,7 @@ class Scribe extends Resource
                 'french' => 'French',
                 'spanish' => 'Spanish',
             ]),
+            HasMany::make('Sessions'),
         ];
     }
 

@@ -8,6 +8,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\HasMany;
 
 class Schedule extends Resource
 {
@@ -51,7 +52,8 @@ class Schedule extends Resource
             BelongsTo::make('Client')->rules('required')->display('name'),
             Number::make('Calls'),
             DateTime::make('Start Date'),
-            DateTime::make('End Date')
+            DateTime::make('End Date'),
+            HasMany::make('Sessions'),
         ];
     }
 

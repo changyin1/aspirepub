@@ -49,8 +49,10 @@ class Session extends Resource
             BelongsTo::make('Schedule', 'schedule', 'App\Nova\Schedule')->nullable(),
             BelongsTo::make('Client')->rules('required')->display('name'),
             BelongsTo::make('Coach', 'coach', 'App\Nova\Coach')->nullable(),
+            BelongsTo::make('Scribe', 'scribe', 'App\Nova\Scribe')->nullable(),
             //BelongsTo::make('Coach')->nullable(),
             //Text::make('Coach', function () { return $this->coach->user->name;}),
+            /*
             Text::make('Scribe', function () { 
                 if(isset($this->scribe->user->name)) {
                     return $this->scribe->user->name;    
@@ -59,6 +61,7 @@ class Session extends Resource
                 }
                 
             }),
+            */
             //Boolean::make('Scored'),
             Textarea::make('Notes'),
             File::make('Call Recording - Not active yet', 'call_recording_id')->disk('public')

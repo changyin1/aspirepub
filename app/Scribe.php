@@ -18,4 +18,9 @@ class Scribe extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+        public function sessions()
+    {
+        return $this->hasMany('App\Session');
+    }
 }

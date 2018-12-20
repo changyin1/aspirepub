@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\HasMany;
 use Silvanite\NovaFieldCheckboxes\Checkboxes;
 
 class Coach extends Resource
@@ -52,6 +53,7 @@ class Coach extends Resource
                 'french' => 'French',
                 'spanish' => 'Spanish',
             ]),
+            HasMany::make('Sessions'),
         ];
     }
 
