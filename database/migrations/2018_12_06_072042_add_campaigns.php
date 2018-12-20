@@ -13,7 +13,7 @@ class AddCampaigns extends Migration
      */
     public function up()
     {
-        Schema::create('campaigns', function (Blueprint $table) {
+        Schema::create('schedules', function (Blueprint $table) {
             $table->increments('id');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
@@ -31,7 +31,7 @@ class AddCampaigns extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('campaigns');
+        Schema::dropIfExists('schedules');
     }
 
 }

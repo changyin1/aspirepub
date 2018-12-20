@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Campaign extends Model
+class Schedule extends Model
 {
     protected $fillable = [
         'start_date', 'end_date', 'calls', 'client_id', 'recpients'

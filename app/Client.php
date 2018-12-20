@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
 	protected $fillable = [
-        'start_date', 'end_date', 'address', 'city', 'state', 'zip', 'country', 'timezone'
+        'start_date', 'end_date', 'city', 'country'
     ];
 
     public function user()
@@ -20,8 +20,8 @@ class Client extends Model
         return $this->hasMany('App\Session');
     }
 
-    public function campaigns()
+    public function schedules()
     {
-        return $this->hasMany('App\Campaign');
+        return $this->hasMany('App\Schedule');
     }
 }

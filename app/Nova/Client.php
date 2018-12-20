@@ -41,29 +41,16 @@ class Client extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            ID::make()->sortable()->hideFromIndex(),
             Text::make('Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
-            Text::make('Address')
-                ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255'),            
             Text::make('City')
-                ->sortable()
-                ->rules('required', 'max:255'),
-            Text::make('State')
-                ->sortable()
-                ->rules('required', 'max:255'),
-            Text::make('Zip')
                 ->sortable()
                 ->rules('required', 'max:255'),
             Text::make('Country')
                 ->sortable()
                 ->rules('required', 'max:255'),
-            Text::make('Timezone')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
         ];
     }
 

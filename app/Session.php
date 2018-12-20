@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Session extends Model
 {
 	protected $fillable = [
-        'client_id', 'coach_id', 'campaign_id', 'notes'
+        'client_id', 'coach_id', 'schedule_id', 'notes'
     ];
     
     public function coach()
@@ -25,8 +25,13 @@ class Session extends Model
         return $this->belongsTo('App\Scribe');
     }
 
-    public function campaign()
+    public function schedule()
     {
-        return $this->belongsTo('App\Campaign');
+        return $this->belongsTo('App\Schedule');
+    }
+
+    public function user()
+    {
+        return $this->coach()->id;
     }
 }

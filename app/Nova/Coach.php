@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
+use Silvanite\NovaFieldCheckboxes\Checkboxes;
 
 class Coach extends Resource
 {
@@ -22,7 +23,10 @@ class Coach extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    
+    public function title() {
+        return $this->user->name;
+    }
 
     /**
      * The columns that should be searched.
@@ -42,11 +46,12 @@ class Coach extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            ID::make()->sortable()->hideFromIndex(),
             BelongsTo::make('User')->rules('required'),
-            Text::make('Languages')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            Checkboxes::make('Languages')->options([
+                'french' => 'French',
+                'spanish' => 'Spanish',
+            ]),
         ];
     }
 

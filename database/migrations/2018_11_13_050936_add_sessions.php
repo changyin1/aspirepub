@@ -17,7 +17,7 @@ class AddSessions extends Migration
             $table->increments('id');
             $table->integer('client_id');
             $table->integer('coach_id');
-            $table->integer('campaign_id');
+            $table->integer('schedule_id');
             $table->integer('scribe_id')->nullable();
             $table->dateTime('completed_at')->nullable();
             $table->dateTime('scored_at')->nullable();

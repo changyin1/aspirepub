@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Text;
 
 class Session extends Resource
 {
@@ -44,14 +45,23 @@ class Session extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-            BelongsTo::make('Campaign')->rules('required'),
+            ID::make()->sortable()->hideFromIndex(),            
+            BelongsTo::make('Schedule', 'schedule', 'App\Nova\Schedule')->nullable(),
             BelongsTo::make('Client')->rules('required')->display('name'),
-            BelongsTo::make('Coach', 'coach', 'App\Nova\User')->nullable(),
-            BelongsTo::make('Scribe')->nullable(),
-            Boolean::make('Scored'),
+            BelongsTo::make('Coach', 'coach', 'App\Nova\Coach')->nullable(),
+            //BelongsTo::make('Coach')->nullable(),
+            //Text::make('Coach', function () { return $this->coach->user->name;}),
+            Text::make('Scribe', function () { 
+                if(isset($this->scribe->user->name)) {
+                    return $this->scribe->user->name;    
+                } else {
+                    return NULL;
+                }
+                
+            }),
+            //Boolean::make('Scored'),
             Textarea::make('Notes'),
-            File::make('Call Recording', 'call_recording_id')->disk('public')
+            File::make('Call Recording - Not active yet', 'call_recording_id')->disk('public')
         ];
     }
 

@@ -15,13 +15,9 @@ class AddClients extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('address')->nullable();
+            $table->string('name');            
             $table->string('country')->nullable();
-            $table->string('city')->nullable();
-            $table->string('state')->nullable();
-            $table->string('zip')->nullable();
-            $table->string('timezone')->nullable();
+            $table->string('city')->nullable();            
             $table->integer('parent_id')->nullable();
             $table->timestamps();
         });
