@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'status'
+        'name', 'email', 'status', 'languages', 'city', 'country'
     ];
 
     /**
@@ -28,18 +28,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function coach()
-    {
-        return $this->hasOne('App\Coach');
-    }
-
-    public function client()
-    {
-        return $this->belongsTo('App\Client');
-    }
-
-    public function scribe()
-    {
-        return $this->hasOne('App\Scribe');
-    }
+    protected $casts = [
+        'languages' => 'array',
+    ];
 }

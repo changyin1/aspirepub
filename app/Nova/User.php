@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
+use Silvanite\NovaFieldCheckboxes\Checkboxes;
+use Laravel\Nova\Fields\Select;
 
 class User extends Resource
 {
@@ -30,7 +32,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email', 'status'
+        'name', 'email', 'status', 'languages', 'role'
     ];
 
     /**
@@ -61,9 +63,23 @@ class User extends Resource
                 ->creationRules('required', 'string', 'min:6')
                 ->updateRules('nullable', 'string', 'min:6'),
 
-            Text::make('Status')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            Select::make('role')->options([
+                'admin' => 'Admin',
+                'call_specialist' => 'Call Specialist',
+                'client' => 'Client',
+                'coach' => 'Coach',
+            ]),
+
+            Checkboxes::make('Languages')->options([
+                'arabic' => 'Arabic',
+                'french' => 'French',
+                'italian' => 'Italian',
+                'korean' => 'Korean',
+                'mandarin' => 'Mandarin',
+                'portuguese' => 'Portuguese',
+                'russian' => 'Russian',
+                'spanish' => 'Spanish',
+            ]),
         ];
     }
 

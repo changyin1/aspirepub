@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddCoaches extends Migration
+class AddSchedules extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class AddCoaches extends Migration
      */
     public function up()
     {
-        Schema::create('coaches', function (Blueprint $table) {
+        Schema::create('schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->string('languages')->nullable();
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->integer('calls');
+            $table->integer('client_id');
+            $table->string('contact')->default('Anyone');
             $table->timestamps();
         });
     }
@@ -28,6 +31,7 @@ class AddCoaches extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coaches');
+        Schema::dropIfExists('schedules');
     }
+
 }

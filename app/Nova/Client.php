@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -45,6 +46,7 @@ class Client extends Resource
      */
     public function fields(Request $request)
     {
+        $parent_clients = \App\Client::where('id', '!=', $this->id)->pluck('name', 'id');
         return [
             ID::make()->sortable()->hideFromIndex(),
             Text::make('Name')
@@ -56,6 +58,8 @@ class Client extends Resource
             Text::make('Country')
                 ->sortable()
                 ->rules('required', 'max:255'),
+            Select::make('Parent Client')->options($parent_clients),
+            
         ];
     }
 

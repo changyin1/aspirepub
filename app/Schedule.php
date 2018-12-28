@@ -14,9 +14,9 @@ class Schedule extends Model
         'start_date','end_date'
     ];
 
-    public function sessions()
+    public function calls()
     {
-        return $this->hasMany('App\Session');
+        return $this->hasMany('App\Call');
     }
 
     public function client()

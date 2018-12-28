@@ -36,7 +36,7 @@ class Schedule extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'client',
     ];
 
     /**
@@ -53,7 +53,7 @@ class Schedule extends Resource
             Number::make('Calls'),
             DateTime::make('Start Date'),
             DateTime::make('End Date'),
-            HasMany::make('Sessions'),
+            HasMany::make('Calls'),
         ];
     }
 

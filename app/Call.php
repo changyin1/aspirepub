@@ -4,15 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Session extends Model
+class Call extends Model
 {
 	protected $fillable = [
-        'client_id', 'coach_id', 'schedule_id', 'notes'
+        'client_id', 'coach_id', 'call_specialist_id', 'schedule_id', 'caller_notes', 'coach_notes', 'call_score'
     ];
     
     public function coach()
     {
-        return $this->belongsTo('App\Coach');
+        return $this->belongsTo('App\User');
     }
 
     public function client()
@@ -20,9 +20,9 @@ class Session extends Model
         return $this->belongsTo('App\Client');
     }
 
-    public function scribe()
+    public function call_specialist()
     {
-        return $this->belongsTo('App\Scribe');
+        return $this->belongsTo('App\User');
     }
 
     public function schedule()
