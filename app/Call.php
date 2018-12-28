@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Call extends Model
 {
 	protected $fillable = [
-        'client_id', 'coach_id', 'call_specialist_id', 'schedule_id', 'caller_notes', 'coach_notes', 'call_score'
+        'client_id', 'coach_id', 'call_specialist_id', 'schedule_id', 'caller_notes', 'coach_notes', 'call_score', 'reservation_confirmation', 'cancelation_confirmation', 'arrival_date', 'departure_date', 'agent_name'
     ];
     
     public function coach()

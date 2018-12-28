@@ -58,7 +58,7 @@ class Client extends Resource
             Text::make('Country')
                 ->sortable()
                 ->rules('required', 'max:255'),
-            Select::make('Parent Client')->options($parent_clients),
+            //Select::make('Parent Client')->options($parent_clients)->nullable(),
             
         ];
     }

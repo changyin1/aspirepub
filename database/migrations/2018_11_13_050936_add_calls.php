@@ -17,14 +17,21 @@ class AddCalls extends Migration
             $table->increments('id');
             $table->integer('client_id');
             $table->integer('schedule_id');
-            $table->integer('call_specialist_id')->nullable();
-            $table->integer('coach_id')->nullable();
+            $table->integer('call_specialist')->nullable();
+            $table->integer('coach')->nullable();
+            $table->text('agent_name')->nullable();
             $table->dateTime('completed_at')->nullable();
             $table->dateTime('scored_at')->nullable();
             $table->integer('call_recording_id')->nullable();
             $table->text('caller_notes')->nullable();
-            $table->integer('call_score')->nullable();
             $table->text('coach_notes')->nullable();
+            $table->integer('call_score')->nullable();
+            $table->text('reservation_confirmation')->nullable();
+            $table->text('reservation_first_name')->nullable();
+            $table->text('reservation_last_name')->nullable();
+            $table->date('arrival_date')->nullable();
+            $table->date('departure_date')->nullable();
+            $table->text('cancelation_confirmation')->nullable();
             $table->timestamps();
         });
     }

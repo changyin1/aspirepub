@@ -11,6 +11,8 @@ use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Text;
 
 class Call extends Resource
 {
@@ -56,11 +58,18 @@ class Call extends Resource
             BelongsTo::make('Schedule', 'schedule', 'App\Nova\Schedule')->nullable(),
             Select::make('Call Specialist')->options($call_specialists),
             Select::make('Coach')->options($coaches),
+            Text::make('Agent Name')->hideFromIndex(),
             //Boolean::make('Scored'),
-            Textarea::make('Caller Notes'),
-            Textarea::make('Coach Notes'),
+            Textarea::make('Caller Notes')->hideFromIndex(),
+            Textarea::make('Coach Notes')->hideFromIndex(),
             Number::make('Call Score'),
-            File::make('Call Recording - Not active yet', 'call_recording_id')->disk('public')
+            Text::make('Reservation Confirmation'),
+            Text::make('Reservation First Name')->hideFromIndex(),
+            Text::make('Reservation Last Name')->hideFromIndex(),
+            Date::make('Arrival Date')->nullable()->hideFromIndex(),
+            Date::make('Departure Date')->nullable()->hideFromIndex(),
+            Text::make('Cancelation Confirmation'),
+            File::make('Call Recording - Not active yet', 'call_recording_id')->disk('public')->hideFromIndex()
         ];
     }
 
