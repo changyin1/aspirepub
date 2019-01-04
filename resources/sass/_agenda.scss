@@ -1,0 +1,56 @@
+.agenda-page {
+  color: $font-gray;
+  margin-bottom: 4rem;
+  h2 {
+    margin-bottom: 1.2em;
+    margin-top: 2em;
+  }
+  hr {
+    width: 60%;
+    margin: 0;
+  }
+  label {
+    margin-right: 2rem;
+  }
+  select {
+    width: 12rem;
+  }
+  .agenda-list {
+    padding: 1.5rem 0;
+  }
+  .agenda-item {
+    background-color: $lightgray;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    margin-bottom: 1rem;
+    box-shadow: 1px 1px 5px 0px rgba(158,158,158,1);
+    &-header, &-details {
+      padding: 0.8rem 1rem;
+    }
+    hr {
+      width: 100%;
+    }
+  }
+  .agenda-item-details {
+    display: flex;
+    justify-content: space-between;
+    span {
+      margin-right: 1rem;
+    }
+  }
+  .agenda-item-footer {
+    .due-date {
+      padding: 0.8rem 1rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .danger {
+      background-color: $danger-bg;
+      color: $danger-font;
+    }
+    .caution {
+      background-color: $caution-bg;
+      color: $caution-font;
+    }
+  }
+}

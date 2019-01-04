@@ -1,0 +1,49 @@
+.header {
+  background-color: black;
+  color: white;
+  .nav-top {
+    background-color: #232323;
+    padding: 0 1.5rem;
+    a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+    }
+  }
+  .nav-bottom {
+    font-size: 1.1rem;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    & > div {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .logo {
+    max-width: 10rem;
+  }
+  .nav-tabs {
+    border: none;
+    margin-left: 10%;
+    width: 100%;
+    display: flex;
+  }
+  .nav-tab {
+    display: inline-block;
+    padding: 1rem 1rem;
+    color: gray;
+    &.active {
+      border-bottom: 2px solid white;
+      color: white;
+    }
+    &:hover {
+      background-color: white;
+      color: black;
+      border-bottom: 2px solid white;
+    }
+  }
+  .big-text{
+    font-size: 2em;
+    padding: 0 1rem;
+  }
+}

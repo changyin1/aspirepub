@@ -1,0 +1,55 @@
+.settings-page {
+  color: $font-gray;
+  margin-bottom: 4rem;
+  h2 {
+    margin-bottom: 1.2em;
+    margin-top: 2em;
+  }
+  .nav {
+    &.nav-tabs {
+      border: none;
+    }
+    li {
+      width: 15rem;
+      text-align: center;
+      padding: 1rem 0;
+      text-transform: capitalize;
+      border-bottom: 1px solid $darkgray;
+      &.active, &:hover {
+        border-color: $green-font;
+        color: $green-font;
+      }
+    }
+  }
+  .form-heading {
+    font-size: 1.2em;
+    padding: 2rem 0;
+  }
+  .form-group {
+    width: 25rem;
+  }
+  .form-row {
+    display: flex;
+    width: 25rem;
+    margin: 0;
+    justify-content: space-between;
+  }
+  .city {
+    width: 15rem;
+    margin-right: 2rem;
+  }
+  .state {
+    width: 8rem;
+  }
+  .select2-container .select2-selection--single {
+    height: 100%;
+    padding: 0.5rem;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .select2-container {
+    box-shadow: 1px 1px 5px 0px rgba(158,158,158,1);
+  }
+}
