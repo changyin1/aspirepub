@@ -1,4 +1,3 @@
-
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
@@ -8,7 +7,39 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+// Partials
+@import 'partials/header';
+@import 'partials/forms';
+
+// Pages
+@import 'login-page';
+@import 'agenda';
+@import 'settings';
+
+body {
+  background-color: white;
+}
+
+.clear {
+  clear: both;
+}
+
+a {
+  color: inherit;
+  &:hover, &:active {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+img {
+  width: 100%;
+}
+
+.content-container {
+  padding: 0 1.5rem;
+}
+
+.black-text {
+  color: black;
 }

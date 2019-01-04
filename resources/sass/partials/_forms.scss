@@ -1,0 +1,36 @@
+form {
+  .form-group {
+    position: relative;
+    &.filled {
+      label {
+        transform: translateY(-125%);
+        color: grey;
+        font-size: .8em;
+      }
+    }
+  }
+  .form-control {
+    margin-bottom: 2.5rem;
+    border: none;
+    border-bottom: 1px solid grey;
+    border-radius: 0;
+    padding-left: 0;
+    &:focus + label {
+      transform: translateY(-125%);
+      color: grey;
+      font-size: .8em;
+    }
+  }
+  label {
+    position: absolute;
+    width: 100%;
+    text-align: left;
+    pointer-events: none;
+    display: inline-block;
+    z-index: 2;
+    top: 7px;
+    left: 0;
+    padding-left: 0;
+    transition: all .3s;
+  }
+}

@@ -1,0 +1,38 @@
+.login-page {
+  background-color: $darkgray;
+  min-height: 100vh;
+  .header {
+    background-color: $darkgray;
+  }
+  form {
+    background-color: white;
+    margin: 3rem auto;
+    width: 25rem;
+    border-radius: 1rem;
+    border: 1px solid grey;
+    a {
+      color: black;
+    }
+  }
+  .form-header {
+    font-size: 1.5rem;
+    border-bottom: 3px solid black;
+    padding: 1rem 0;
+  }
+  .form-body {
+    padding: 2rem 1rem;
+  }
+  .unmask {
+    position: absolute;
+    right: 0;
+    top: 7px;
+    cursor: pointer;
+  }
+  .login-btn {
+    display: block;
+    background-color: black;
+    color: white;
+    width: 100%;
+    line-height: 2rem;
+  }
+}
