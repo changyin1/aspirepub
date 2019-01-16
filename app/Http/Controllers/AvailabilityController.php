@@ -10,7 +10,7 @@ class AvailabilityController extends Controller
 {
 	public function __construct()
 	{
-    	$this->middleware('auth');
+    	//$this->middleware('auth');
 	}
 
     public function index(Request $request){
@@ -20,10 +20,12 @@ class AvailabilityController extends Controller
         ]);
     }
 
-    public function toggleAvailability($date, $available) {
+    public function toggleAvailab(Request $request) {
+    	//dd($request);
     	//TODO decide if proxy users or direct admin edit, can check if admin but need to make sure all admin can do.    	
     	$user = Auth::user();
-    	$date = date('Y-m-d',strtotime($date));		
+    	$date = date('Y-m-d',strtotime($request->input('date')));
+    	$available = $request->input('available');
     	$availability = Availability::firstOrCreate(
 			['user_id' => $user->id], ['date' => $date]
 		);

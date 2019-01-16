@@ -2,7 +2,7 @@
 
 @section('content')
    <div class="agenda-page mt-4">
-       <h2>Call Agenda for {{$data['user']->name}}</h2>
+       <h2>Call Agenda for {{$data['user']->name ?? ''}}</h2>
        <div class="form-group">
            <label for="view">View</label>
            <select name="view">

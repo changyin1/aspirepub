@@ -14,6 +14,6 @@
     </div>
     <div class="right">
         <a href="#">My Balance</a>
-        <a class="big-text" href="#">$62.00</a>
+        <a class="big-text" href="#">$0.00</a>
     </div>
 </div>

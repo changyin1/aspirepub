@@ -112,7 +112,7 @@ $(function() {
             var data = {
                 'date': date.format(),
                 'userID': $('#user-id').val(),
-                'available': true
+                'available': 1
             };
             var $day = $(this);
             $.ajax({
@@ -126,6 +126,11 @@ $(function() {
                 success: function(response) {
                     if (response.success) {
                         $day.children('div').remove();
+                        if(response.available == 1) {
+                            $day.html('Available');    
+                        } else {
+                            $day.html('');
+                        }                        
                     } else {
                         $day.children('div').remove();
                         $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
@@ -144,7 +149,7 @@ $(function() {
             var data = {
                 'date': calEvent.start.format(),
                 'userID': $('#user-id').val(),
-                'available': false
+                'available': 0
             };
             var $day = $(this);
             $.ajax({
