@@ -18,7 +18,7 @@
         <img src="images/logo-black.png" class="logo" alt="Logo">
     </div>
     <div class="container">
-        <form id="login-form" class="login-form" action="/login" method="post">
+        <form id="login-form" class="login-form" action="/login" method="post">            
             <div class="form-header text-center">
                 <div>Login</div>
             </div>
