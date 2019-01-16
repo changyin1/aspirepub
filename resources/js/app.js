@@ -63,7 +63,7 @@ $(function() {
                 placeholder: placeholder,
                 ajax: {
                     type: 'post',
-                    url: 'api/cities',
+                    url: $('#city-url').val(),
                     data: function () {
                         return {
                             state: $('select.state').val()

@@ -9,16 +9,16 @@
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="{{asset("/css/app.css")}}">
 
 </head>
 <body>
 <div id="app" class="login-page">
     <div class="header">
-        <img src="images/logo-black.png" class="logo" alt="Logo">
+        <img src="{{asset('images/logo-black.png'}}" class="logo" alt="Logo">
     </div>
     <div class="container">
-        <form id="login-form" class="login-form" action="/login" method="post">            
+        <form id="login-form" class="login-form" action="{{url('/login')}}" method="post">
             <div class="form-header text-center">
                 <div>Login</div>
             </div>
@@ -40,6 +40,6 @@
         </form>
     </div>
 </div>
-<script src="/js/app.js"></script>
+<script src="{{asset('/js/app.js')}}"></script>
 </body>
 </html>
