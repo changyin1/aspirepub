@@ -98,7 +98,7 @@ $(function() {
             },
             {
                 title  : 'event3',
-                start  : '2019-01-09',
+                start  : '2019-01-21',
             }
         ],
         dayClick: function(date) {
@@ -107,7 +107,9 @@ $(function() {
             $('#availability-modal').modal();
         },
         eventClick: function(calEvent, jsEvent, view) {
-            console.log(calEvent.start)
+            if (calEvent.start.format() < moment().format()) {
+                return false;
+            };
             $('.date').html(calEvent.start.format('MMM DD, YYYY'));
             $('#date').val(calEvent.start.format());
             $('#availability-modal').modal();

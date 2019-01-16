@@ -48024,7 +48024,7 @@ $(function () {
       start: '2019-01-05'
     }, {
       title: 'event3',
-      start: '2019-01-09'
+      start: '2019-01-21'
     }],
     dayClick: function dayClick(date) {
       $('.date').html(date.format('MMM DD, YYYY'));
@@ -48032,7 +48032,11 @@ $(function () {
       $('#availability-modal').modal();
     },
     eventClick: function eventClick(calEvent, jsEvent, view) {
-      console.log(calEvent.start);
+      if (calEvent.start.format() < moment().format()) {
+        return false;
+      }
+
+      ;
       $('.date').html(calEvent.start.format('MMM DD, YYYY'));
       $('#date').val(calEvent.start.format());
       $('#availability-modal').modal();
