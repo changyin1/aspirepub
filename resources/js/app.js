@@ -84,4 +84,66 @@ $(function() {
             });
         }
     });
+
+    //calendar js
+    $('#calendar').fullCalendar({
+        events: [
+            {
+                title  : 'event1',
+                start  : '2019-01-01'
+            },
+            {
+                title  : 'event2',
+                start  : '2019-01-05'
+            },
+            {
+                title  : 'event3',
+                start  : '2019-01-09',
+            }
+        ],
+        dayClick: function(date) {
+            $('.date').html(date.format('MMM DD, YYYY'));
+            $('#date').val(date.format());
+            $('#availability-modal').modal();
+        },
+        eventClick: function(calEvent, jsEvent, view) {
+            console.log(calEvent.start)
+            $('.date').html(calEvent.start.format('MMM DD, YYYY'));
+            $('#date').val(calEvent.start.format());
+            $('#availability-modal').modal();
+        },
+        header: {
+            left:   'prev,next title',
+            center: '',
+            right:  'today '
+        },
+        buttonText: {
+            today: 'Today',
+        }
+    });
+    $('#availability-modal').on('hidden.bs.modal', function () {
+        // clear errors
+      $('#form-error').html('');
+    });
+    $('#submit-availability-btn').on('click', function(e) {
+        e.preventDefault();
+        console.log($('form.availabilty-form').serialize())
+        $.ajax({
+            type: "POST",
+            url: "api/availability",
+            data: $('form.availabilty-form').serialize(),
+            success: function(response) {
+                console.log(response.success);
+                if (response.success) {
+                    $('#availability-modal').modal('hide');
+                } else {
+                    $('#form-error').html('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
+                }
+            },
+            error: function() {
+                alert('Error');
+            }
+        });
+    return false;
+    });
 });

@@ -10704,6 +10704,35 @@ form label {
   color: #f38a00;
 }
 
+.availability-page {
+  color: gray;
+  margin-bottom: 4rem;
+}
+
+.availability-page hr {
+  margin: 2rem 0;
+}
+
+.fc h2 {
+  color: black;
+}
+
+.fc button {
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+
+.fc .fc-event {
+  background-color: #addbdc;
+  padding: 30% 5%;
+  margin: 0;
+}
+
+.fc .fc-content {
+  color: white;
+}
+
 .settings-page {
   color: gray;
   margin-bottom: 4rem;

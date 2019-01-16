@@ -1,0 +1,26 @@
+.availability-page {
+  color: $font-gray;
+  margin-bottom: 4rem;
+  hr {
+    margin: 2rem 0;
+  }
+}
+
+.fc {
+  h2 {
+    color: black;
+  }
+  button {
+    border: none;
+    background: none;
+    box-shadow: none;
+  }
+  .fc-event {
+    background-color: $lightblue;
+    padding: 30% 5%;
+    margin: 0;
+  }
+  .fc-content {
+    color: white;
+  }
+}

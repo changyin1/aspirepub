@@ -9,6 +9,7 @@
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel='stylesheet' href='vendor/fullcalendar-3.10.0/fullcalendar.css' />
     <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
@@ -24,5 +25,7 @@
 <!-- Vendor Files -->
 <link href="vendor/select2/dist/css/select2.min.css" rel="stylesheet" />
 <script src="vendor/select2/dist/js/select2.min.js"></script>
+<script src='vendor/moment/moment.js'></script>
+<script src='vendor/fullcalendar-3.10.0/fullcalendar.js'></script>
 </body>
 </html>
