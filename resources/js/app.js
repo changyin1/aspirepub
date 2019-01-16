@@ -84,4 +84,146 @@ $(function() {
             });
         }
     });
+
+    //calendar js
+    $('#calendar').fullCalendar({
+        events: [
+            {
+                title  : 'event1',
+                start  : '2019-01-01'
+            },
+            {
+                title  : 'event2',
+                start  : '2019-01-05'
+            },
+            {
+                title  : 'event3',
+                start  : '2019-01-21',
+            }
+        ],
+        dayClick: function(date) {
+            if (date.format() < moment().format()) {
+                return false;
+            };
+            if (IsDateHasEvent(date)) {
+                console.log('has event');
+                return false;
+            }
+            var data = {
+                'date': date.format(),
+                'userID': $('#user-id').val(),
+                'available': 1
+            };
+            var $day = $(this);
+            $.ajax({
+                type: "POST",
+                url: "api/availability",
+                data: data,
+                beforeSend: function () {
+                    $day.children('div').remove();
+                    $day.append('<div class="loader">Loading...</div>');
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $day.children('div').remove();
+                        if(response.available == 1) {
+                            $day.html('Available');    
+                        } else {
+                            $day.html('');
+                        }                        
+                    } else {
+                        $day.children('div').remove();
+                        $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
+                    }
+                },
+                error: function() {
+                    $day.children('div').remove();
+                    $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
+                }
+            });
+        },
+        eventClick: function(calEvent, jsEvent, view) {
+            if (calEvent.start.format() < moment().format()) {
+                return false;
+            };
+            var data = {
+                'date': calEvent.start.format(),
+                'userID': $('#user-id').val(),
+                'available': 0
+            };
+            var $day = $(this);
+            $.ajax({
+                type: "POST",
+                url: "api/availability",
+                data: data,
+                beforeSend: function () {
+                    $day.children('div').remove();
+                    $day.html('');
+                    $day.addClass('loading');
+                    $day.removeClass('error');
+                    $day.append('<div class="loader">Loading...</div>');
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $day.children('div').remove();
+                        $day.html('');
+                        $day.removeClass('loading');
+                    } else {
+                        $day.children('div').remove();
+                        $day.removeClass('loading');
+                        $day.addClass('error');
+                        $day.html('Error Submitting Please Try Again Later');
+                    }
+                },
+                error: function() {
+                    $day.children('div').remove();
+                    $day.removeClass('loading');
+                    $day.addClass('error');
+                    $day.html('Error Submitting Please Try Again Later');
+                    $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
+                }
+            });
+        },
+        header: {
+            left:   'prev,next title',
+            center: '',
+            right:  'today '
+        },
+        buttonText: {
+            today: 'Today',
+        }
+    });
+    $('#availability-modal').on('hidden.bs.modal', function () {
+        // clear errors
+      $('#form-error').html('');
+    });
+    $('#submit-availability-btn').on('click', function(e) {
+        e.preventDefault();
+        console.log($('form.availabilty-form').serialize())
+        $.ajax({
+            type: "POST",
+            url: "api/availability",
+            data: $('form.availabilty-form').serialize(),
+            success: function(response) {
+                console.log(response.success);
+                if (response.success) {
+                    $('#availability-modal').modal('hide');
+                } else {
+                    $('#form-error').html('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
+                }
+            },
+            error: function() {
+                alert('Error');
+            }
+        });
+    return false;
+    });
+    function IsDateHasEvent(date) {
+        var allEvents = [];
+        allEvents = $('#calendar').fullCalendar('clientEvents');
+        var event = $.grep(allEvents, function (v) {
+            return +v.start === +date;
+        });
+        return event.length > 0;
+    }
 });

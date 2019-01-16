@@ -10,7 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/login', 'Auth\LoginController@showLoginForm');
+Auth::routes();
+//Route::get('/login', 'Auth\LoginController@showLoginForm');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::post('/login', 'Auth\LoginController@login');
 Route::get('/', function () {
@@ -18,4 +19,6 @@ Route::get('/', function () {
 });
 
 Route::get('/agenda', 'AgendaController@index')->name('agenda');
+Route::get('/availability', 'AvailabilityController@index')->name('availability');
 Route::get('/settings', 'SettingsController@index')->name('settings');
+Route::get('/toggle-availability/{date}/{available}', 'AvailabilityController@toggleAvailability')->name('toggle-availability');

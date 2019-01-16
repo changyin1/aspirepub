@@ -2,7 +2,7 @@
 
 @section('content')
    <div class="agenda-page mt-4">
-       <h2>Call Agenda</h2>
+       <h2>Call Agenda for {{$data['user']->name ?? ''}}</h2>
        <div class="form-group">
            <label for="view">View</label>
            <select name="view">
@@ -13,7 +13,7 @@
        </div>
        <hr class="gray"/>
        <div class="agenda-list">
-           @foreach($data as $agenda)
+           @foreach($data['items'] as $agenda)
                <div class="agenda-item">
                    <div class="agenda-item-header">
                        Four Seasons | Scottsdale

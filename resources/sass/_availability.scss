@@ -1,0 +1,42 @@
+.availability-page {
+  color: $font-gray;
+  margin-bottom: 4rem;
+  hr {
+    margin: 2rem 0;
+  }
+}
+
+.fc {
+  h2 {
+    color: black;
+  }
+  button {
+    border: none;
+    background: none;
+    box-shadow: none;
+  }
+  .fc-event {
+    background-color: $lightblue;
+    padding: 3.7vw 5%;
+    margin: 0;
+    &.loading {
+      padding: 0;
+    }
+    &.error {
+      padding: 1.7vw 5%;
+      color: #761b18;
+      background-color: #f9d6d5;
+      border: none;
+    }
+    .loader {
+      margin: 3vw auto;
+    }
+  }
+  .fc-content {
+    color: black;
+  }
+  .alert {
+    margin-top: 3vw;
+    margin-bottom: 0;
+  }
+}
