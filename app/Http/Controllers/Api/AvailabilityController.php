@@ -29,7 +29,7 @@ class AvailabilityController extends Controller
 		$availability->save();
 		
 		if ($availability->available !== NULL) {
-			return response()->json(['success' => true, 'available' => $availability->available]);		
+			return response()->json(['success' => true, 'available' => $availability->available, 'date' => $availability->date]);		
 		} else {
 			return response()->json(['success' => false]);	
 		}

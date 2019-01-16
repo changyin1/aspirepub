@@ -48017,14 +48017,14 @@ $(function () {
 
   $('#calendar').fullCalendar({
     events: [{
-      title: 'event1',
+      title: 'Available',
       start: '2019-01-01'
     }, {
-      title: 'event2',
+      title: 'Available',
       start: '2019-01-05'
     }, {
-      title: 'event3',
-      start: '2019-01-21'
+      title: 'Available',
+      start: '2019-01-26'
     }],
     dayClick: function dayClick(date) {
       if (date.format() < moment().format()) {
@@ -48058,6 +48058,10 @@ $(function () {
 
             if (response.available == 1) {
               $day.html('Available');
+              events.push({
+                title: 'Available',
+                'start': response.date
+              });
             } else {
               $day.html('');
             }
