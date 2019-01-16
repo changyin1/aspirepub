@@ -31,4 +31,9 @@ class User extends Authenticatable
     protected $casts = [
         'languages' => 'array',
     ];
+
+    public function availabilities()
+    {
+        return $this->hasMany('App\Availability');
+    }
 }
