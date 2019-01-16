@@ -18,4 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/agenda', 'AgendaController@index')->name('agenda');
+Route::get('/availability', 'AvailabilityController@index')->name('availability');
 Route::get('/settings', 'SettingsController@index')->name('settings');

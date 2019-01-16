@@ -10,10 +10,12 @@
 // Partials
 @import 'partials/header';
 @import 'partials/forms';
+@import 'partials/_animations';
 
 // Pages
 @import 'login-page';
 @import 'agenda';
+@import 'availability';
 @import 'settings';
 
 body {

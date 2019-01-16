@@ -8,7 +8,7 @@
         <div class="logo d-inline-block"><img src="images/logo-white.png" alt="logo"></div>
         <div class="nav-tabs">
             <a class="nav-tab{{Route::currentRouteName() == 'agenda' ? ' active' : '' }}" href="{{route('agenda')}}"><div>Agenda</div></a>
-            <a class="nav-tab{{Route::currentRouteName() == 'availability' ? ' active' : '' }}" href="#"><div>Availability</div></a>
+            <a class="nav-tab{{Route::currentRouteName() == 'availability' ? ' active' : '' }}" href="{{route('availability')}}"><div>Availability</div></a>
             <a class="nav-tab{{Route::currentRouteName() == 'settings' ? ' active' : '' }}" href="{{route('settings')}}"><div>Settings</div></a>
         </div>
     </div>
