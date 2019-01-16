@@ -20,4 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware(['api'])->group(function(){
     Route::post('cities', 'Api\UtilitiesController@getCities');
     Route::post('availability', 'Api\AvailabilityController@submit');
+    Route::get('availability', 'Api\AvailabilityController@get');
 });
