@@ -102,17 +102,82 @@ $(function() {
             }
         ],
         dayClick: function(date) {
-            $('.date').html(date.format('MMM DD, YYYY'));
-            $('#date').val(date.format());
-            $('#availability-modal').modal();
+            if (date.format() < moment().format()) {
+                return false;
+            };
+            if (IsDateHasEvent(date)) {
+                console.log('has event');
+                return false;
+            }
+            var data = {
+                'date': date.format(),
+                'userID': $('#user-id').val(),
+                'available': true
+            };
+            var $day = $(this);
+            $.ajax({
+                type: "POST",
+                url: "api/availability",
+                data: data,
+                beforeSend: function () {
+                    $day.children('div').remove();
+                    $day.append('<div class="loader">Loading...</div>');
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $day.children('div').remove();
+                    } else {
+                        $day.children('div').remove();
+                        $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
+                    }
+                },
+                error: function() {
+                    $day.children('div').remove();
+                    $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
+                }
+            });
         },
         eventClick: function(calEvent, jsEvent, view) {
             if (calEvent.start.format() < moment().format()) {
                 return false;
             };
-            $('.date').html(calEvent.start.format('MMM DD, YYYY'));
-            $('#date').val(calEvent.start.format());
-            $('#availability-modal').modal();
+            var data = {
+                'date': calEvent.start.format(),
+                'userID': $('#user-id').val(),
+                'available': false
+            };
+            var $day = $(this);
+            $.ajax({
+                type: "POST",
+                url: "api/availability",
+                data: data,
+                beforeSend: function () {
+                    $day.children('div').remove();
+                    $day.html('');
+                    $day.addClass('loading');
+                    $day.removeClass('error');
+                    $day.append('<div class="loader">Loading...</div>');
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $day.children('div').remove();
+                        $day.html('');
+                        $day.removeClass('loading');
+                    } else {
+                        $day.children('div').remove();
+                        $day.removeClass('loading');
+                        $day.addClass('error');
+                        $day.html('Error Submitting Please Try Again Later');
+                    }
+                },
+                error: function() {
+                    $day.children('div').remove();
+                    $day.removeClass('loading');
+                    $day.addClass('error');
+                    $day.html('Error Submitting Please Try Again Later');
+                    $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
+                }
+            });
         },
         header: {
             left:   'prev,next title',
@@ -148,4 +213,12 @@ $(function() {
         });
     return false;
     });
+    function IsDateHasEvent(date) {
+        var allEvents = [];
+        allEvents = $('#calendar').fullCalendar('clientEvents');
+        var event = $.grep(allEvents, function (v) {
+            return +v.start === +date;
+        });
+        return event.length > 0;
+    }
 });
