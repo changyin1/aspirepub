@@ -63,7 +63,7 @@ $(function() {
                 placeholder: placeholder,
                 ajax: {
                     type: 'post',
-                    url: 'api/cities',
+                    url: $('#city-url').val(),
                     data: function () {
                         return {
                             state: $('select.state').val()
@@ -94,7 +94,7 @@ $(function() {
             };
             $.ajax({
                 type: "GET",
-                url: "api/availability",
+                url: $('#availability-url').val(),
                 data: data,
                 beforeSend: function () {
                     cell.children('div').remove();
@@ -129,7 +129,7 @@ $(function() {
             var $day = $(this);
             $.ajax({
                 type: "POST",
-                url: "api/availability",
+                url: $('#availability-url').val(),
                 data: data,
                 beforeSend: function () {
                     $day.children('div').remove();

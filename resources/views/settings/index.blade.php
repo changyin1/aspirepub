@@ -48,6 +48,7 @@
            <div id="preferences" class="tab-pane fade">
                test2
            </div>
+           <input type="hidden" id="city-url" value="{{url('/api/cities')}}">
        </div>
    </div>
 @endsection

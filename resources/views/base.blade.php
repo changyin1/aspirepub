@@ -21,7 +21,7 @@
         @yield('content')
     </div>
 </div>
-<script src="/js/app.js"></script>
+<script src="{{asset('/js/app.js')}}"></script>
 <!-- Vendor Files -->
 <link href="{{asset("vendor/select2/dist/css/select2.min.css")}}" rel="stylesheet" />
 <script src="{{asset("vendor/select2/dist/js/select2.min.js")}}"></script>
