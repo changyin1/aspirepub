@@ -48023,7 +48023,7 @@ $(function () {
       };
       $.ajax({
         type: "GET",
-        url: "api/availability",
+        url: $('#availability-url').val(),
         data: data,
         beforeSend: function beforeSend() {
           cell.children('div').remove();
@@ -48063,7 +48063,7 @@ $(function () {
       var $day = $(this);
       $.ajax({
         type: "POST",
-        url: "api/availability",
+        url: $('#availability-url').val(),
         data: data,
         beforeSend: function beforeSend() {
           $day.children('div').remove();

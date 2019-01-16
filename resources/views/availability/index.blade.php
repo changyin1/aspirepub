@@ -7,5 +7,6 @@
        <div id='calendar'></div>
        <input type="hidden" id="date" name="date" value="">
        <input type="hidden" id='user-id' name="user-id" value="12345">
+       <input type="hidden" id="availability-url" value="{{url('/api/availability')}}">
    </div>
 @endsection
