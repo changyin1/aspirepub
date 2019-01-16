@@ -35,4 +35,15 @@ class AvailabilityController extends Controller
 		}
         
     }
+
+    public function get(Request $request) {
+        $user_id = $request->input('userID');
+        $date = date('Y-m-d',strtotime($request->input('date')));
+        $availability = Availability::where('user_id', $user_id)->where('date', $date)->first();
+        if ($availability) {
+            return response()->json(['success' => true, 'available' => $availability->available]);
+        } else {
+            return response()->json(['success' => true, 'available' => 0]);
+        }
+    }
 }

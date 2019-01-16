@@ -10805,29 +10805,8 @@ form label {
   box-shadow: none;
 }
 
-.fc .fc-event {
+.fc .fc-day.available {
   background-color: #addbdc;
-  padding: 3.7vw 5%;
-  margin: 0;
-}
-
-.fc .fc-event.loading {
-  padding: 0;
-}
-
-.fc .fc-event.error {
-  padding: 1.7vw 5%;
-  color: #761b18;
-  background-color: #f9d6d5;
-  border: none;
-}
-
-.fc .fc-event .loader {
-  margin: 3vw auto;
-}
-
-.fc .fc-content {
-  color: black;
 }
 
 .fc .alert {
