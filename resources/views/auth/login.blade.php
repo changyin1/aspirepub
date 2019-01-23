@@ -15,7 +15,7 @@
 <body>
 <div id="app" class="login-page">
     <div class="header">
-        <img src="{{asset('images/logo-black.png'}}" class="logo" alt="Logo">
+        <img src="{{asset('images/logo-black.png')}}" class="logo" alt="Logo">
     </div>
     <div class="container">
         <form id="login-form" class="login-form" action="{{url('/login')}}" method="post">
