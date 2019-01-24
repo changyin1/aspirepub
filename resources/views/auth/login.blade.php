@@ -19,6 +19,7 @@
     </div>
     <div class="container">
         <form id="login-form" class="login-form" action="{{url('/login')}}" method="post">
+            @csrf
             <div class="form-header text-center">
                 <div>Login</div>
             </div>
