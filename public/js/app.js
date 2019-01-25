@@ -48016,6 +48016,7 @@ $(function () {
   }); //calendar js
 
   $('#calendar').fullCalendar({
+<<<<<<< HEAD
     events: [{
       title: 'Available',
       start: '2019-01-01'
@@ -48038,24 +48039,25 @@ $(function () {
         return false;
       }
 
+=======
+    dayRender: function dayRender(date, cell) {
+>>>>>>> 069b5aa8d8c67ffe9f08d122494017f9851c5d0c
       var data = {
-        'date': date.format(),
         'userID': $('#user-id').val(),
-        'available': 1
+        'date': date.format()
       };
-      var $day = $(this);
       $.ajax({
-        type: "POST",
-        url: "api/availability",
+        type: "GET",
+        url: $('#availability-url').val(),
         data: data,
         beforeSend: function beforeSend() {
-          $day.children('div').remove();
-          $day.append('<div class="loader">Loading...</div>');
+          cell.children('div').remove();
+          cell.append('<div class="loader">Loading...</div>');
         },
         success: function success(response) {
-          if (response.success) {
-            $day.children('div').remove();
+          cell.children('div').remove();
 
+<<<<<<< HEAD
             if (response.available == 1) {
               $day.html('Available');
               events.push({
@@ -48068,54 +48070,60 @@ $(function () {
           } else {
             $day.children('div').remove();
             $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
+=======
+          if (response.available) {
+            console.log(cell);
+            cell.addClass('available');
+>>>>>>> 069b5aa8d8c67ffe9f08d122494017f9851c5d0c
           }
         },
         error: function error() {
-          $day.children('div').remove();
-          $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
+          cell.children('div').remove();
+          cell.append('<div class="alert alert-danger">Error Retrieving Day Info Please Try Again Later</div>');
         }
       });
     },
-    eventClick: function eventClick(calEvent, jsEvent, view) {
-      if (calEvent.start.format() < moment().format()) {
+    dayClick: function dayClick(date) {
+      if (date.format() < moment().format()) {
         return false;
       }
 
       ;
+
+      if (IsDateHasEvent(date)) {
+        console.log('has event');
+        return false;
+      }
+
       var data = {
-        'date': calEvent.start.format(),
+        'date': date.format(),
         'userID': $('#user-id').val(),
-        'available': 0
+        'available': 1
       };
       var $day = $(this);
       $.ajax({
         type: "POST",
-        url: "api/availability",
+        url: $('#availability-url').val(),
         data: data,
         beforeSend: function beforeSend() {
           $day.children('div').remove();
-          $day.html('');
-          $day.addClass('loading');
-          $day.removeClass('error');
           $day.append('<div class="loader">Loading...</div>');
         },
         success: function success(response) {
+          $day.children('div').remove();
+
           if (response.success) {
-            $day.children('div').remove();
-            $day.html('');
-            $day.removeClass('loading');
+            if (response.available == 1) {
+              $day.addClass('available');
+            } else {
+              $day.removeClass('available');
+            }
           } else {
-            $day.children('div').remove();
-            $day.removeClass('loading');
-            $day.addClass('error');
-            $day.html('Error Submitting Please Try Again Later');
+            $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
           }
         },
         error: function error() {
           $day.children('div').remove();
-          $day.removeClass('loading');
-          $day.addClass('error');
-          $day.html('Error Submitting Please Try Again Later');
           $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
         }
       });
@@ -48128,32 +48136,6 @@ $(function () {
     buttonText: {
       today: 'Today'
     }
-  });
-  $('#availability-modal').on('hidden.bs.modal', function () {
-    // clear errors
-    $('#form-error').html('');
-  });
-  $('#submit-availability-btn').on('click', function (e) {
-    e.preventDefault();
-    console.log($('form.availabilty-form').serialize());
-    $.ajax({
-      type: "POST",
-      url: "api/availability",
-      data: $('form.availabilty-form').serialize(),
-      success: function success(response) {
-        console.log(response.success);
-
-        if (response.success) {
-          $('#availability-modal').modal('hide');
-        } else {
-          $('#form-error').html('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
-        }
-      },
-      error: function error() {
-        alert('Error');
-      }
-    });
-    return false;
   });
 
   function IsDateHasEvent(date) {
@@ -48313,8 +48295,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/vagrant/code/aspire/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/vagrant/code/aspire/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/changparagon/aspire/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/changparagon/aspire/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

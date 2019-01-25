@@ -10,6 +10,7 @@
        <div class="tab-content">
            <div id="contact-info" class="tab-pane fade in active show">
                <form id="contact-info-form" class="contact-info-form" action="/settings/save" method="post">
+                   @csrf
                    <div class="form-heading">Contact Information</div>
                    <div class="form-body">
                        <div class="form-group">
@@ -48,6 +49,7 @@
            <div id="preferences" class="tab-pane fade">
                test2
            </div>
+           <input type="hidden" id="city-url" value="{{url('/api/cities')}}">
        </div>
    </div>
 @endsection

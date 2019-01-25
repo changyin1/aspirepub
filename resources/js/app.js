@@ -63,7 +63,7 @@ $(function() {
                 placeholder: placeholder,
                 ajax: {
                     type: 'post',
-                    url: 'api/cities',
+                    url: $('#city-url').val(),
                     data: function () {
                         return {
                             state: $('select.state').val()
@@ -87,22 +87,33 @@ $(function() {
 
     //calendar js
     $('#calendar').fullCalendar({
-        events: [
-            
-            {
-                title  : 'Available',
-                start  : '2019-01-01'
-            },
-            {
-                title  : 'Available',
-                start  : '2019-01-05'
-            },
-            {
-                title  : 'Available',
-                start  : '2019-01-26',
-            }
+        dayRender: function(date, cell) {
 
-        ],
+            var data = {
+                'userID': $('#user-id').val(),
+                'date': date.format()
+            };
+            $.ajax({
+                type: "GET",
+                url: $('#availability-url').val(),
+                data: data,
+                beforeSend: function () {
+                    cell.children('div').remove();
+                    cell.append('<div class="loader">Loading...</div>');
+                },
+                success: function(response) {
+                    cell.children('div').remove();
+                    if (response.available) {
+                        console.log(cell);
+                        cell.addClass('available');
+                    }
+                },
+                error: function() {
+                    cell.children('div').remove();
+                    cell.append('<div class="alert alert-danger">Error Retrieving Day Info Please Try Again Later</div>');
+                }
+            });
+        },
         dayClick: function(date) {
             if (date.format() < moment().format()) {
                 return false;
@@ -119,70 +130,26 @@ $(function() {
             var $day = $(this);
             $.ajax({
                 type: "POST",
-                url: "api/availability",
+                url: $('#availability-url').val(),
                 data: data,
                 beforeSend: function () {
                     $day.children('div').remove();
                     $day.append('<div class="loader">Loading...</div>');
                 },
                 success: function(response) {
+                    $day.children('div').remove();
                     if (response.success) {
-                        $day.children('div').remove();
                         if(response.available == 1) {
-                            $day.html('Available');
-                            events.push({title: 'Available', 'start':response.date});
+                            $day.addClass('available');
                         } else {
-                            $day.html('');
+                            $day.removeClass('available');
                         }                        
                     } else {
-                        $day.children('div').remove();
                         $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
                     }
                 },
                 error: function() {
                     $day.children('div').remove();
-                    $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
-                }
-            });
-        },
-        eventClick: function(calEvent, jsEvent, view) {
-            if (calEvent.start.format() < moment().format()) {
-                return false;
-            };
-            var data = {
-                'date': calEvent.start.format(),
-                'userID': $('#user-id').val(),
-                'available': 0
-            };
-            var $day = $(this);
-            $.ajax({
-                type: "POST",
-                url: "api/availability",
-                data: data,
-                beforeSend: function () {
-                    $day.children('div').remove();
-                    $day.html('');
-                    $day.addClass('loading');
-                    $day.removeClass('error');
-                    $day.append('<div class="loader">Loading...</div>');
-                },
-                success: function(response) {
-                    if (response.success) {
-                        $day.children('div').remove();
-                        $day.html('');
-                        $day.removeClass('loading');
-                    } else {
-                        $day.children('div').remove();
-                        $day.removeClass('loading');
-                        $day.addClass('error');
-                        $day.html('Error Submitting Please Try Again Later');
-                    }
-                },
-                error: function() {
-                    $day.children('div').remove();
-                    $day.removeClass('loading');
-                    $day.addClass('error');
-                    $day.html('Error Submitting Please Try Again Later');
                     $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
                 }
             });
@@ -195,31 +162,6 @@ $(function() {
         buttonText: {
             today: 'Today',
         }
-    });
-    $('#availability-modal').on('hidden.bs.modal', function () {
-        // clear errors
-      $('#form-error').html('');
-    });
-    $('#submit-availability-btn').on('click', function(e) {
-        e.preventDefault();
-        console.log($('form.availabilty-form').serialize())
-        $.ajax({
-            type: "POST",
-            url: "api/availability",
-            data: $('form.availabilty-form').serialize(),
-            success: function(response) {
-                console.log(response.success);
-                if (response.success) {
-                    $('#availability-modal').modal('hide');
-                } else {
-                    $('#form-error').html('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
-                }
-            },
-            error: function() {
-                alert('Error');
-            }
-        });
-    return false;
     });
     function IsDateHasEvent(date) {
         var allEvents = [];
