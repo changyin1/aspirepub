@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Text;
 
 class Schedule extends Resource
 {
@@ -51,8 +52,19 @@ class Schedule extends Resource
             ID::make()->sortable()->hideFromIndex(),
             BelongsTo::make('Client')->rules('required')->display('name'),
             Number::make('Calls'),
-            DateTime::make('Start Date'),
-            DateTime::make('End Date'),
+            Number::make('Week'),
+            Text::make('Month', function () {
+                return $this->start_date->format('M Y');
+            }),
+            Text::make('Type', function () {
+                if($this->contact == 'Anyone') {
+                    return 'Standard';
+                } else {
+                    return 'Custom';
+                }
+            }),            
+            DateTime::make('Start Date')->hideFromIndex(),
+            DateTime::make('End Date')->hideFromIndex(),
             HasMany::make('Calls'),
         ];
     }
@@ -98,6 +110,8 @@ class Schedule extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+
+        ];
     }
 }
