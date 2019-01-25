@@ -88,6 +88,7 @@ $(function() {
     //calendar js
     $('#calendar').fullCalendar({
         dayRender: function(date, cell) {
+
             var data = {
                 'userID': $('#user-id').val(),
                 'date': date.format()

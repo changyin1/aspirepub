@@ -14,7 +14,9 @@ class AvailabilityController extends Controller
 	}
 
     public function index(Request $request){
-        $data= [1,2,3];
+        //$user = Auth::user();
+        $data['items']= [1,2,3];
+        $data['dates'] = Availability::where('user_id', 12345)->where('available',1)->get();        
         return view('availability.index', [
             'data' => $data
         ]);
