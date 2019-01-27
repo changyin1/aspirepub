@@ -106,6 +106,7 @@ class Client extends Resource
     {
         return [
             new Actions\CreateClientSchedule,
+            new Actions\RepeatClientCalls,
         ];
     }
 }
