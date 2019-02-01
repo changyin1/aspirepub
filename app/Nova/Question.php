@@ -5,6 +5,10 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\BelongsTo;
 
 class Question extends Resource
 {
@@ -40,7 +44,16 @@ class Question extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            ID::make()->sortable()->hideFromIndex(),
+            Select::make('Type')->options([
+                'Yes/No' => 'Yes/No',
+                'Normal' => 'Normal',
+            ])->sortable(),
+            Number::make('Weight')
+                ->sortable(),
+            Text::make('Question')
+                ->sortable(),            
+
         ];
     }
 
@@ -85,6 +98,8 @@ class Question extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new Actions\AddQuestionToTemplate,
+        ];
     }
 }

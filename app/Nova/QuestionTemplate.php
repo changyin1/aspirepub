@@ -5,6 +5,7 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Text;
 
 class QuestionTemplate extends Resource
 {
@@ -40,7 +41,12 @@ class QuestionTemplate extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            ID::make()->sortable()->hideFromIndex(),
+            Text::make('Template Name')
+                ->sortable(),
+            Text::make('Questions', function () {
+                return $this->templateQuestionCount();
+            }),
         ];
     }
 
@@ -85,6 +91,8 @@ class QuestionTemplate extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new Actions\ViewQuestions,
+        ];
     }
 }
