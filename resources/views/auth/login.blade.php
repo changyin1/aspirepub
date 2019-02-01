@@ -25,7 +25,7 @@
             </div>
             <div class="form-body">
                 <div class="form-group">
-                    <input name="username" id="username" class="form-control" type="text">
+                    <input name="email" id="email" class="form-control" type="text">
                     <label class="control-label" for="username">Username</label>
                 </div>
                 <div class="form-group">
