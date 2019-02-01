@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/agenda';
+    protected $redirectTo = '/schedule';
 
     /**
      * Create a new controller instance.
@@ -38,19 +38,20 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /*
     public function authenticated(Request $request, $user)
     {
         if($request->get('continue')){
             return redirect($request->get('continue'));
         }
 
-        if($user->type === User::TYPE_MEMBER){
+        if($user->type === \User::TYPE_MEMBER){
             return redirect('https://iwantfanclub.com');
         }
 
         return false;
     }
-
+*/
     public function showLoginForm(Request $request)
     {
         return view('auth.login', [

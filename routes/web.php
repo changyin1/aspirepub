@@ -18,7 +18,7 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/agenda', 'AgendaController@index')->name('agenda');
+Route::get('/schedule', 'AgendaController@index')->name('schedule');
 Route::get('/availability', 'AvailabilityController@index')->name('availability');
 Route::get('/settings', 'SettingsController@index')->name('settings');
 Route::get('/toggle-availability/{date}/{available}', 'AvailabilityController@toggleAvailability')->name('toggle-availability');
