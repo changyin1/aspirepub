@@ -47993,7 +47993,7 @@ $(function () {
         placeholder: placeholder,
         ajax: {
           type: 'post',
-          url: 'api/cities',
+          url: $('#city-url').val(),
           data: function data() {
             return {
               state: $('select.state').val()
@@ -48016,32 +48016,7 @@ $(function () {
   }); //calendar js
 
   $('#calendar').fullCalendar({
-<<<<<<< HEAD
-    events: [{
-      title: 'Available',
-      start: '2019-01-01'
-    }, {
-      title: 'Available',
-      start: '2019-01-05'
-    }, {
-      title: 'Available',
-      start: '2019-01-26'
-    }],
-    dayClick: function dayClick(date) {
-      if (date.format() < moment().format()) {
-        return false;
-      }
-
-      ;
-
-      if (IsDateHasEvent(date)) {
-        console.log('has event');
-        return false;
-      }
-
-=======
     dayRender: function dayRender(date, cell) {
->>>>>>> 069b5aa8d8c67ffe9f08d122494017f9851c5d0c
       var data = {
         'userID': $('#user-id').val(),
         'date': date.format()
@@ -48057,24 +48032,9 @@ $(function () {
         success: function success(response) {
           cell.children('div').remove();
 
-<<<<<<< HEAD
-            if (response.available == 1) {
-              $day.html('Available');
-              events.push({
-                title: 'Available',
-                'start': response.date
-              });
-            } else {
-              $day.html('');
-            }
-          } else {
-            $day.children('div').remove();
-            $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
-=======
           if (response.available) {
             console.log(cell);
             cell.addClass('available');
->>>>>>> 069b5aa8d8c67ffe9f08d122494017f9851c5d0c
           }
         },
         error: function error() {
@@ -48295,8 +48255,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/changparagon/aspire/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/changparagon/aspire/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/vagrant/code/aspire/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/vagrant/code/aspire/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
