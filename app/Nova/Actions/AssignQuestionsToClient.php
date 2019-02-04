@@ -30,14 +30,14 @@ class AssignQuestionsToClient extends Action
         foreach ($models as $model) {                                    
             $cq = new ClientQuestion;
             $cq->question_id = $model->id;
-            $cq->client_id = $fields['Client'];
+            $cq->client_id = $fields['client'];
             $cq->question = $model->question;
             $cq->type = $model->type;
             $cq->weight = $model->weight;           
               
 
             //Check if already exists
-            $existing = ClientQuestion::where('client_id', $fields['Client'])->where('question_id', $question->id)->first();
+            $existing = ClientQuestion::where('client_id', $fields['client'])->where('question_id', $model->id)->first();
             if($existing) {
                 $existing->active = 1;
                 $existing->save();
