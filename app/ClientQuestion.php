@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClientQuestion extends Model
 {
-    //
+    public function client()
+    {
+        return $this->belongsTo('App\Client');
+    }
 }

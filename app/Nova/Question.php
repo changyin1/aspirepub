@@ -100,6 +100,7 @@ class Question extends Resource
     {
         return [
             new Actions\AddQuestionToTemplate,
+            new Actions\AssignQuestionsToClient,
         ];
     }
 }

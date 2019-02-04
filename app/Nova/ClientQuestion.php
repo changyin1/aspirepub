@@ -3,6 +3,8 @@
 namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\BelongsTo;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -39,8 +41,9 @@ class ClientQuestion extends Resource
      */
     public function fields(Request $request)
     {
-        return [
-            ID::make()->sortable(),
+        return [            
+            BelongsTo::make('Client')->sortable()->searchable()->rules('required')->display('name'),
+            Text::make('Question'),
         ];
     }
 
