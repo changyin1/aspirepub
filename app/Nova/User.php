@@ -58,6 +58,10 @@ class User extends Resource
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
+            Text::make('Phone')
+                ->sortable()
+                ->rules('required', 'max:255'),
+
             Password::make('Password')
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:6')
@@ -73,8 +77,7 @@ class User extends Resource
             Checkboxes::make('Languages')->options([
                 'arabic' => 'Arabic',
                 'french' => 'French',
-                'italian' => 'Italian',
-                'korean' => 'Korean',
+                'italian' => 'Italian',                
                 'mandarin' => 'Mandarin',
                 'portuguese' => 'Portuguese',
                 'russian' => 'Russian',
