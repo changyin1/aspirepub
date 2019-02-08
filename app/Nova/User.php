@@ -73,8 +73,7 @@ class User extends Resource
             Checkboxes::make('Languages')->options([
                 'arabic' => 'Arabic',
                 'french' => 'French',
-                'italian' => 'Italian',
-                'korean' => 'Korean',
+                'italian' => 'Italian',                
                 'mandarin' => 'Mandarin',
                 'portuguese' => 'Portuguese',
                 'russian' => 'Russian',

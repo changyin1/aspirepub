@@ -4,6 +4,8 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\BelongsTo;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -44,6 +46,13 @@ class ClientQuestion extends Resource
         return [            
             BelongsTo::make('Client')->sortable()->searchable()->rules('required')->display('name'),
             Text::make('Question'),
+            Select::make('Type')->options([
+                'Yes/No' => 'Yes/No',
+                'Normal' => 'Normal',
+                'Bonus' => 'Bonus',
+            ])->sortable(),
+            Number::make('Weight')
+                ->sortable(),
         ];
     }
 
