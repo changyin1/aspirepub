@@ -34,4 +34,14 @@ class Call extends Model
     {
         return $this->coach()->id;
     }
+
+    public function recording()
+    {
+        return $this->belongsTo('App\Recodings');
+    }
+
+    public function transcript()
+    {
+        return $this->belongsTo('App\Transcripts');
+    }
 }

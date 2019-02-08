@@ -58,7 +58,7 @@ class Call extends Resource
             BelongsTo::make('Schedule', 'schedule', 'App\Nova\Schedule')->nullable(),
             Select::make('Call Specialist')->options($call_specialists),
             Select::make('Coach')->options($coaches),
-            Text::make('Contact')->hideFromIndex(),
+            Text::make('Contact', 'agent_name')->hideFromIndex(),
             //Boolean::make('Scored'),
             Textarea::make('Caller Notes')->hideFromIndex(),
             Textarea::make('Coach Notes')->hideFromIndex(),
