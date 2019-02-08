@@ -48,6 +48,7 @@ class Question extends Resource
             Select::make('Type')->options([
                 'Yes/No' => 'Yes/No',
                 'Normal' => 'Normal',
+                'Bonus' => 'Bonus',
             ])->sortable(),
             Number::make('Weight')
                 ->sortable(),
@@ -100,6 +101,7 @@ class Question extends Resource
     {
         return [
             new Actions\AddQuestionToTemplate,
+            new Actions\AssignQuestionsToClient,
         ];
     }
 }
