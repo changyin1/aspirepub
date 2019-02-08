@@ -13,10 +13,10 @@
        </div>
        <hr class="gray"/>
        <div class="agenda-list">
-           @foreach($data['items'] as $agenda)
+           @foreach($data['calls'] as $agenda)
                <div class="agenda-item">
                    <div class="agenda-item-header">
-                       Four Seasons | Scottsdale
+                       {{$agenda['client']->name}} | {{$agenda['client']->city}}
                    </div>
                    <hr/>
                    <div class="agenda-item-details">
@@ -34,14 +34,14 @@
                        </div>
                    </div>
                    <div class="agenda-item-footer">
-                       @if($agenda == 1)
+                       @if($agenda['schedule']->end_date <= \Carbon\Carbon::now()->addDays(1))
                            <div class="due-date danger"><span><i class="fas fa-exclamation-circle"></i> Due Tomorrow</span>
-                       @elseif($agenda == 2)
+                       @elseif($agenda['schedule']->end_date <= \Carbon\Carbon::now()->addDays(7))
                            <div class="due-date caution"><span><i class="fas fa-exclamation-circle"></i> Due This Week</span>
                        @else
-                           <div class="due-date">Due 02/03/19
+                           <div class="due-date">Due Date: {{$agenda['schedule']->end_date}}
                        @endif
-                       <a href="#">View Details</a>
+                       <a href="/schedule/detail/{{$agenda['id']}}">View Details</a>
                        </div>
                    </div>
                </div>
