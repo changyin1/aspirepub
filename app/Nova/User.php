@@ -72,6 +72,7 @@ class User extends Resource
                 'call_specialist' => 'Call Specialist',
                 'client' => 'Client',
                 'coach' => 'Coach',
+                'property_manager' => 'Property Manager',
             ]),
 
             Checkboxes::make('Languages')->options([
