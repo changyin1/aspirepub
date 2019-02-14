@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Availability');
     }
+
+    public function hasRole($role)
+    {
+        return User::where('role', $role)->get();
+    }
 }

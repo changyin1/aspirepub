@@ -94,6 +94,7 @@ class QuestionTemplate extends Resource
         return [
             new Actions\ViewQuestions,
             new Actions\AssignTemplateQuestionsToClient,
+            new Actions\CloneQuestionTemplate,
         ];
     }
 }

@@ -47,6 +47,7 @@ class Client extends Resource
     public function fields(Request $request)
     {
         $parent_clients = \App\Client::where('id', '!=', $this->id)->pluck('name', 'id');
+        $property_manager = \App\User::whereIn('role', ['property_manager'])->pluck('name', 'id');
         return [
             ID::make()->sortable()->hideFromIndex(),
             Text::make('Name')
@@ -58,6 +59,8 @@ class Client extends Resource
             Text::make('Country')
                 ->sortable()
                 ->rules('required', 'max:255'),
+            Select::make('Property Manager')->options($property_manager)->hideFromIndex(),
+            Text::make('Reservation Cancelation Contact (comma seperated emails allow)', 'reservation_contact')->hideFromIndex(),
             //Select::make('Parent Client')->options($parent_clients)->nullable(),
             
         ];
