@@ -13,6 +13,7 @@
         "laravel/tinker": "^1.0",
         "league/flysystem-aws-s3-v3": "~1.0",
         "pragmarx/countries": "^0.5.9",
+        "quickbooks/v3-php-sdk": "^5.0",
         "silvanite/novafieldcheckboxes": "^1.1",
         "titasgailius/search-relations": "^1.0"
     },
