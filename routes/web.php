@@ -33,3 +33,7 @@ Route::get('/admin', 'AdminController@index')->name('admin');
 Route::get('/admin/upload-questions', 'AdminController@uploadQuestions')->name('uploadQuestions');
 Route::post('admin/import-parse', 'AdminController@parseImport')->name('admin/import-parse');
 Route::post('admin/import-process', 'AdminController@processImport')->name('admin/import-process');
+
+
+Route::get('/store', 'AgendaController@upload_selector')->name('get_store');
+Route::post('/store', 'AgendaController@store_file')->name('store');

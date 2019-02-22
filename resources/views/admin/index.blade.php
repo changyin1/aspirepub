@@ -9,6 +9,9 @@
        <div class="form-group">
            <a href="/admin/upload-questions">Upload Questions</a>
        </div>
+       <div class="form-group">
+           <a href="/store">Test Uploads</a>
+       </div>
        <hr class="gray"/>
        
    </div>
