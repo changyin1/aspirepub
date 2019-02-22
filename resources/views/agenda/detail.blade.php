@@ -110,13 +110,13 @@
                            <div class="form-group form-row">
                                <label class="col-md-4 control-label" for="Contact">contact</label>
                                <div class="col-md-4">
-                                   <input id="Contact" name="Contact" type="text" placeholder="Input Contact Name" class="form-control input-md">
+                                   <input id="Contact" name="Contact" type="text" placeholder="Input Contact Name" class="form-control input-md" value="{{ ucfirst(trans($data['calls']->agent_name)) }}">
                                </div>
                            </div>
                            <div class="form-group form-row">
-                               <label class="col-md-4 control-label" for="calltime">Call Time</label>
+                               <label class="col-md-4 control-label" for="calltime">Call Time (at hotel)</label>
                                <div class="col-md-4">
-                                   <input id="calltime" name="calltime" type="text" placeholder="Enter Time" class="form-control input-md">
+                                   <input id="calltime" name="calltime" type="text" placeholder="Enter Time" class="form-control input-md" value="{{$data['calls']->completed_at}}">
                                </div>
                            </div>
                            <div class="form-group form-row">
@@ -129,6 +129,12 @@
                                <label class="col-md-4 control-label" for="transcript">Call Transcript</label>
                                <div class="col-md-4">
                                    <input id="transcript" name="transcript" class="input-file" type="file">
+                               </div>
+                           </div>
+                           <div class="form-group form-row">
+                               <label class="col-md-4 control-label" for="caller_notes">Caller Notes</label>
+                               <div class="col-md-4">
+                                   <textarea id="caller_notes" name="caller_notes" class="input-file">{{$data['calls']->caller_notes}}</textarea>
                                </div>
                            </div>
                            <div class="form-group form-row">
@@ -146,6 +152,7 @@
                            </div>
 
                        </fieldset>
+                       <input type="hidden" name="call_id" value="{{$data['calls']->id}}">
                    </form>
                </div>
            </div>

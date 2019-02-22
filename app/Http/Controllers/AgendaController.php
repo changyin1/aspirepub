@@ -31,7 +31,12 @@ class AgendaController extends Controller
     public function post(Request $request) {
         $user = Auth::user();
         $data['user'] = $user;
-dd($request);
+        $call = Call::findOrFail($request->input('call_id'));
+        $call->agent_name = $request->input('Contact');
+        $call->completed_at = $request->input('calltime');
+        $call->caller_notes = $request->input('caller_notes');
+        $call->save();
+        return redirect('/schedule');
     }
 
 }
