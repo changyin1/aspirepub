@@ -27,3 +27,13 @@ Route::get('/settings', 'SettingsController@index')->name('settings');
 Route::get('/toggle-availability/{date}/{available}', 'AvailabilityController@toggleAvailability')->name('toggle-availability');
 
 Route::get('/questions/template/{id}', 'QuestionsController@view_questions');
+
+
+Route::get('/admin', 'AdminController@index')->name('admin');
+Route::get('/admin/upload-questions', 'AdminController@uploadQuestions')->name('uploadQuestions');
+Route::post('admin/import-parse', 'AdminController@parseImport')->name('admin/import-parse');
+Route::post('admin/import-process', 'AdminController@processImport')->name('admin/import-process');
+
+
+Route::get('/store', 'AgendaController@upload_selector')->name('get_store');
+Route::post('/store', 'AgendaController@store_file')->name('store');
