@@ -1,0 +1,5 @@
+type,weight,question
+Yes/No,10,a?
+Yes/No,10,b?
+Normal,10,c?
+Bonus,10,d?

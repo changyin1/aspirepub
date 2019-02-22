@@ -225,4 +225,10 @@ return [
 
     ],
 
+
+    'db_fields' => [
+        'type',
+        'weight',
+        'question'
+    ]
 ];

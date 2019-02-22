@@ -9,6 +9,9 @@ use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Silvanite\NovaFieldCheckboxes\Checkboxes;
 use Laravel\Nova\Fields\Select;
+use Nova\Multiselect\Multiselect;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Log;
 
 class User extends Resource
 {
@@ -43,6 +46,25 @@ class User extends Resource
      */
     public function fields(Request $request)
     {
+        $clients_mappings = \App\Client::where('id', '!=', $this->id)->pluck('name', 'id');
+        $current_url = URL::current();
+        Log::alert($current_url);
+        $segments = explode('/', $current_url);        
+        $action = $segments[count($segments)-1];
+        Log::alert($action);
+        if($action == 'edit' || is_numeric($action)) {
+            if(is_numeric($action)) {
+                $current_id = $segments[count($segments)-1];
+            } else {
+                $current_id = $segments[count($segments)-2];    
+            }
+            
+            Log::alert($current_id);
+            $current_user = \App\User::find($current_id);
+            $selectedOptions = json_decode($current_user->client_ids);
+        } else {
+            $selectedOptions = array();
+        }
         return [
             ID::make()->sortable()->hideFromIndex(),
 
@@ -67,12 +89,11 @@ class User extends Resource
                 ->creationRules('required', 'string', 'min:6')
                 ->updateRules('nullable', 'string', 'min:6'),
 
-            Select::make('role')->options([
+            Select::make('Role')->options([
                 'admin' => 'Admin',
                 'call_specialist' => 'Call Specialist',
                 'client' => 'Client',
-                'coach' => 'Coach',
-                'property_manager' => 'Property Manager',
+                'coach' => 'Coach',                
             ]),
 
             Checkboxes::make('Languages')->options([
@@ -83,7 +104,10 @@ class User extends Resource
                 'portuguese' => 'Portuguese',
                 'russian' => 'Russian',
                 'spanish' => 'Spanish',
-            ]),
+            ])->hideFromIndex(),
+
+            Multiselect::make('Properties', 'client_ids')->options($clients_mappings,$selectedOptions),
+            
         ];
     }
 
