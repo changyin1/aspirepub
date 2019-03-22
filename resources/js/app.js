@@ -171,4 +171,9 @@ $(function() {
         });
         return event.length > 0;
     }
+
+    //Question list
+    $('.question-item').click(function () {
+        $(this).toggleClass('active');
+    })
 });
