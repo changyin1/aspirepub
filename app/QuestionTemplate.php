@@ -1,4 +1,4 @@
-Can<?php
+<?php
 
 namespace App;
 
