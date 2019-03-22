@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
+use Orlyapps\NovaBelongsToDepend\NovaBelongsToDepend;
 
 class Call extends Resource
 {
@@ -54,8 +55,15 @@ class Call extends Resource
 
         return [
             ID::make()->sortable()->hideFromIndex(),            
-            BelongsTo::make('Client')->rules('required')->display('name'),
-            BelongsTo::make('Schedule', 'schedule', 'App\Nova\Schedule')->nullable(),
+            //BelongsTo::make('Client')->rules('required')->display('name'),
+            NovaBelongsToDepend::make('Client')
+                ->options(\App\Client::all()),
+            NovaBelongsToDepend::make('Schedule')
+                ->optionsResolve(function ($client) {
+                    // Reduce the amount of unnecessary data sent
+                    return $client->schedules()->get(['id']);
+                })
+                ->dependsOn('Client'),
             Select::make('Call Specialist')->options($call_specialists),
             Select::make('Coach')->options($coaches),
             Text::make('Contact', 'agent_name')->hideFromIndex(),
@@ -66,8 +74,8 @@ class Call extends Resource
             Text::make('Reservation Confirmation'),
             Text::make('Reservation First Name')->hideFromIndex(),
             Text::make('Reservation Last Name')->hideFromIndex(),
-            Date::make('Arrival Date')->nullable()->hideFromIndex(),
-            Date::make('Departure Date')->nullable()->hideFromIndex(),
+            date::make('Arrival Date', 'arrival_date')->nullable()->hideFromIndex(),
+            date::make('Departure Date', 'departure_date')->nullable()->hideFromIndex(),
             Text::make('Cancelation Confirmation'),
             File::make('Call Recording - Not active yet', 'call_recording_id')->disk('public')->hideFromIndex()
         ];

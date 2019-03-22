@@ -54,7 +54,9 @@ class Schedule extends Resource
             Number::make('Calls'),
             Number::make('Week'),
             Text::make('Month', function () {
-                return $this->start_date->format('M Y');
+                if(isset($this->start_date)) {
+                    return $this->start_date->format('M Y');
+                }
             }),
             Text::make('Type', function () {
                 if($this->contact == 'Anyone') {
