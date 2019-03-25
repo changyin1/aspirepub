@@ -49,7 +49,7 @@
                            </div>
                    </div>
                </div>
-               <div class="col-4 border mt-5">
+               <div class="col-4 border mt-5 pt-4 pl-4">
                    <!--
                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
                        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
@@ -58,6 +58,8 @@
                        </button>
                    </div>
                    -->
+                   <h5 class="form-heading">Call details for {{$data['calls']['client']->name}}</h5>
+                   <hr class="mb-4">
                    <div class="form-group form-row">
                        <label class="col-md-4 control-label" for="Contact">Client</label>
                        <div class="col-md-4">
