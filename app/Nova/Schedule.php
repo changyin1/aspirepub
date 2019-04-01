@@ -8,8 +8,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
+use Orlyapps\NovaBelongsToDepend\NovaBelongsToDepend;
 
 class Schedule extends Resource
 {
@@ -29,7 +31,7 @@ class Schedule extends Resource
 
     public function title() {
         return $this->client->name . ' - ' .  $this->end_date->format('m/d/Y');
-    }    
+    }
 
     /**
      * The columns that should be searched.
@@ -48,23 +50,26 @@ class Schedule extends Resource
      */
     public function fields(Request $request)
     {
+        $call_specialists = \App\User::whereIn('role', ['coach','call_specialist'])->pluck('name', 'id');
+        $coaches = \App\User::where('role', 'coach')->pluck('name', 'id');
         return [
             ID::make()->sortable()->hideFromIndex(),
-            BelongsTo::make('Client')->rules('required')->display('name'),
+            NovaBelongsToDepend::make('Client')
+                ->options(\App\Client::all()),
+            NovaBelongsToDepend::make('QuestionTemplate')
+                ->optionsResolve(function ($client) {
+                    // Reduce the amount of unnecessary data sent
+                    return $client->templates()->get(['id']);
+                })->display('template_name')
+                ->dependsOn('Client'),
             Number::make('Calls'),
-            Number::make('Week'),
+            Select::make('Call Specialist')->options($call_specialists)->displayUsingLabels(),
+            Select::make('Coach')->options($coaches)->displayUsingLabels(),
             Text::make('Month', function () {
                 if(isset($this->start_date)) {
                     return $this->start_date->format('M Y');
                 }
             }),
-            Text::make('Type', function () {
-                if($this->contact == 'Anyone') {
-                    return 'Standard';
-                } else {
-                    return 'Custom';
-                }
-            }),            
             DateTime::make('Start Date')->hideFromIndex(),
             DateTime::make('End Date')->hideFromIndex(),
             HasMany::make('Calls'),

@@ -6,6 +6,7 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
+use Orlyapps\NovaBelongsToDepend\NovaBelongsToDepend;
 
 class QuestionTemplate extends Resource
 {
@@ -21,7 +22,7 @@ class QuestionTemplate extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'template_name';
 
     /**
      * The columns that should be searched.
@@ -44,6 +45,8 @@ class QuestionTemplate extends Resource
             ID::make()->sortable()->hideFromIndex(),
             Text::make('Template Name')
                 ->sortable(),
+            NovaBelongsToDepend::make('Client')
+                ->options(\App\Client::all()),
             Text::make('Questions', function () {
                 return $this->templateQuestionCount();
             }),

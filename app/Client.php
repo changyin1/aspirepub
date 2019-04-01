@@ -29,4 +29,9 @@ class Client extends Model
     {
         return $this->hasMany('App\ClientQuestion');
     }
+
+    public function templates()
+    {
+        return $this->hasMany('App\QuestionTemplate');
+    }
 }
