@@ -59,7 +59,7 @@ class Schedule extends Resource
             NovaBelongsToDepend::make('QuestionTemplate')
                 ->optionsResolve(function ($client) {
                     // Reduce the amount of unnecessary data sent
-                    return $client->templates()->get(['id']);
+                    return $client->templates()->get([ 'template_name','id']);
                 })->display('template_name')
                 ->dependsOn('Client'),
             Number::make('Calls'),
