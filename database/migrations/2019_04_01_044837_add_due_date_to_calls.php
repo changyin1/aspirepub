@@ -14,7 +14,7 @@ class AddDueDateToCalls extends Migration
     public function up()
     {
         Schema::table('calls', function (Blueprint $table) {
-            $table->date('due_date');
+            $table->date('due_date')->nullable();
         });
     }
 
