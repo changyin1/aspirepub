@@ -39,7 +39,7 @@
                        @elseif($agenda['schedule']->end_date <= \Carbon\Carbon::now()->addDays(7))
                            <div class="due-date caution"><span><i class="fas fa-exclamation-circle"></i> Due This Week</span>
                        @else
-                           <div class="due-date">Due Date: {{$agenda['schedule']->end_date}}
+                           <div class="due-date">Due Date: {{$agenda->due_date}}
                        @endif
                        <a href="/schedule/detail/{{$agenda['id']}}">View Details</a>
                        </div>

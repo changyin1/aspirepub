@@ -14,7 +14,7 @@ class AgendaController extends Controller
     public function index(Request $request){
     	$user = Auth::user();
         $data['user'] = $user;
-        $data['calls'] = Call::with('client', 'schedule')->where('call_specialist', $user->id)->orWhere('coach', $user->id)->get();
+        $data['calls'] = Call::with('client', 'schedule')->where('call_specialist', $user->id)->orWhere('coach', $user->id)->orderBy('due_date', 'asc')->get();
         //$data['items'] = [1,2,3];
         return view('agenda.index', [
             'data' => $data
@@ -25,7 +25,7 @@ class AgendaController extends Controller
         $user = Auth::user();
         $data['user'] = $user;
         $data['calls'] = Call::with('client', 'schedule')->find($id);
-        //dd($data);
+       //dd($data);
         return view('agenda.detail', [
             'data' => $data
         ]);

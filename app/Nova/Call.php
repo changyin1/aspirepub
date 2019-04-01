@@ -51,11 +51,9 @@ class Call extends Resource
     {
         $call_specialists = \App\User::whereIn('role', ['coach','call_specialist'])->pluck('name', 'id');
         $coaches = \App\User::where('role', 'coach')->pluck('name', 'id');
-        //$schedules = \App\Schedule::where('client_id', 'coach')->pluck('name', 'id');
 
         return [
-            ID::make()->sortable()->hideFromIndex(),            
-            //BelongsTo::make('Client')->rules('required')->display('name'),
+            ID::make()->sortable(),
             NovaBelongsToDepend::make('Client')
                 ->options(\App\Client::all()),
             NovaBelongsToDepend::make('Schedule')
@@ -64,8 +62,8 @@ class Call extends Resource
                     return $client->schedules()->get(['id']);
                 })
                 ->dependsOn('Client'),
-            Select::make('Call Specialist')->options($call_specialists),
-            Select::make('Coach')->options($coaches),
+            Select::make('Call Specialist')->options($call_specialists)->displayUsingLabels(),
+            Select::make('Coach')->options($coaches)->displayUsingLabels(),
             Text::make('Contact', 'agent_name')->hideFromIndex(),
             //Boolean::make('Scored'),
             Textarea::make('Caller Notes')->hideFromIndex(),
