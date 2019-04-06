@@ -22,11 +22,11 @@ Route::get('/schedule', 'AgendaController@index')->name('schedule');
 Route::get('/schedule/detail/{id}', 'AgendaController@detail');
 Route::post('/schedule/post', 'AgendaController@post');
 Route::get('/availability', 'AvailabilityController@index')->name('availability');
-Route::get('/schedule/detail/{id}', 'AgendaController@detail');
 Route::get('/settings', 'SettingsController@index')->name('settings');
 Route::get('/toggle-availability/{date}/{available}', 'AvailabilityController@toggleAvailability')->name('toggle-availability');
 
 Route::get('/questions/template/{id}', 'QuestionsController@view_questions');
+Route::get('/questions/score/template/{id}', 'QuestionsController@score_questions');
 
 
 Route::get('/admin', 'AdminController@index')->name('admin');

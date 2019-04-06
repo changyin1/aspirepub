@@ -15,12 +15,20 @@ class QuestionTemplate extends Model
 
     public function questions()
     {
-        return $this->hasMany('App\TemplateQuestion', 'template_id');    
+        return $this->hasMany('App\TemplateQuestion', 'template_id');
     }
 
     public function allQuestions()
-    {     
+    {
         return Question::join('template_questions', 'questions.id', '=', 'template_questions.question_id')->where('template_questions.template_id', $this->id)->get();
+    }
+    public function client()
+    {
+        return $this->belongsTo('App\Client');
+    }
+    public function schedule()
+    {
+        return $this->belongsTo('App\Schedule', 'questions_template_id');
     }
 
 }

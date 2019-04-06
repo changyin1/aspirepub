@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Nova\Schedule;
+use App\Observers\ScheduleObserver;
 use Illuminate\Support\ServiceProvider;
 use App\ClientQuestion;
 
@@ -15,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         ClientQuestion::observe(ClientQuestionObserver::class);
+        \App\Schedule::observe(ScheduleObserver::class);
     }
 
     /**

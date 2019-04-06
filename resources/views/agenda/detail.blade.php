@@ -41,7 +41,7 @@
                                            @elseif($data['calls']['schedule']->end_date <= \Carbon\Carbon::now()->addDays(7))
                                                <div class="due-date caution"><span><i class="fas fa-exclamation-circle"></i> Due This Week</span>
                                                    @else
-                                                       <div class="due-date">Due Date: {{$data['calls']['schedule']->end_date}}
+                                                       <div class="due-date">Due Date: {{$data['calls']->due_date}}
                                                            @endif
                                                            <a href="/schedule">Hide Details</a>
                                    </div>
@@ -49,7 +49,7 @@
                            </div>
                    </div>
                </div>
-               <div class="col-4 border mt-5">
+               <div class="col-4 border mt-5 pt-4 pl-4">
                    <!--
                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
                        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
@@ -58,6 +58,8 @@
                        </button>
                    </div>
                    -->
+                   <h5 class="form-heading">Call details for {{$data['calls']['client']->name}}</h5>
+                   <hr class="mb-4">
                    <div class="form-group form-row">
                        <label class="col-md-4 control-label" for="Contact">Client</label>
                        <div class="col-md-4">
@@ -110,7 +112,7 @@
                            <div class="form-group form-row">
                                <label class="col-md-4 control-label" for="Contact">contact</label>
                                <div class="col-md-4">
-                                   <input id="Contact" name="Contact" type="text" placeholder="Input Contact Name" class="form-control input-md" value="{{ ucfirst(trans($data['calls']->agent_name)) }}">
+                                   <input id="Contact" name="Contact" type="text" placeholder="Input Contact Name" class="form-control input-md" value="@if (!empty($data['calls']->agent_name)) {{ ucfirst(trans($data['calls']->agent_name)) }} @endif">
                                </div>
                            </div>
                            <div class="form-group form-row">
@@ -148,6 +150,7 @@
                            <div class="form-group form-row">
                                <div class="col-md-4">
                                    <input class="btn btn-primary" type="submit" value="POST CALL">
+                                   <a  class="btn btn-primary" href="/questions/template/{{$data['calls']['Schedule']->questionstemplates_id}}">VIEW QUESTIONS</a>
                                </div>
                            </div>
 

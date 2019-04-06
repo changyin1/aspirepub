@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Schedule extends Model
 {
     protected $fillable = [
-        'start_date', 'end_date', 'calls', 'client_id', 'recpients'
+        'start_date', 'end_date', 'calls', 'client_id', 'recpients', 'questionstemplates_id'
     ];
 
     protected $dates = [
@@ -22,5 +22,10 @@ class Schedule extends Model
     public function client()
     {
         return $this->belongsTo('App\Client');
+    }
+
+    public function questiontemplate()
+    {
+        return $this->belongsTo('App\QuestionTemplate', 'questionstemplates_id');
     }
 }
