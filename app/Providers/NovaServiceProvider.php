@@ -67,7 +67,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            new \vmitchell85\NovaLinks\Links(),
+//            new \vmitchell85\NovaLinks\Links(),
         ];
     }
 
