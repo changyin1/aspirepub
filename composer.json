@@ -23,7 +23,7 @@
         "quickbooks/v3-php-sdk": "^5.0",
         "silvanite/novafieldcheckboxes": "^1.1",
         "titasgailius/search-relations": "^1.0",
-        "vmitchell85/nova-links": "^0.0.1"
+        "vmitchell85/nova-links": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
