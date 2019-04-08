@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class TemplateQuestion extends Model
 {
 
-    public function schedule()
+
+    public function question()
     {
-        return $this->belongsTo('App\Schedule');
+        return $this->belongsTo('App\Question');
     }
 
 }

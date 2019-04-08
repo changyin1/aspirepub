@@ -50,6 +50,7 @@ class QuestionTemplate extends Resource
             Text::make('Questions', function () {
                 return $this->templateQuestionCount();
             }),
+            HasMany::make('template_question'),
         ];
     }
 

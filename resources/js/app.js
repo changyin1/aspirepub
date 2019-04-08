@@ -88,31 +88,33 @@ $(function() {
     //calendar js
     $('#calendar').fullCalendar({
         dayRender: function(date, cell) {
-
+            cell.attr('data-week', getWeek(date.date()));
             var data = {
                 'userID': $('#user-id').val(),
-                'date': date.format()
+                'date': date.format(),
+                'week': getWeek(date.date())
             };
-            $.ajax({
-                type: "GET",
-                url: $('#availability-url').val(),
-                data: data,
-                beforeSend: function () {
-                    cell.children('div').remove();
-                    cell.append('<div class="loader">Loading...</div>');
-                },
-                success: function(response) {
-                    cell.children('div').remove();
-                    if (response.available) {
-                        console.log(cell);
-                        cell.addClass('available');
+            if (date.date() % 7 == 1) {
+                $.ajax({
+                    type: "GET",
+                    url: $('#availability-url').val(),
+                    data: data,
+                    beforeSend: function () {
+                        cell.children('div').remove();
+                        cell.append('<div class="loader">Loading...</div>');
+                    },
+                    success: function(response) {
+                        cell.children('div').remove();
+                        if (response.available) {
+                            $('.fc-day[data-week="' + response.week + '"]').addClass('available');
+                        }
+                    },
+                    error: function() {
+                        cell.children('div').remove();
+                        cell.append('<div class="alert alert-danger">Error Retrieving Day Info Please Try Again Later</div>');
                     }
-                },
-                error: function() {
-                    cell.children('div').remove();
-                    cell.append('<div class="alert alert-danger">Error Retrieving Day Info Please Try Again Later</div>');
-                }
-            });
+                });
+            }
         },
         dayClick: function(date) {
             if (date.format() < moment().format()) {
@@ -141,8 +143,11 @@ $(function() {
                     if (response.success) {
                         if(response.available == 1) {
                             $day.addClass('available');
+                            console.log($('.fc-day[data-week="' + response.week + '"]'));
+                            $('.fc-day[data-week="' + response.week + '"]').addClass('available');
                         } else {
                             $day.removeClass('available');
+                            $('.fc-day[data-week="' + response.week + '"]').removeClass('available');
                         }                        
                     } else {
                         $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
@@ -172,8 +177,54 @@ $(function() {
         return event.length > 0;
     }
 
+    function getWeek(date) {
+        return Math.ceil(date/7);
+    }
+
     //Question list
     $('.question-item').click(function () {
         $(this).toggleClass('active');
     })
+
+    //Table row linking
+    $('.link-row').click(function () {
+        window.location = $(this).data("href");
+    })
+
+    // sortable
+    $("#sortable tbody").sortable({
+        update: function(event, ui) {
+            var data = {};
+            $('#sortable tbody tr').each(function () {
+                data[$(this).data('id')] = $(this).index()
+            });
+            $.ajax({
+                type: "POST",
+                url: $('#sortable').data('sort-url'),
+                data: data,
+                beforeSend: function () {
+                    $('.question-list').children('div').remove();
+                    $('.question-list').addClass('loading');
+                    $('.question-list').append('<div class="loader">Loading...</div>');
+                },
+                success: function(response) {
+                    $('.question-list').removeClass('loading');
+                    $('.question-list').children('div').remove();
+                    $.each(response.templateQuestions, function(i, question) {
+                        console.log(question);
+                        console.log(question.id);
+                        console.log(question.order);
+                        $('tr[data-id="' + question.id + '"]').find('.order').html(question.order);
+                    })
+                },
+                error: function() {
+                    $('.question-list').removeClass('loading');
+                    $('.question-list').children('div').remove();
+                    $('.question-list').append('<div class="error"></div>');
+                    $('.error').html('Error Saving Question Order');
+                }
+            });
+        }
+    });
+    $("#sortable tbody").disableSelection();
 });

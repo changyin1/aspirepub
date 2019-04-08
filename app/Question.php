@@ -8,6 +8,6 @@ class Question extends Model
 {
 	public function template()
     {
-        return $this->belongsTo('App\QuestionTemplate');
+        return $this->belongsTo('App\QuestionTemplate')->orderBy('order');
     }
 }

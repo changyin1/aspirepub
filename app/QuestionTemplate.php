@@ -8,14 +8,14 @@ class QuestionTemplate extends Model
 {
     protected $table = 'questions_templates';
 
-    public function templateQuestionCount()
+    public function questionCount()
     {
         return TemplateQuestion::where('template_id', $this->id)->count();
     }
 
     public function questions()
     {
-        return $this->hasMany('App\TemplateQuestion', 'template_id');
+        return $this->hasMany('App\TemplateQuestion', 'template_id')->orderBy('order');
     }
 
     public function allQuestions()

@@ -1,0 +1,32 @@
+.admin-page {
+  h2 {
+    &:first-of-type {
+      border-bottom: 1px solid grey;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+table {
+  tr {
+    border-bottom: 1px solid lightgrey;
+  }
+  th, td {
+    padding: 0.5rem 0;
+  }
+}
+
+.question-list {
+  position: relative;
+  &.loading {
+    background: rgba(0,0,0,0.3);
+  }
+  .loader {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+}

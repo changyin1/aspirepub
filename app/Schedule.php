@@ -28,4 +28,11 @@ class Schedule extends Model
     {
         return $this->belongsTo('App\QuestionTemplate', 'questionstemplates_id');
     }
+
+    public function client_name() {
+        if ($this->client) {
+            return $this->client->name;
+        }
+        return '-';
+    }
 }

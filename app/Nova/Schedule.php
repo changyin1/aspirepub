@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AutoAssignCalls;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -118,7 +119,7 @@ class Schedule extends Resource
     public function actions(Request $request)
     {
         return [
-
+            new AutoAssignCalls,
         ];
     }
 }

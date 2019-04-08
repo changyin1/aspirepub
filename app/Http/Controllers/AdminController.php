@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\CsvImportRequest;
@@ -14,6 +15,13 @@ class AdminController extends Controller
     public function index() {
     	$data['user'] = Auth::user();
     	return view('admin.index', [
+            'data' => $data
+        ]);
+    }
+
+    public function users() {
+        $data['users'] = User::all();
+        return view('admin.users', [
             'data' => $data
         ]);
     }

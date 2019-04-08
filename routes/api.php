@@ -21,4 +21,6 @@ Route::middleware(['api'])->group(function(){
     Route::post('cities', 'Api\UtilitiesController@getCities');
     Route::post('availability', 'Api\AvailabilityController@submit');
     Route::get('availability', 'Api\AvailabilityController@get');
+
+    Route::post('/admin/question_templates/order', 'Admin\QuestionTemplateController@updateOrder')->name('admin/question_templates/order');
 });

@@ -14,7 +14,6 @@ class AvailabilityController extends Controller
 	}
 
     public function index(Request $request){
-        //$user = Auth::user();
         $user = Auth::user();
         $data['user'] = $user;
         $data['items']= [1,2,3];
@@ -36,4 +35,5 @@ class AvailabilityController extends Controller
 		$availability->available = $available;
 		$availability->save();
     }
+
 }

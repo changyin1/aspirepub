@@ -19,6 +19,9 @@
 @import 'settings';
 @import 'questions';
 
+// Admin Styles
+@import 'admin';
+
 body {
   background-color: white;
 }
@@ -45,4 +48,12 @@ img {
 
 .black-text {
   color: black;
+}
+
+table {
+  width: 100%;
+}
+
+.ui-sortable-helper {
+  display: table;
 }
