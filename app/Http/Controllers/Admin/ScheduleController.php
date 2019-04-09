@@ -55,6 +55,13 @@ class ScheduleController extends Controller
         $startDate = Carbon::createFromFormat('d/m/Y', '01/'. $request->month .'/' . $request->year);
         $endDate = Carbon::createFromFormat('d/m/Y', '28/'. $request->month .'/' . $request->year);
 
+        if ($startDate->isPast()) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'date' => ['Cannot make a schedule in the past'],
+            ]);
+            throw $error;
+        }
+
         $schedule = new Schedule;
         $schedule->start_date = $startDate;
         $schedule->end_date = $endDate;
@@ -88,6 +95,13 @@ class ScheduleController extends Controller
 
         $startDate = Carbon::createFromFormat('d/m/Y', '01/'. $request->month .'/' . $request->year);
         $endDate = Carbon::createFromFormat('d/m/Y', '28/'. $request->month .'/' . $request->year);
+
+        if ($startDate->isPast()) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'date' => ['Cannot make a schedule in the past'],
+            ]);
+            throw $error;
+        }
 
         $schedule->start_date = $startDate;
         $schedule->end_date = $endDate;
