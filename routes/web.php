@@ -41,7 +41,10 @@ Route::middleware(['auth', 'admin'])->group(function() {
 
     Route::get('/admin/users', 'AdminController@users')->name('admin/users');
     Route::get('/admin/clients', 'Admin\ClientController@index')->name('admin/clients');
+
     Route::get('/admin/schedules', 'Admin\ScheduleController@index')->name('admin/schedules');
+    Route::get('/admin/schedules/{id}', 'Admin\ScheduleController@edit')->name('admin/schedules/edit');
+
     Route::get('/admin/questions', 'Admin\QuestionController@index')->name('admin/questions');
 
     Route::get('/admin/question_templates', 'Admin\QuestionTemplateController@index')->name('admin/question_templates');

@@ -24,4 +24,5 @@ Route::middleware(['api'])->group(function(){
 
     Route::post('/admin/question_templates/order', 'Admin\QuestionTemplateController@updateOrder')->name('admin/question_templates/order');
     Route::post('/admin/schedule/create', 'Admin\ScheduleController@create')->name('createSchedule');
+    Route::post('/admin/schedule/modify', 'Admin\ScheduleController@modify')->name('modifySchedule');
 });

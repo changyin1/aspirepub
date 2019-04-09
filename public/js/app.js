@@ -48168,20 +48168,61 @@ $(function () {
     var self = $(this);
     var url = $(this).attr('action');
     var data = $(this).serialize();
+    self.find('.errors').html('');
     self.find('.btn-submit').attr('disabled', true).html('Submitting');
     $.ajax({
       type: "POST",
       url: url,
       data: data,
       success: function success(response) {
-        self.find('.btn-submit').attr('disabled', false).html('Success');
+        if (response.success) {
+          self.closest('.modal').modal('hide');
+          self.find('.btn-submit').attr('disabled', false);
+          $('#successModal').modal('show');
+        } else {
+          self.find('.btn-submit').attr('disabled', false).html('Submit');
+          self.find('.errors').append('<div class="alert alert-danger">Error submitting. Please try again later.</div>');
+        }
       },
       error: function error(response) {
-        console.log(response);
-        $.each(response.errors, function (e) {
-          console.log(e);
+        $.each(response.responseJSON.errors, function (e, error) {
+          self.find('.errors').append('<div class="alert alert-danger">' + error[0] + '</div>');
         });
         self.find('.btn-submit').attr('disabled', false).html('Submit');
+      }
+    });
+  }); //refresh on success modal
+
+  $('#successModal .btn-primary').click(function (e) {
+    location.reload();
+  }); //handle ajax forms
+
+  $('form.ajax').submit(function (e) {
+    e.preventDefault();
+    var self = $(this);
+    var url = $(this).attr('action');
+    var data = $(this).serialize();
+    self.find('.errors').html('');
+    self.find('.btn').attr('disabled', true);
+    self.find('.btn-submit').val('Submitting');
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: data,
+      success: function success(response) {
+        if (response.success) {
+          self.find('.btn-submit').attr('disabled', false);
+          $('#successModal').modal('show');
+        } else {
+          self.find('.btn-submit').attr('disabled', false).val('Submit');
+          self.find('.errors').append('<div class="alert alert-danger">Error submitting. Please try again later.</div>');
+        }
+      },
+      error: function error(response) {
+        $.each(response.responseJSON.errors, function (e, error) {
+          self.find('.errors').append('<div class="alert alert-danger">' + error[0] + '</div>');
+        });
+        self.find('.btn-submit').attr('disabled', false).val('Submit');
       }
     });
   });

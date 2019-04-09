@@ -12,6 +12,7 @@
             <form id="create-schedule-form" class="modal-form" action="{{route('createSchedule')}}" method="post">
                 @csrf
                 <div class="modal-body">
+                    <div class="errors"></div>
                     <div class="form-body">
                         <div class="form-group">
                             <select class="client" name="client" data-placeholder="Client" style="width: 100%">
@@ -23,10 +24,19 @@
                             <label class="control-label select-label" for="client">Client</label>
                         </div>
                         <div class="form-group">
+                            <select class="template" name="template" data-placeholder="Template" style="width: 100%">
+                                <option></option>
+                                @foreach($data['templates'] as $template)
+                                    <option value="{{$template->id}}">{{$template->template_name}}</option>
+                                @endforeach
+                            </select>
+                            <label class="control-label select-label" for="month">Question Template</label>
+                        </div>
+                        <div class="form-group">
                             <select class="month" name="month" data-placeholder="Month" style="width: 100%">
                                 <option></option>
                                 @foreach(range(1,12) as $month)
-                                    <option value="{{$month}}">{{$month}}</option>
+                                    <option value="{{$month}}">{{DateTime::createFromFormat('!m', $month)->format('F')}}</option>
                                 @endforeach
                             </select>
                             <label class="control-label select-label" for="month">Month</label>
