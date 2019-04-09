@@ -3,6 +3,12 @@
 @section('content')
     <div class="admin-page mt-4">
         <h2>Schedules</h2>
+        <div>
+            <h5 class="float-left">Here are your schedules</h5>
+            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#newScheduleModal">
+                Create New
+            </button>
+        </div>
         <div class="schedule-list">
             <table>
                 @if(!$data['schedules'])
@@ -30,4 +36,5 @@
             </table>
         </div>
     </div>
+    @include('admin/modals/new_schedule_modal')
 @endsection

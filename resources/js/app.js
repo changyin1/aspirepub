@@ -227,4 +227,28 @@ $(function() {
         }
     });
     $("#sortable tbody").disableSelection();
+
+    //handle modal form submissions
+    $('.modal form').submit(function(e) {
+        e.preventDefault();
+        let self = $(this);
+        let url = $(this).attr('action');
+        let data = $(this).serialize();
+        self.find('.btn-submit').attr('disabled', true).html('Submitting');
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: function(response) {
+                self.find('.btn-submit').attr('disabled', false).html('Success');
+            },
+            error: function(response) {
+                console.log(response);
+                $.each(response.errors, function (e) {
+                    console.log(e);
+                });
+                self.find('.btn-submit').attr('disabled', false).html('Submit');
+            }
+        });
+    })
 });

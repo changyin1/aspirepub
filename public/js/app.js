@@ -48161,7 +48161,30 @@ $(function () {
       });
     }
   });
-  $("#sortable tbody").disableSelection();
+  $("#sortable tbody").disableSelection(); //handle modal form submissions
+
+  $('.modal form').submit(function (e) {
+    e.preventDefault();
+    var self = $(this);
+    var url = $(this).attr('action');
+    var data = $(this).serialize();
+    self.find('.btn-submit').attr('disabled', true).html('Submitting');
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: data,
+      success: function success(response) {
+        self.find('.btn-submit').attr('disabled', false).html('Success');
+      },
+      error: function error(response) {
+        console.log(response);
+        $.each(response.errors, function (e) {
+          console.log(e);
+        });
+        self.find('.btn-submit').attr('disabled', false).html('Submit');
+      }
+    });
+  });
 });
 
 /***/ }),
