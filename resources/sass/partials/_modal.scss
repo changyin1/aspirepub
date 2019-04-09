@@ -1,0 +1,26 @@
+.modal {
+  .form-group {
+    width: 100%;
+    padding-top: 1rem;
+    .form-control {
+      margin-bottom: 1.5rem;
+    }
+    label {
+      top: calc(1rem + 7px);
+      &.select-label {
+        top: -8px;
+      }
+    }
+  }
+  .select2-container .select2-selection--single {
+    height: 100%;
+    padding: 0.5rem;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .select2-container {
+    box-shadow: 1px 1px 5px 0px rgba(158,158,158,1);
+  }
+}

@@ -1,8 +1,14 @@
 @extends('admin.admin_base')
 
 @section('content')
-    <div class="admin-page mt-4">
+    <div class="admin-page schedules-page mt-4">
         <h2>Schedules</h2>
+        <div>
+            <h5 class="float-left">Here are your schedules</h5>
+            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#newScheduleModal">
+                Create New
+            </button>
+        </div>
         <div class="schedule-list">
             <table>
                 @if(!$data['schedules'])
@@ -18,7 +24,7 @@
                     </thead>
                     <tbody>
                     @foreach($data['schedules'] as $schedule)
-                        <tr>
+                        <tr class="link-row" data-href="{{route('admin/schedules') . '/'.$schedule->id}}">
                             <td>{{$schedule->id}}</td>
                             <td>{{$schedule->client_name()}}</td>
                             <td>{{date_format($schedule->start_date, 'F Y')}}</td>
@@ -30,4 +36,5 @@
             </table>
         </div>
     </div>
+    @include('admin/modals/new_schedule_modal')
 @endsection

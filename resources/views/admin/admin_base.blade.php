@@ -25,6 +25,7 @@
         <div class="col-10">
             @yield('content')
         </div>
+        @include('admin.modals.success_modal')
     </div>
 </div>
 <script src="{{asset('/js/app.js')}}"></script>

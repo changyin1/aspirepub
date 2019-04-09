@@ -10672,6 +10672,38 @@ form label {
   }
 }
 
+.modal .form-group {
+  width: 100%;
+  padding-top: 1rem;
+}
+
+.modal .form-group .form-control {
+  margin-bottom: 1.5rem;
+}
+
+.modal .form-group label {
+  top: calc(1rem + 7px);
+}
+
+.modal .form-group label.select-label {
+  top: -8px;
+}
+
+.modal .select2-container .select2-selection--single {
+  height: 100%;
+  padding: 0.5rem;
+}
+
+.modal .select2-container--default .select2-selection--single .select2-selection__arrow {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.modal .select2-container {
+  box-shadow: 1px 1px 5px 0px #9e9e9e;
+}
+
 .login-page {
   background-color: #b0b0b0;
   min-height: 100vh;
@@ -10944,6 +10976,61 @@ form label {
   border-bottom: 1px solid grey;
   padding-bottom: 1rem;
   margin-bottom: 1rem;
+}
+
+.admin-page .form-group {
+  width: 100%;
+  padding-top: 1rem;
+}
+
+.admin-page .form-group .form-control {
+  margin-bottom: 1.5rem;
+  padding: 1.375rem 0.75rem;
+}
+
+.admin-page .form-group label {
+  top: calc(1rem + 7px);
+}
+
+.admin-page .form-group label.select-label {
+  top: -8px;
+  left: 0px;
+}
+
+.admin-page .form-row {
+  margin-bottom: -1rem;
+}
+
+.admin-page .form-row label,
+.admin-page .form-row label.select-label {
+  left: 5px;
+}
+
+.admin-page .select2 {
+  margin-bottom: 1rem;
+}
+
+.admin-page .select2-container .select2-selection--single {
+  height: 100%;
+  padding: 0.5rem;
+}
+
+.admin-page .select2-container--default .select2-selection--single .select2-selection__arrow {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.admin-page .select2-container {
+  box-shadow: 1px 1px 5px 0px #9e9e9e;
+}
+
+.admin-page .edit-form {
+  max-width: 40rem;
+}
+
+select .admin-page .edit-form.col-4 {
+  padding: 0;
 }
 
 table tr {
