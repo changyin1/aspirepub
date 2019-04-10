@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7815dd8a905cd4360d879b1afd653398",
+    "content-hash": "c3298bfa23067a4724901fc514e096d8",
     "packages": [
         {
             "name": "arku/nova-multiselect",
@@ -5034,16 +5034,16 @@
         },
         {
             "name": "vmitchell85/nova-links",
-            "version": "v0.0.1",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vmitchell85/nova-links.git",
-                "reference": "420fb04bd036ba312c328f1dfb2a34f09b63743f"
+                "reference": "98234ea3acee309b69217d9cbfc30ed96d487138"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vmitchell85/nova-links/zipball/420fb04bd036ba312c328f1dfb2a34f09b63743f",
-                "reference": "420fb04bd036ba312c328f1dfb2a34f09b63743f",
+                "url": "https://api.github.com/repos/vmitchell85/nova-links/zipball/98234ea3acee309b69217d9cbfc30ed96d487138",
+                "reference": "98234ea3acee309b69217d9cbfc30ed96d487138",
                 "shasum": ""
             },
             "require": {
@@ -5084,7 +5084,7 @@
                 "laravel",
                 "nova"
             ],
-            "time": "2018-08-25T20:06:40+00:00"
+            "time": "2019-03-15T01:02:20+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
@@ -5624,20 +5624,20 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.9.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "78af75148f9fdd34ea727c8b529a9b4a8f7b740c"
+                "reference": "3e01bdad3e18354c3dce54466b7fbe33a9f9f7f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/78af75148f9fdd34ea727c8b529a9b4a8f7b740c",
-                "reference": "78af75148f9fdd34ea727c8b529a9b4a8f7b740c",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/3e01bdad3e18354c3dce54466b7fbe33a9f9f7f8",
+                "reference": "3e01bdad3e18354c3dce54466b7fbe33a9f9f7f8",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2"
+                "php": "^7.1"
             },
             "replace": {
                 "myclabs/deep-copy": "self.version"
@@ -5645,8 +5645,6 @@
             "require-dev": {
                 "doctrine/collections": "^1.0",
                 "doctrine/common": "^2.6",
-                "phpstan/phpstan": "^0.9.2",
-                "phpstan/phpstan-phpunit": "^0.9.4",
                 "phpunit/phpunit": "^7.1"
             },
             "type": "library",
@@ -5670,7 +5668,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2018-10-30T00:14:44+00:00"
+            "time": "2018-06-11T23:09:50+00:00"
         },
         {
             "name": "nunomaduro/collision",
