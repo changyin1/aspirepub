@@ -1,10 +1,17 @@
 @extends('admin.admin_base')
 
 @section('content')
-    <div class="admin-page questions-page mt-4">
+    <div class="admin-page templates-page mt-4">
         <h2>Question Templates</h2>
+        <div>
+            <h5 class="float-left">Here are your schedules</h5>
+            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#newQuestionTemplateModal">
+                Create New
+            </button>
+            <div class="clear"></div>
+        </div>
         <div class="question-list">
-            <table>
+            <table class="data-table">
                 @if(!$data['templates'])
                     No Question Templates Created Click Here to Add One!
                 @else
@@ -13,6 +20,7 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Questions</th>
+                            <th>Used</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -21,6 +29,7 @@
                             <td>{{$template->id}}</td>
                             <td>{{$template->template_name}}</td>
                             <td>{{$template->questionCount()}}</td>
+                            <td>{{$template->used() ? 'Yes' : 'No'}}</td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -28,4 +37,5 @@
             </table>
         </div>
     </div>
+    @include('admin/modals/new_template_modal')
 @endsection

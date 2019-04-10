@@ -3,8 +3,15 @@
 @section('content')
     <div class="admin-page questions-page mt-4">
         <h2>Questions</h2>
+        <div>
+            <h5 class="float-left">Here are your questions</h5>
+            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#newQuestionModal">
+                Create New
+            </button>
+            <div class="clear"></div>
+        </div>
         <div class="question-list">
-            <table>
+            <table class="data-table" data-searchable="true">
                 @if(!$data['questions'])
                     No Questions Created Click Here to Add One!
                 @else
@@ -30,4 +37,5 @@
             </table>
         </div>
     </div>
+    @include('admin.modals.new_question_modal')
 @endsection

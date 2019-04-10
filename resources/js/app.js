@@ -295,4 +295,14 @@ $(function () {
             }
         });
     });
+
+    //initialize data table
+    function dataTable(element) {
+        let searchable = $(element).data('searchable') == null ? false :  $(element).data('searchable');
+        $(element).DataTable({
+            searching: searchable
+        });
+    }
+
+    dataTable('table.data-table')
 });

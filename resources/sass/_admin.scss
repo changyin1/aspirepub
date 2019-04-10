@@ -56,6 +56,9 @@ table {
   th, td {
     padding: 0.5rem 0;
   }
+  .link-row {
+    cursor: pointer;
+  }
 }
 
 .question-list {
@@ -70,4 +73,8 @@ table {
     left: 0;
     bottom: 0;
   }
+}
+
+.dataTables_wrapper {
+  margin-top: 1rem;
 }

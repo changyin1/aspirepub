@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Schedule;
 
 class QuestionTemplate extends Model
 {
@@ -28,7 +29,18 @@ class QuestionTemplate extends Model
     }
     public function schedule()
     {
-        return $this->belongsTo('App\Schedule', 'questions_template_id');
+        return $this->belongsTo('App\Schedule', 'questionstemplates_id');
+    }
+
+    public function used() {
+        $edit = true;
+        $schedules = Schedule::where('questionstemplates_id', $this->id)->get();
+        foreach ($schedules as $schedule) {
+            if($schedule->start_date->isPast()) {
+                $edit = false;
+            }
+        }
+        return $edit;
     }
 
 }

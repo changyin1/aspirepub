@@ -22,7 +22,12 @@ Route::middleware(['api'])->group(function(){
     Route::post('availability', 'Api\AvailabilityController@submit');
     Route::get('availability', 'Api\AvailabilityController@get');
 
+    Route::post('/admin/questions/create', 'Admin\QuestionController@Create')->name('createQuestion');
+
+    Route::post('/admin/question_templates/create', 'Admin\QuestionTemplateController@Create')->name('createQuestionTemplate');
     Route::post('/admin/question_templates/order', 'Admin\QuestionTemplateController@updateOrder')->name('admin/question_templates/order');
+    Route::post('/admin/question_templates/addQuestion', 'Admin\QuestionTemplateController@addQuestionToTemplate')->name('addQuestionToTemplate');
+
     Route::post('/admin/schedule/create', 'Admin\ScheduleController@create')->name('createSchedule');
     Route::post('/admin/schedule/modify', 'Admin\ScheduleController@modify')->name('modifySchedule');
 });

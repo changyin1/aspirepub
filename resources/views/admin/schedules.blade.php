@@ -8,11 +8,12 @@
             <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#newScheduleModal">
                 Create New
             </button>
+            <div class="clear"></div>
         </div>
         <div class="schedule-list">
-            <table>
+            <table class="data-table" data-searchable="false">
                 @if(!$data['schedules'])
-                    No Schedules Created Click Here to Add One!
+                    No Schedules Created Add One to Get Started!
                 @else
                     <thead>
                     <tr>
