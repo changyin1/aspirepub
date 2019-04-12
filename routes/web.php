@@ -46,6 +46,8 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/admin/schedules/{id}', 'Admin\ScheduleController@edit')->name('admin/schedules/edit');
 
     Route::get('/admin/questions', 'Admin\QuestionController@index')->name('admin/questions');
+    Route::get('/admin/questions/{id}', 'Admin\QuestionController@show')->name('admin/questions/show');
+    Route::post('/admin/questions/edit/{id}', 'Admin\QuestionController@edit')->name('admin/questions/edit');
 
     Route::get('/admin/question_templates', 'Admin\QuestionTemplateController@index')->name('admin/question_templates');
     Route::get('/admin/question_templates/{id}', 'Admin\QuestionTemplateController@template')->name('admin/question_templates/edit');

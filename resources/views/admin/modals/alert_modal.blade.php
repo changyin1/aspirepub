@@ -4,14 +4,16 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{$title}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="create-schedule-form" class="modal-form" action="{{route('addQuestionToTemplate')}}" method="post">
+            <form id="create-schedule-form" class="modal-form" action="{{$formRoute}}" method="post">
                 @csrf
-                <input type="hidden" name="template_id" value="{{$data['template']->id}}">
+                @foreach($hiddenValues as $name => $hiddenValue)
+                    <input type="hidden" name="{{$name}}" value="{{$hiddenValue}}">
+                @endforeach
                 <div class="modal-body">
                     <div class="errors"></div>
                     <div>Are you sure you want to proceed?</div>

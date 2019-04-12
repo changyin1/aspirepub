@@ -25,7 +25,7 @@
                     </thead>
                     <tbody>
                     @foreach($data['questions'] as $question)
-                        <tr>
+                        <tr class="link-row" data-href="{{route('admin/questions') . '/'.$question->id}}">
                             <td>{{$question->id}}</td>
                             <td>{{$question->question}}</td>
                             <td>{{$question->type}}</td>
