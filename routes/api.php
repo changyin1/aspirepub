@@ -22,6 +22,12 @@ Route::middleware(['api'])->group(function(){
     Route::post('availability', 'Api\AvailabilityController@submit');
     Route::get('availability', 'Api\AvailabilityController@get');
 
+    Route::post('/admin/companies/create', 'Admin\CompanyController@Create')->name('createCompany');
+
+    Route::post('/admin/regions/create', 'Admin\RegionController@Create')->name('createRegion');
+
+    Route::post('/admin/categories/create', 'Admin\CategoryController@Create')->name('createCategory');
+
     Route::post('/admin/questions/create', 'Admin\QuestionController@Create')->name('createQuestion');
 
     Route::post('/admin/question_templates/create', 'Admin\QuestionTemplateController@Create')->name('createQuestionTemplate');

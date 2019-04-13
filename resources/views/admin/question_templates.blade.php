@@ -12,7 +12,7 @@
         </div>
         <div class="question-list">
             <table class="data-table">
-                @if(!$data['templates'])
+                @if($data['templates']->isEmpty())
                     No Question Templates Created Click Here to Add One!
                 @else
                     <thead>

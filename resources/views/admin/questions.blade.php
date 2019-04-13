@@ -12,7 +12,7 @@
         </div>
         <div class="question-list">
             <table class="data-table" data-searchable="true">
-                @if(!$data['questions'])
+                @if($data['questions']->isEmpty())
                     No Questions Created Click Here to Add One!
                 @else
                     <thead>

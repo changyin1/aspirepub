@@ -12,7 +12,7 @@
         </div>
         <div class="schedule-list">
             <table class="data-table" data-searchable="false">
-                @if(!$data['schedules'])
+                @if($data['schedules']->isEmpty())
                     No Schedules Created Add One to Get Started!
                 @else
                     <thead>

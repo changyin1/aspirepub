@@ -42,6 +42,17 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/admin/users', 'AdminController@users')->name('admin/users');
     Route::get('/admin/clients', 'Admin\ClientController@index')->name('admin/clients');
 
+    Route::get('/admin/companies', 'Admin\CompanyController@index')->name('admin/companies');
+    Route::get('/admin/companies/{id}', 'Admin\CompanyController@edit')->name('admin/companies/edit');
+
+    Route::get('/admin/regions', 'Admin\RegionController@index')->name('admin/regions');
+    Route::get('/admin/regions/{id}', 'Admin\RegionController@edit')->name('admin/regions/edit');
+    Route::post('/admin/regions/update/{id}', 'Admin\RegionController@update')->name('admin/regions/update');
+
+    Route::get('/admin/categories', 'Admin\CategoryController@index')->name('admin/categories');
+    Route::get('/admin/categories/{id}', 'Admin\CategoryController@edit')->name('admin/categories/edit');
+    Route::post('/admin/categories/update/{id}', 'Admin\CategoryController@update')->name('admin/categories/update');
+
     Route::get('/admin/schedules', 'Admin\ScheduleController@index')->name('admin/schedules');
     Route::get('/admin/schedules/{id}', 'Admin\ScheduleController@edit')->name('admin/schedules/edit');
 
