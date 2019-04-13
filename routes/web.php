@@ -44,6 +44,7 @@ Route::middleware(['auth', 'admin'])->group(function() {
 
     Route::get('/admin/companies', 'Admin\CompanyController@index')->name('admin/companies');
     Route::get('/admin/companies/{id}', 'Admin\CompanyController@edit')->name('admin/companies/edit');
+    Route::post('/admin/companies/update/{id}', 'Admin\CompanyController@update')->name('admin/companies/update');
 
     Route::get('/admin/regions', 'Admin\RegionController@index')->name('admin/regions');
     Route::get('/admin/regions/{id}', 'Admin\RegionController@edit')->name('admin/regions/edit');

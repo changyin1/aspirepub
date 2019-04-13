@@ -30,8 +30,31 @@ class CompanyController extends Controller
     public function edit($id) {
         $company = Company::where('id', $id)->first();
         $data = [
-            'company' => $company
+            'company' => $company,
+            'save' => false
         ];
+        return view('admin.companies.edit', [
+            'data' => $data
+        ]);
+    }
+
+    public function update(NewCompanyRequest $request) {
+        $company = Company::where('id', $request->id)->first();
+        if (!$company) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'company' => ['That company does not exist.'],
+            ]);
+            throw $error;
+        }
+
+        $company->name = $request->name;
+        $company->save();
+
+        $data = [
+            'company' => $company,
+            'save' => true
+        ];
+
         return view('admin.companies.edit', [
             'data' => $data
         ]);
