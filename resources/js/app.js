@@ -76,6 +76,26 @@ $(function () {
                     }
                 }
             });
+        } else if ($(this).hasClass('specialists')) {
+            $(this).select2({
+                minimumResultsForSearch: Infinity,
+                placeholder: placeholder,
+                ajax: {
+                    type: 'post',
+                    url: $('#availability-url').val(),
+                    data: function () {
+                        return {
+                            week: $('#week-select').val(), schedule: $('#schedule-id').val()
+                        };
+                    },
+                    cache: true
+                },
+                language: {
+                    noResults: function (params) {
+                        return "No Available Specialists Found";
+                    }
+                }
+            });
         } else {
             $(this).select2({
                 minimumResultsForSearch: Infinity,
@@ -312,6 +332,7 @@ $(function () {
         $(element).DataTable({
             searching: searchable,
             stateSave: true,
+            fixedHeader: true
         });
     }
 
@@ -325,9 +346,25 @@ $(function () {
 
     dataTable('table.data-table');
 
+    //handle dataTable showing;
+    function toggleTable(select) {
+        $('table').each(function() {
+            $(this).parents('div.dataTables_wrapper').first().hide();
+        });
+        let week = $(select).val();
+        $('table[data-week="' + week + '"]').parents('div.dataTables_wrapper').first().show();
+    }
+
+    toggleTable($('#week-select-table'));
+    $('#week-select-table').on('change', function() {
+        toggleTable($('#week-select-table'));
+        $('.specialists').val(null).trigger('change');
+    });
+
     //checkbox handling
     $(".checkbox-all").click(function () {
-        $(".checkbox").prop('checked', $(this).prop('checked'));
+        console.log($(this));
+        $(this).closest('table').find('.checkbox').prop('checked', $(this).prop('checked'));
     });
 
     $(".checkbox-row").click(function (e) {

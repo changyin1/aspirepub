@@ -33,6 +33,14 @@ class ScheduleController extends Controller
         $schedule = $schedule->where('id', $id)->first();
         $calls = Call::where('schedule_id', $id)->get();
 
+        $sortedCalls = [];
+
+        if (!$calls->isEmpty()) {
+            foreach($calls as $call) {
+                $sortedCalls[$call->week()][] = $call;
+            }
+        }
+
         if (!$schedule) {
             abort(404, 'The page you are looking for does not exist.');
         }
@@ -41,7 +49,6 @@ class ScheduleController extends Controller
         $templates = QuestionTemplate::all();
         $user = new User();
         $coaches = $user->hasRole('coach');
-        $specialists = $user->hasRole('call_specialist');
 
         $edit = !$schedule->start_date->isPast() && !$schedule->finalized;
 
@@ -49,10 +56,9 @@ class ScheduleController extends Controller
             'schedule' => $schedule,
             'clients' => $clients,
             'templates' => $templates,
-            'calls' => $calls,
+            'sortedCalls' => $sortedCalls,
             'edit' => $edit,
             'coaches' => $coaches,
-            'specialists' => $specialists,
         ];
 
         return view('admin.schedules.edit', [

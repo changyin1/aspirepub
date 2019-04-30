@@ -20,22 +20,35 @@
                             <div class="detail">{{Carbon\Carbon::parse($data['schedule']->start_date)->format('M-d-Y')}}</div>
                             <div class="detail">{{$data['schedule']->calls}}</div>
                         </div>
+                        @if($data['sortedCalls'])
+                        <div class="col-6 offset-1">
+                            <div class="form-group" style="padding-top:0; margin-bottom:0">
+                                <input type="hidden" id="schedule-id" value="{{$data['schedule']->id}}">
+                                <input type="hidden" id="availability-url" value="{{route('getAvailable')}}">
+                                <label class="control-label select-label" for="week">Week</label>
+                                <select class="week" name="week" data-placeholder="Week" id="week-select" style="width: 97%">
+                                    <option value="1" selected>1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                        </div>
+                        @endif
                     </div>
-
                 </div>
             @endif
-            @if(!$data['calls']->isEmpty())
+            @if($data['sortedCalls'])
                 <br>
                 <h4>Calls</h4>
                 <div class="row">
                     <div class="col-6">
-                        <form id="assign-specialist-form" class="assign-form ajax" data-type="specialist" action="{{route('assignCalls')}}" method="post">
+                        <form id="assign-specialist-form" class="assign-form ajax" data-type="specialist"
+                              action="{{route('assignCalls')}}" method="post">
                             @csrf
                             <div class="form-group" style="margin-bottom:0">
-                                <select class="specialists" name="specialists[]" multiple="multiple" data-placeholder="Specialists" style="width: 95%">
-                                    @foreach($data['specialists'] as $specialist)
-                                        <option value="{{$specialist->id}}">{{$specialist->name}}</option>
-                                    @endforeach
+                                <select class="specialists" name="specialists[]" multiple="multiple"
+                                        data-placeholder="No Specialist Selected" style="width: 95%">
                                 </select>
                                 <label class="control-label select-label" for="specialist">Specialists</label>
                             </div>
@@ -43,7 +56,8 @@
                         </form>
                     </div>
                     <div class="col-6">
-                        <form id="assign-coach-form" class="assign-form ajax" data-type="coach" action="{{route('assignCalls')}}" method="post">
+                        <form id="assign-coach-form" class="assign-form ajax" data-type="coach"
+                              action="{{route('assignCalls')}}" method="post">
                             @csrf
                             <div class="form-group" style="margin-bottom:0">
                                 <select class="coach" name="coach" data-placeholder="Coach" style="width: 95%">
@@ -57,7 +71,8 @@
                         </form>
                     </div>
                 </div>
-                    <table class="data-table" data-searchable="false">
+                @foreach($data['sortedCalls'] as $index => $calls)
+                    <table class="data-table hidden" data-week="{{$index}}" data-searchable="false">
                         <thead>
                         <tr>
                             <th><input class="checkbox-all" type="checkbox"></th>
@@ -72,7 +87,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($data['calls'] as $call)
+                        @foreach($calls as $call)
                             <tr class="checkbox-row">
                                 <td><input class="checkbox" type="checkbox" name="call-id" value="{{$call->id}}"></td>
                                 <td>{{$call->id}}</td>
@@ -94,6 +109,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                @endforeach
             @endif
         </div>
     </div>

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Call extends Model
 {
@@ -67,5 +68,11 @@ class Call extends Model
 
     public function assigned() {
         return $this->hasMany('App\CallAssignment');
+    }
+
+    public function week() {
+        $day = Carbon::parse($this->due_date)->format('d');
+        $week = ($day - 1) / 7;
+        return $week;
     }
 }

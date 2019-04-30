@@ -16,6 +16,9 @@
             <form id="edit-schedule-form" class="edit-form ajax" action="{{route('assignCall')}}" method="post">
                 @csrf
                 <div class="errors" style="width: 66.67%"></div>
+                <input type="hidden" id="schedule-id" value="{{$data['call']->schedule->id}}">
+                <input type="hidden" id="week-select" value="{{$data['call']->week()}}">
+                <input type="hidden" id="availability-url" value="{{route('getAvailable')}}">
                 <input type="hidden" id="id" name="id" value="{{$data['call']->id}}">
                 <div class="form-body">
                     <div class="form-group">
@@ -33,13 +36,6 @@
                     </div>
                     <div class="form-group">
                         <select class="specialists" name="specialists[]" multiple="multiple" data-placeholder="Specialists" style="width: 66.67%">
-                            @foreach($data['specialists'] as $specialist)
-                                <option value="{{$specialist->id}}"
-                                        @if($data['call']->call_specialist == $specialist->id)
-                                        selected
-                                        @endif
-                                >{{$specialist->name}}</option>
-                            @endforeach
                         </select>
                         <label class="control-label select-label" for="specialist">Specialists</label>
                     </div>
