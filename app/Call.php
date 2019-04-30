@@ -11,7 +11,7 @@ class Call extends Model
     ];
 
     protected $casts = [
-         'arrival_date' => 'date',
+        'arrival_date' => 'date',
         'departure_date' => 'date'
     ];
 
@@ -48,5 +48,16 @@ class Call extends Model
     public function transcript()
     {
         return $this->belongsTo('App\Transcripts');
+    }
+
+    public function client_name() {
+        if ($this->client) {
+            return $this->client->name;
+        }
+        return '-';
+    }
+
+    public function assigned() {
+        return $this->hasMany('App\CallAssignment');
     }
 }

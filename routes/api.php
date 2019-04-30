@@ -36,6 +36,7 @@ Route::middleware(['api'])->group(function(){
     Route::post('/admin/question_templates/order', 'Admin\QuestionTemplateController@updateOrder')->name('admin/question_templates/order');
     Route::post('/admin/question_templates/addQuestion', 'Admin\QuestionTemplateController@addQuestionToTemplate')->name('addQuestionToTemplate');
 
+    Route::post('/admin/calls/assign', 'Admin\CallController@assign')->name('assignCall');
     Route::post('/admin/schedule/create', 'Admin\ScheduleController@create')->name('createSchedule');
     Route::post('/admin/schedule/modify', 'Admin\ScheduleController@modify')->name('modifySchedule');
 });

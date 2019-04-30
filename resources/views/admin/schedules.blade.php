@@ -21,6 +21,7 @@
                         <th>Client</th>
                         <th>Date</th>
                         <th>Number of Calls</th>
+                        <th>Finalized</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -30,6 +31,7 @@
                             <td>{{$schedule->client_name()}}</td>
                             <td>{{date_format($schedule->start_date, 'F Y')}}</td>
                             <td>{{$schedule->calls}}</td>
+                            <td>{{$schedule->finalized ? 'Yes' : 'No'}}</td>
                         </tr>
                     @endforeach
                     </tbody>

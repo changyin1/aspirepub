@@ -3,6 +3,7 @@
     <div class="errors" style="width: 66.67%"></div>
     <div class="form-body">
         <input type="hidden" name="schedule_id" id="schedule_id" value="{{$data['schedule']->id}}">
+        <input type="hidden" name="finalized" id="finalized" value="0">
         <div class="form-group">
             <select class="client" name="client" data-placeholder="Client" style="width: 66.67%">
                 <option></option>
@@ -52,6 +53,7 @@
             <input name="calls" id="calls" class="form-control" type="number" value="{{$data['schedule']->calls}}">
             <label class="control-label" for="calls">Calls</label>
         </div>
+        <input type="submit" data-message="Once you have finalized you can no longer edit are you sure you want to finalize this schedule?" class="btn btn-primary btn-submit submit-alert" data-field="finalized" value="Finalize">
         <input type="submit" class="btn btn-primary btn-submit" value="Save">
         <input type="submit" class="btn btn-danger btn-delete" value="Delete">
     </div>

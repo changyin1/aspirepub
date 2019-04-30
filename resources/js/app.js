@@ -304,5 +304,13 @@ $(function () {
         });
     }
 
+    $('.submit-alert').click(function(e) {
+        if (confirm($(this).data('message'))) {
+            $('#' + $(this).data('field')).val(1);
+        } else {
+            e.preventDefault();
+        };
+    });
+
     dataTable('table.data-table')
 });

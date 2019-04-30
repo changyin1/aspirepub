@@ -23,7 +23,30 @@
                     </div>
 
                 </div>
-                </table>
+            @endif
+            @if(!$data['calls']->isEmpty())
+                <br>
+                <h4>Calls</h4>
+                    <table class="data-table" data-searchable="false">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Client</th>
+                            <th>Due Date</th>
+                            <th>Completed</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($data['calls'] as $call)
+                            <tr class="link-row" data-href="{{route('admin/calls') . '/'.$call->id}}">
+                                <td>{{$call->id}}</td>
+                                <td>{{$call->client_name()}}</td>
+                                <td>{{$call->due_date}}</td>
+                                <td>{{$call->completed_at ? $call_completed_at : ''}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
             @endif
         </div>
     </div>

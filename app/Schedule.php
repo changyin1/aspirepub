@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Schedule extends Model
 {
@@ -34,5 +35,19 @@ class Schedule extends Model
             return $this->client->name;
         }
         return '-';
+    }
+
+    public function finalize() {
+        $numberOfCalls = $this->calls;
+        for($i = 1; $i <= $numberOfCalls; $i++) {
+            $newCall = new Call();
+            $newCall->client_id = $this->client_id;
+            $newCall->schedule_id = $this->id;
+            $dueDate = Carbon::parse($this->start_date)->addDays(7 * ($i % 4 + 1));
+            $newCall->due_date = $dueDate->toDateTimeString();
+            $newCall->save();
+        }
+
+        return true;
     }
 }

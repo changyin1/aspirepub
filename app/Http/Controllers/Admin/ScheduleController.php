@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Call;
 use App\Client;
 use App\Http\Requests\CreateScheduleRequest;
 use App\QuestionTemplate;
@@ -29,6 +30,7 @@ class ScheduleController extends Controller
 
     public function edit($id, Schedule $schedule) {
         $schedule = $schedule->where('id', $id)->first();
+        $calls = Call::where('schedule_id', $id)->get();
 
         if (!$schedule) {
             abort(404, 'The page you are looking for does not exist.');
@@ -37,12 +39,13 @@ class ScheduleController extends Controller
         $clients = Client::all();
         $templates = QuestionTemplate::all();
 
-        $edit = !$schedule->start_date->isPast();
+        $edit = !$schedule->start_date->isPast() && !$schedule->finalized;
 
         $data = [
             'schedule' => $schedule,
             'clients' => $clients,
             'templates' => $templates,
+            'calls' => $calls,
             'edit' => $edit
         ];
 
@@ -103,13 +106,26 @@ class ScheduleController extends Controller
             throw $error;
         }
 
-        $schedule->start_date = $startDate;
-        $schedule->end_date = $endDate;
+        $schedule->start_date = $startDate->toDateTimeString();
+        $schedule->end_date = $endDate->toDateTimeString();
         $schedule->client_id = $request->client;
         $schedule->calls = $request->calls;
         $schedule->questionstemplates_id = $request->template;
+        $schedule->finalized = $request->finalized;
 
         $schedule->save();
+
+        if ($schedule->finalized) {
+            try {
+                $schedule->finalize();
+            } catch (\Exception $e) {
+                $schedule->finalized  = 0;
+                $schedule->save();
+                var_dump($e);
+                return response()->json(['success' => false]);
+            }
+
+        }
         return response()->json(['success' => true]);
     }
 }

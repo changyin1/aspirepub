@@ -59,6 +59,9 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/admin/schedules', 'Admin\ScheduleController@index')->name('admin/schedules');
     Route::get('/admin/schedules/{id}', 'Admin\ScheduleController@edit')->name('admin/schedules/edit');
 
+    Route::get('/admin/calls/', 'Admin\CallController@show')->name('admin/calls');
+    Route::get('/admin/calls/{id}', 'Admin\CallController@show')->name('admin/calls/show');
+
     Route::get('/admin/questions', 'Admin\QuestionController@index')->name('admin/questions');
     Route::get('/admin/questions/{id}', 'Admin\QuestionController@show')->name('admin/questions/show');
     Route::post('/admin/questions/edit/{id}', 'Admin\QuestionController@edit')->name('admin/questions/edit');

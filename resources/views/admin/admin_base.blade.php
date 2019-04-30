@@ -12,6 +12,7 @@
     <link rel='stylesheet' href='{{asset("vendor/fullcalendar-3.10.0/fullcalendar.css")}}' />
     <link rel="stylesheet" href="{{asset("vendor/jquery-ui-1.12.1/jquery-ui.css")}}">
     <link rel="stylesheet" href="{{asset("/css/app.css")}}">
+    <script src="{{asset('/js/app.js')}}"></script>
 </head>
 <body>
 <div id="app">
@@ -28,7 +29,6 @@
         @include('admin.modals.success_modal')
     </div>
 </div>
-<script src="{{asset('/js/app.js')}}"></script>
 <!-- Vendor Files -->
 <link href="{{asset("vendor/select2/dist/css/select2.min.css")}}" rel="stylesheet" />
 <script src="{{asset("vendor/select2/dist/js/select2.min.js")}}"></script>
