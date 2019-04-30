@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
 	protected $fillable = [
-        'name', 'city', 'country'
+        'name', 'city', 'country', 'reservation_contact', 'cancellation_email'
     ];
 
     public function users()
@@ -28,5 +28,17 @@ class Client extends Model
     public function templates()
     {
         return $this->hasMany('App\QuestionTemplate');
+    }
+
+    public function company() {
+        return $this->belongsTo('App\Company');
+    }
+
+    public function region() {
+        return $this->belongsTo('App\Region');
+    }
+
+    public function category() {
+        return $this->belongsTo('App\Category');
     }
 }

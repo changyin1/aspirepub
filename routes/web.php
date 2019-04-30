@@ -41,6 +41,8 @@ Route::middleware(['auth', 'admin'])->group(function() {
 
     Route::get('/admin/users', 'AdminController@users')->name('admin/users');
     Route::get('/admin/clients', 'Admin\ClientController@index')->name('admin/clients');
+    Route::get('/admin/clients/{id}', 'Admin\ClientController@show')->name('admin/clients/show');
+    Route::post('/admin/clients/edit/{id}', 'Admin\ClientController@edit')->name('admin/clients/edit');
 
     Route::get('/admin/companies', 'Admin\CompanyController@index')->name('admin/companies');
     Route::get('/admin/companies/{id}', 'Admin\CompanyController@edit')->name('admin/companies/edit');

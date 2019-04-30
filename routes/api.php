@@ -22,6 +22,8 @@ Route::middleware(['api'])->group(function(){
     Route::post('availability', 'Api\AvailabilityController@submit');
     Route::get('availability', 'Api\AvailabilityController@get');
 
+    Route::post('/admin/clients/create', 'Admin\ClientController@Create')->name('createClient');
+
     Route::post('/admin/companies/create', 'Admin\CompanyController@Create')->name('createCompany');
 
     Route::post('/admin/regions/create', 'Admin\RegionController@Create')->name('createRegion');

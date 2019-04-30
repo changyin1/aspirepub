@@ -3,14 +3,17 @@
     width: 100%;
     padding-top: 1rem;
     .form-control {
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.5rem;
     }
     label {
       top: calc(1rem + 7px);
       &.select-label {
-        top: -8px;
+        top: calc(1rem - 8px);
       }
     }
+  }
+  .select2-container {
+    margin-top: 1rem;
   }
   .select2-container .select2-selection--single {
     height: 100%;
