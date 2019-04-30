@@ -17,7 +17,11 @@ class Call extends Model
 
     public function coach()
     {
-        return $this->belongsTo('App\User');
+        if ($this->coach) {
+            $user = User::where('id', $this->coach)->first();
+            return $user;
+        }
+        return '';
     }
 
     public function client()
@@ -27,7 +31,11 @@ class Call extends Model
 
     public function call_specialist()
     {
-        return $this->belongsTo('App\User');
+        if ($this->call_specialist) {
+            $user = User::where('id', $this->call_specialist)->first();
+            return $user;
+        }
+        return '';
     }
 
     public function schedule()
@@ -42,7 +50,7 @@ class Call extends Model
 
     public function recording()
     {
-        return $this->belongsTo('App\Recodings');
+        return $this->belongsTo('App\Recording');
     }
 
     public function transcript()

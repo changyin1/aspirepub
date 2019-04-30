@@ -9,7 +9,7 @@ class CallAssignment extends Model
     public $timestamps = false;
 
     public function specialist() {
-        return User::where('id', $this->specialist_id);
+        return User::where('id', $this->specialist_id)->first();
     }
 
     public function call() {

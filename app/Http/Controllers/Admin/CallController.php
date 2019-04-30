@@ -57,4 +57,47 @@ class CallController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function multiAssign(Request $request) {
+        $types = ['coach', 'specialist'];
+        if (!in_array($request->type, $types)) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'type' => ['You cannot assign calls to that user type'],
+            ]);
+            throw $error;
+        }
+
+        $call_ids = explode(',', $request->calls);
+        if ($request->type == 'coach') {
+            foreach($call_ids as $call_id) {
+                try {
+                    $call = Call::where('id', $call_id)->first();
+                    $call->coach = $request->coach;
+                    $call->save();
+                } catch (Exception $e) {
+                    // do something if one failed?
+                }
+            }
+        }
+
+        if ($request->type == 'specialist') {
+            foreach($call_ids as $call_id) {
+                try {
+                    CallAssignment::where('call_id', $call_id)->delete();
+
+                    foreach($request->specialists as $specialist_id) {
+                        $callAssignment = new CallAssignment;
+                        $callAssignment->call_id = $call_id;
+                        $callAssignment->specialist_id = $specialist_id;
+
+                        $callAssignment->save();
+                    }
+                } catch (Exception $e) {
+                    // do something if one failed?
+                }
+            }
+        }
+
+        return response()->json(['success' => true]);
+    }
 }

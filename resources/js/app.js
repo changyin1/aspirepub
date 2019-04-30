@@ -189,7 +189,9 @@ $(function () {
 
     //Table row linking
     $('.link-row').click(function () {
-        window.location = $(this).data("href");
+        if (!$(this).hasClass('checkbox')) {
+            window.location = $(this).data("href");
+        }
     })
 
     // sortable
@@ -270,7 +272,15 @@ $(function () {
         e.preventDefault();
         let self = $(this);
         let url = $(this).attr('action');
-        let data = $(this).serialize();
+        let data = $(this).serializeArray();
+        if (self.hasClass('assign-form')) {
+            var calls = [];
+            $.each($("input[name='call-id']:checked"), function(){
+                calls.push($(this).val());
+            });
+            data.push({name: 'calls', value: calls});
+            data.push({name: 'type', value: self.data('type')});
+        }
         self.find('.errors').html('');
         self.find('.btn').attr('disabled', true);
         self.find('.btn-submit').val('Submitting');
@@ -300,7 +310,8 @@ $(function () {
     function dataTable(element) {
         let searchable = $(element).data('searchable') == null ? false :  $(element).data('searchable');
         $(element).DataTable({
-            searching: searchable
+            searching: searchable,
+            stateSave: true,
         });
     }
 
@@ -312,5 +323,16 @@ $(function () {
         };
     });
 
-    dataTable('table.data-table')
+    dataTable('table.data-table');
+
+    //checkbox handling
+    $(".checkbox-all").click(function () {
+        $(".checkbox").prop('checked', $(this).prop('checked'));
+    });
+
+    $(".checkbox-row").click(function (e) {
+        if(event.target.nodeName.toLowerCase() !== 'input' ) {
+            $(this).find('.checkbox').prop('checked', !$(this).find('.checkbox').prop('checked'))
+        }
+    });
 });

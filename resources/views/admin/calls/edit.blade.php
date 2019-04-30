@@ -5,12 +5,13 @@
         <h2>Call {{$data['call']->id}}</h2>
         <div class="call">
             <h5>Client</h5>
-            <p>{{$data['call']->client_name()}}</p>
+            <p><a href="{{route('admin/clients') . '/'.$data['call']->client_id}}">{{$data['call']->client_name()}}</a></p>
             <h5>Schedule</h5>
-            <p>{{$data['call']->schedule->id}}</p>
+            <p><a href="{{route('admin/schedules') . '/' .$data['call']->schedule->id}}}">{{$data['call']->schedule->id}}</a></p>
             <h5>Completed</h5>
-            <p>{{$data['call']->completed_at ? $data['call']->completed_at : 'Not complete'}}</p>
-
+            <p>{{$data['call']->completed_at ? $data['call']->completed_at . ' by : ' . $data['call']->call_specialist()->name : 'Not complete'}}</p>
+            <h5>Due Date</h5>
+            <p>{{$data['call']->due_date}}</p>
             @if(!$data['call']->completed_at)
             <form id="edit-schedule-form" class="edit-form ajax" action="{{route('assignCall')}}" method="post">
                 @csrf
@@ -53,7 +54,6 @@
             @foreach($data['call']->assigned as $assigned)
                 specialists.push({{$assigned->specialist_id}});
             @endforeach
-            console.log(specialists);
             $(".specialists").val(specialists);
         </script>
     </div>

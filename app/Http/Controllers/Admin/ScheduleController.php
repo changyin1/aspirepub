@@ -7,6 +7,7 @@ use App\Client;
 use App\Http\Requests\CreateScheduleRequest;
 use App\QuestionTemplate;
 use App\Schedule;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -38,6 +39,9 @@ class ScheduleController extends Controller
 
         $clients = Client::all();
         $templates = QuestionTemplate::all();
+        $user = new User();
+        $coaches = $user->hasRole('coach');
+        $specialists = $user->hasRole('call_specialist');
 
         $edit = !$schedule->start_date->isPast() && !$schedule->finalized;
 
@@ -46,7 +50,9 @@ class ScheduleController extends Controller
             'clients' => $clients,
             'templates' => $templates,
             'calls' => $calls,
-            'edit' => $edit
+            'edit' => $edit,
+            'coaches' => $coaches,
+            'specialists' => $specialists,
         ];
 
         return view('admin.schedules.edit', [
