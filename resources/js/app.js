@@ -348,16 +348,16 @@ $(function () {
 
     //handle dataTable showing;
     function toggleTable(select) {
-        $('table').each(function() {
+        $('table.hidden').each(function() {
             $(this).parents('div.dataTables_wrapper').first().hide();
         });
         let week = $(select).val();
         $('table[data-week="' + week + '"]').parents('div.dataTables_wrapper').first().show();
     }
 
-    toggleTable($('#week-select-table'));
-    $('#week-select-table').on('change', function() {
-        toggleTable($('#week-select-table'));
+    toggleTable($('#week-select'));
+    $('#week-select').on('change', function() {
+        toggleTable($('#week-select'));
         $('.specialists').val(null).trigger('change');
     });
 
