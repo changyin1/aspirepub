@@ -34,6 +34,8 @@ Route::middleware(['auth:api'])->group(function(){
 
     Route::post('/admin/categories/create', 'Admin\CategoryController@Create')->name('createCategory');
 
+    Route::post('/admin/schedule/delete', 'Admin\ScheduleController@Delete')->name('deleteSchedule');
+
     Route::post('/admin/questions/create', 'Admin\QuestionController@Create')->name('createQuestion');
 
     Route::post('/admin/question_templates/create', 'Admin\QuestionTemplateController@Create')->name('createQuestionTemplate');

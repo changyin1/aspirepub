@@ -55,6 +55,8 @@
         </div>
         <input type="submit" data-message="Once you have finalized you can no longer edit are you sure you want to finalize this schedule?" class="btn btn-primary btn-submit submit-alert" data-field="finalized" value="Finalize">
         <input type="submit" class="btn btn-primary btn-submit" value="Save">
-        <input type="submit" class="btn btn-danger btn-delete" value="Delete">
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteScheduleModal">
+            Delete
+        </button>
     </div>
 </form>

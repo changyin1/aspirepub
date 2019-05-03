@@ -50,7 +50,7 @@ class ScheduleController extends Controller
         $user = new User();
         $coaches = $user->hasRole('coach');
 
-        $edit = !$schedule->start_date->isPast() && !$schedule->finalized;
+        $edit = !$schedule->finalized;
 
         $data = [
             'schedule' => $schedule,
@@ -101,9 +101,9 @@ class ScheduleController extends Controller
             throw $error;
         }
 
-        if ($schedule->start_date->isPast()) {
+        if ($schedule->finalized) {
             $error = \Illuminate\Validation\ValidationException::withMessages([
-                'schedule_id' => ['Cannot edit a past schedule'],
+                'schedule_id' => ['Cannot edit a finalized schedule'],
             ]);
             throw $error;
         }
@@ -113,7 +113,7 @@ class ScheduleController extends Controller
 
         if ($startDate->isPast()) {
             $error = \Illuminate\Validation\ValidationException::withMessages([
-                'date' => ['Cannot make a schedule in the past'],
+                'date' => ['Cannot set a schedule in the past'],
             ]);
             throw $error;
         }
@@ -139,5 +139,23 @@ class ScheduleController extends Controller
 
         }
         return response()->json(['success' => true]);
+    }
+
+    public function delete(Request $request) {
+        $request->validate([
+            'schedule_id' => 'required'
+        ]);
+
+        $schedule = Schedule::findorfail($request->schedule_id);
+
+        if ($schedule->finalized) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'schedule_id' => ['Cannot delete a finalized schedule'],
+            ]);
+            throw $error;
+        }
+
+        $schedule->delete();
+        return response()->json(['success' => true, 'redirect' => Route('admin/schedules')]);
     }
 }
