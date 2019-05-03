@@ -12,6 +12,15 @@
             <p>{{$data['call']->completed_at ? $data['call']->completed_at . ' by : ' . $data['call']->call_specialist()->name : 'Not complete'}}</p>
             <h5>Due Date</h5>
             <p>{{$data['call']->due_date}}</p>
+            <h5>Currently Assigned To</h5>
+            <p>
+                @if(!$data['assigned'])
+                    None
+                @endif
+                @foreach($data['assigned'] as $assigned)
+                    {{$assigned->name}}
+                @endforeach
+            </p>
             @if(!$data['call']->completed_at)
             <form id="edit-schedule-form" class="edit-form ajax" action="{{route('assignCall')}}" method="post">
                 @csrf
@@ -35,7 +44,7 @@
                         <label class="control-label select-label" for="coach">Coach</label>
                     </div>
                     <div class="form-group">
-                        <select class="specialists" name="specialists[]" multiple="multiple" data-placeholder="Specialists" style="width: 66.67%">
+                        <select id="specialists" class="specialists" name="specialists[]" multiple="multiple" data-placeholder="Specialists" style="width: 66.67%">
                         </select>
                         <label class="control-label select-label" for="specialist">Specialists</label>
                     </div>
@@ -45,12 +54,5 @@
             </form>
             @endif
         </div>
-        <script>
-            var specialists = [];
-            @foreach($data['call']->assigned as $assigned)
-                specialists.push({{$assigned->specialist_id}});
-            @endforeach
-            $(".specialists").val(specialists);
-        </script>
     </div>
 @endsection

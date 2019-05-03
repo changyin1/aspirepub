@@ -17,10 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['api'])->group(function(){
+Route::middleware(['auth:api'])->group(function(){
     Route::post('cities', 'Api\UtilitiesController@getCities');
     Route::post('availability', 'Api\AvailabilityController@submit');
     Route::get('availability', 'Api\AvailabilityController@get');
+    Route::post('/call/accept', 'Api\AvailabilityController@claimCall')->name('claimCall');
 
     Route::post('/admin/clients/create', 'Admin\ClientController@Create')->name('createClient');
 

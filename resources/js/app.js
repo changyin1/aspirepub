@@ -35,6 +35,12 @@ require('./bootstrap');
 // });
 
 $(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'Authorization': 'Bearer ' + $('meta[name="api_token"]').attr('content'),
+        }
+    });
     $("input").change(function () {
         "" != $(this).val() ? $(this).parent().addClass("filled") : $(this).parent().removeClass("filled")
     }),
@@ -363,7 +369,6 @@ $(function () {
 
     //checkbox handling
     $(".checkbox-all").click(function () {
-        console.log($(this));
         $(this).closest('table').find('.checkbox').prop('checked', $(this).prop('checked'));
     });
 

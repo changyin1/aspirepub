@@ -2,7 +2,7 @@
 
 @section('content')
    <div class="questions-page mt-4">
-       <h2>Questions for {{$data['template']->template_name ?? ''}}</h2>      
+       <h2>Questions for call: {{$data['call']->id}} Question Template: {{$data['template']->template_name ?? ''}}</h2>
        <hr class="gray"/>
        <div class="questions-list">
            @foreach ($data['questions'] as $question)

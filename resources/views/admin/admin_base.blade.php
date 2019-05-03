@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="api_token" content="{{ (Auth::user()) ? Auth::user()->api_token : '' }}">
     <title>Aspire</title>
 
     <!-- Latest compiled and minified CSS -->
@@ -36,7 +37,6 @@
 <script src='{{asset("vendor/fullcalendar-3.10.0/fullcalendar.js")}}'></script>
 <script src='{{asset("vendor/jquery-ui-1.12.1/jquery-ui.js")}}'></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 </body>
 </html>

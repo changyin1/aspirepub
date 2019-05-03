@@ -75,4 +75,38 @@ class Call extends Model
         $week = ($day - 1) / 7;
         return $week;
     }
+
+    public function due() {
+        if ($this->completed_at) {
+            return 1;
+        }
+        switch (true) {
+            case $this->due_date <= \Carbon\Carbon::now()->addDays(1):
+                return 3;
+                break;
+            case $this->due_date <= \Carbon\Carbon::now()->addDays(7):
+                return 2;
+                break;
+            default:
+                return 1;
+                break;
+        }
+    }
+
+    public function claimed() {
+        if ($this->call_specialist) {
+            return true;
+        }
+        return false;
+    }
+
+    public function scores() {
+        $scores = Score::where('call_id', $this->id)->get();
+        $scoreArray = [];
+        foreach ($scores as $score) {
+            $scoreArray[$score->question_id] = $score->score;
+        }
+
+        return $scoreArray;
+    }
 }

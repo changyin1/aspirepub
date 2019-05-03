@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CallAssignment;
 use Illuminate\Http\Request;
 use Auth;
 use App\Call;
@@ -14,8 +15,17 @@ class AgendaController extends Controller
     public function index(Request $request){
     	$user = Auth::user();
         $data['user'] = $user;
-        $data['calls'] = Call::with('client', 'schedule')->where('call_specialist', $user->id)->orWhere('coach', $user->id)->orderBy('due_date', 'asc')->get();
-        //$data['items'] = [1,2,3];
+        $calls = Call::with('client', 'schedule')->where('call_specialist', $user->id)->orWhere('coach', $user->id)->orderBy('due_date', 'asc')->get();
+
+        //get assigned calls
+        $assigned = Call::join('call_assignments', function($join) use ($user) {
+            $join->on('calls.id', '=', 'call_assignments.call_id')
+                ->where('call_assignments.specialist_id', '=', $user->id);
+        })->with('client', 'schedule')->get();
+
+        $allCalls = $assigned->merge($calls);
+        $data['calls'] = $allCalls->sortBy('due_date');
+
         return view('agenda.index', [
             'data' => $data
         ]);
@@ -24,7 +34,7 @@ class AgendaController extends Controller
     public function detail($id) {
         $user = Auth::user();
         $data['user'] = $user;
-        $data['calls'] = Call::with('client', 'schedule')->find($id);
+        $data['call'] = Call::with('client', 'schedule')->find($id);
        //dd($data);
         return view('agenda.detail', [
             'data' => $data

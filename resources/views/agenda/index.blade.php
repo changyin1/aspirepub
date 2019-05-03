@@ -5,7 +5,7 @@
        <h2>Call Agenda for {{$data['user']->name ?? ''}}</h2>
        <div class="form-group">
            <label for="view">View</label>
-           <select name="view">
+           <select name="view" id="agenda-view">
                <option value="1">All</option>
                <option value="2">Due This Week</option>
                <option value="3">Due Tomorrow</option>
@@ -13,10 +13,13 @@
        </div>
        <hr class="gray"/>
        <div class="agenda-list">
-           @foreach($data['calls'] as $agenda)
-               <div class="agenda-item">
-                   <div class="agenda-item-header">
-                       {{$agenda['client']->name}} | {{$agenda['client']->city}}
+           @foreach($data['calls'] as $call)
+               <div class="agenda-item" data-item="{{$call->due()}}">
+                   <div class="agenda-item-header row">
+                       <div class="col-11">{{$call['client']->name}} | {{$call['client']->city}}</div>
+                       @if(!$call->claimed())
+                       <div class="col-1 align-right"><button class="btn btn-success claim-call-btn" data-call="{{$call->id}}" data-url="{{route('claimCall')}}">Accept</button></div>
+                       @endif
                    </div>
                    <hr/>
                    <div class="agenda-item-details">
@@ -34,18 +37,53 @@
                        </div>
                    </div>
                    <div class="agenda-item-footer">
-                       @if($agenda['schedule']->end_date <= \Carbon\Carbon::now()->addDays(1))
+                       @if($call->completed_at)
+                           <div class="due-date success">Completed: {{date_format(date_create($call->completed_at), 'Y-m-d')}}
+                       @elseif($call->due_date <= \Carbon\Carbon::now()->addDays(1))
                            <div class="due-date danger"><span><i class="fas fa-exclamation-circle"></i> Due Tomorrow</span>
-                       @elseif($agenda['schedule']->end_date <= \Carbon\Carbon::now()->addDays(7))
+                       @elseif($call->due_date <= \Carbon\Carbon::now()->addDays(7))
                            <div class="due-date caution"><span><i class="fas fa-exclamation-circle"></i> Due This Week</span>
                        @else
-                           <div class="due-date">Due Date: {{$agenda->due_date}}
+                           <div class="due-date">Due Date: {{$call->due_date}}
                        @endif
-                       <a href="/schedule/detail/{{$agenda['id']}}">View Details</a>
+                       <a href="/schedule/detail/{{$call['id']}}">View Details</a>
                        </div>
                    </div>
                </div>
            @endforeach
        </div>
    </div>
+   <script type="text/javascript">
+       $(document).ready(function () {
+           $('#agenda-view').on('change', function (){
+               if ($(this).val() == 1) {
+                   $('.agenda-item').show();
+               } else {
+                   $('.agenda-item').hide();
+                   $('.agenda-item[data-item="'+ $(this).val()  +'"]').show();
+               }
+           });
+           $('.claim-call-btn').click(function (e) {
+               e.preventDefault();
+               let $this = $(this);
+               $.ajax({
+                   type: "POST",
+                   url: $(this).data('url'),
+                   data: { id: $(this).data('call')},
+                   success: function (response) {
+                       if (response.success) {
+                           alert('Successfully claimed this call assignment')
+                           $this.hide();
+                       } else {
+                           alert('Error claiming call, this assignment may have been claimed already please try again')
+                       }
+                       $(this).hide();
+                   },
+                   error: function (response) {
+                       alert('Error claiming call, this assignment may have been claimed already please try again')
+                   }
+               });
+           });
+       });
+   </script>
 @endsection

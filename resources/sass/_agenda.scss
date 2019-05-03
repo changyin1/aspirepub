@@ -44,6 +44,10 @@
       display: flex;
       justify-content: space-between;
     }
+    .success {
+      background-color: $success-bg;
+      color: $success-font;
+    }
     .danger {
       background-color: $danger-bg;
       color: $danger-font;

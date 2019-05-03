@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Call;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -11,7 +12,8 @@ class AvailabilityController extends Controller
 {
     public function submit(Request $request) {
 		//TODO check user id has permission
-		$user_id = $request->input('userID');
+        $user = Auth::user();
+		$user_id = $user->id;
 
 		// store date as 1st of the week e.g. week 2 stored as the 8th
     	$date = date('Y-m-d',strtotime($request->input('date')));
@@ -60,5 +62,19 @@ class AvailabilityController extends Controller
 
         // now return
         return $w;
+    }
+
+    public function claimCall(Request $request) {
+        if (!$request->id) {
+            return response()->json(['success' => false]);
+        }
+        $call = Call::where('id', $request->id)->first();
+        if ($call->claimed()) {
+            return response()->json(['success' => false]);
+        }
+        $user = Auth::user();
+        $call->call_specialist = $user->id;
+        $call->save();
+        return response()->json(['success' => true]);
     }
 }

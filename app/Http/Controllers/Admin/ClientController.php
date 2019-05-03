@@ -7,7 +7,6 @@ use App\Client;
 use App\Company;
 use App\Region;
 use App\Http\Requests\NewClientRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ClientController extends Controller

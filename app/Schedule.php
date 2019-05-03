@@ -37,6 +37,13 @@ class Schedule extends Model
         return '-';
     }
 
+    public function template_name() {
+        if ($this->questiontemplate) {
+            return $this->questiontemplate->template_name;
+        }
+        return '-';
+    }
+
     public function finalize() {
         $numberOfCalls = $this->calls;
         for($i = 1; $i <= $numberOfCalls; $i++) {

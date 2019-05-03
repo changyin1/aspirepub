@@ -26,8 +26,10 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/settings', 'SettingsController@index')->name('settings');
     Route::get('/toggle-availability/{date}/{available}', 'AvailabilityController@toggleAvailability')->name('toggle-availability');
 
-    Route::get('/questions/template/{id}', 'QuestionsController@view_questions');
-    Route::get('/questions/score/template/{id}', 'QuestionsController@score_questions');
+    Route::get('/questions/call/{id}', 'QuestionsController@viewQuestions');
+    Route::get('/questions/score/call/{id}', 'QuestionsController@scoreQuestionsView');
+
+    Route::post('/call/score', 'QuestionsController@scoreQuestions')->name('scoreCall');
 
     Route::get('/store', 'AgendaController@upload_selector')->name('get_store');
     Route::post('/store', 'AgendaController@store_file')->name('store');

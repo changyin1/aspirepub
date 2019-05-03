@@ -18,7 +18,7 @@
                    <div class="agenda-list">
                            <div class="agenda-item">
                                <div class="agenda-item-header">
-                                   {{$data['calls']['client']->name}} | {{$data['calls']['client']->city}}
+                                   {{$data['call']['client']->name}} | {{$data['call']['client']->city}}
                                </div>
                                <hr/>
                                <div class="agenda-item-details">
@@ -36,14 +36,16 @@
                                    </div>
                                </div>
                                <div class="agenda-item-footer">
-                                   @if($data['calls']['schedule']->end_date <= \Carbon\Carbon::now()->addDays(1))
+                                   @if($data['call']->completed_at)
+                                       <div class="due-date success">Completed: {{date_format(date_create($data['call']->completed_at), 'Y-m-d')}}
+                                   @elseif($data['call']->due_date <= \Carbon\Carbon::now()->addDays(1))
                                        <div class="due-date danger"><span><i class="fas fa-exclamation-circle"></i> Due Tomorrow</span>
-                                           @elseif($data['calls']['schedule']->end_date <= \Carbon\Carbon::now()->addDays(7))
-                                               <div class="due-date caution"><span><i class="fas fa-exclamation-circle"></i> Due This Week</span>
-                                                   @else
-                                                       <div class="due-date">Due Date: {{$data['calls']->due_date}}
-                                                           @endif
-                                                           <a href="/schedule">Hide Details</a>
+                                   @elseif($data['call']->due_date <= \Carbon\Carbon::now()->addDays(7))
+                                       <div class="due-date caution"><span><i class="fas fa-exclamation-circle"></i> Due This Week</span>
+                                   @else
+                                       <div class="due-date">Due Date: {{$data['call']->due_date}}
+                                   @endif
+                                       <a href="/schedule">Hide Details</a>
                                    </div>
                                </div>
                            </div>
@@ -58,18 +60,18 @@
                        </button>
                    </div>
                    -->
-                   <h5 class="form-heading">Call details for {{$data['calls']['client']->name}}</h5>
+                   <h5 class="form-heading">Call details for {{$data['call']['client']->name}}</h5>
                    <hr class="mb-4">
                    <div class="form-group form-row">
                        <label class="col-md-4 control-label" for="Contact">Client</label>
                        <div class="col-md-4">
-                           {{$data['calls']['client']->name}}
+                           {{$data['call']['client']->name}}
                        </div>
                    </div>
                    <div class="form-group form-row">
                        <label class="col-md-4 control-label" for="Contact">Location</label>
                        <div class="col-md-4">
-                           {{$data['calls']['client']->city}}
+                           {{$data['call']['client']->city}}
                        </div>
                    </div>
                    <div class="form-group form-row">
@@ -93,7 +95,7 @@
                    <div class="form-group form-row">
                        <label class="col-md-4 control-label" for="Contact">Status</label>
                        <div class="col-md-4">
-                           @if(empty($data['calls']['completed_at']))
+                           @if(empty($data['call']['completed_at']))
                                Scheduled
                                @else
                            Completed
@@ -103,7 +105,7 @@
                    <div class="form-group form-row">
                        <label class="col-md-4 control-label" for="Contact">Due Date</label>
                        <div class="col-md-4">
-                           {{$data['calls']['schedule']->end_date}}
+                           {{$data['call']['schedule']->end_date}}
                        </div>
                    </div>
                    <form action="/schedule/post" method="post" class="form-horizontal">@
@@ -112,13 +114,13 @@
                            <div class="form-group form-row">
                                <label class="col-md-4 control-label" for="Contact">contact</label>
                                <div class="col-md-4">
-                                   <input id="Contact" name="Contact" type="text" placeholder="Input Contact Name" class="form-control input-md" value="@if (!empty($data['calls']->agent_name)) {{ ucfirst(trans($data['calls']->agent_name)) }} @endif">
+                                   <input id="Contact" name="Contact" type="text" placeholder="Input Contact Name" class="form-control input-md" value="@if (!empty($data['call']->agent_name)) {{ ucfirst(trans($data['call']->agent_name)) }} @endif">
                                </div>
                            </div>
                            <div class="form-group form-row">
                                <label class="col-md-4 control-label" for="calltime">Call Time (at hotel)</label>
                                <div class="col-md-4">
-                                   <input id="calltime" name="calltime" type="text" placeholder="Enter Time" class="form-control input-md" value="{{$data['calls']->completed_at}}">
+                                   <input id="calltime" name="calltime" type="text" placeholder="Enter Time" class="form-control input-md" value="{{$data['call']->completed_at}}">
                                </div>
                            </div>
                            <div class="form-group form-row">
@@ -136,7 +138,7 @@
                            <div class="form-group form-row">
                                <label class="col-md-4 control-label" for="caller_notes">Caller Notes</label>
                                <div class="col-md-4">
-                                   <textarea id="caller_notes" name="caller_notes" class="input-file">{{$data['calls']->caller_notes}}</textarea>
+                                   <textarea id="caller_notes" name="caller_notes" class="input-file">{{$data['call']->caller_notes}}</textarea>
                                </div>
                            </div>
                            <div class="form-group form-row">
@@ -150,12 +152,12 @@
                            <div class="form-group form-row">
                                <div class="col-md-4">
                                    <input class="btn btn-primary" type="submit" value="POST CALL">
-                                   <a  class="btn btn-primary" href="/questions/template/{{$data['calls']['Schedule']->questionstemplates_id}}">VIEW QUESTIONS</a>
+                                   <a class="btn btn-primary" target="_blank" href="/questions/template/{{$data['call']->id}}">VIEW QUESTIONS</a>
                                </div>
                            </div>
 
                        </fieldset>
-                       <input type="hidden" name="call_id" value="{{$data['calls']->id}}">
+                       <input type="hidden" name="call_id" value="{{$data['call']->id}}">
                    </form>
                </div>
            </div>

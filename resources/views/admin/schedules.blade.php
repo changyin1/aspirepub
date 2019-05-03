@@ -20,6 +20,7 @@
                         <th>#</th>
                         <th>Client</th>
                         <th>Date</th>
+                        <th>Question Template</th>
                         <th>Number of Calls</th>
                         <th>Finalized</th>
                     </tr>
@@ -30,6 +31,7 @@
                             <td>{{$schedule->id}}</td>
                             <td>{{$schedule->client_name()}}</td>
                             <td>{{date_format($schedule->start_date, 'F Y')}}</td>
+                            <td>{{$schedule->template_name()}}</td>
                             <td>{{$schedule->calls}}</td>
                             <td>{{$schedule->finalized ? 'Yes' : 'No'}}</td>
                         </tr>

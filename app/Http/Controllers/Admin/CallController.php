@@ -18,10 +18,16 @@ class CallController extends Controller
         $call = Call::where('id', $id)->first();
         $user = new User();
         $coaches = $user->hasRole('coach');
+        $assignedIds = CallAssignment::where('call_id', $id)->get();
+        $assigned = [];
+        foreach($assignedIds as $assignId) {
+            $assigned[] = User::where('id', $assignId->specialist_id)->first();
+        }
 
         $data = [
             'call' => $call,
             'coaches' => $coaches,
+            'assigned' => $assigned,
             'save' => false
         ];
 

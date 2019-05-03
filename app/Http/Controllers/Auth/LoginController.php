@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -38,20 +39,17 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    /*
-    public function authenticated(Request $request, $user)
+
+    public function authenticated(Request $request)
     {
-        if($request->get('continue')){
-            return redirect($request->get('continue'));
-        }
+        $token = Str::random(60);
 
-        if($user->type === \User::TYPE_MEMBER){
-            return redirect('https://iwantfanclub.com');
-        }
+        $request->user()->forceFill([
+            'api_token' => hash('sha256', $token),
+        ])->save();
 
-        return false;
     }
-*/
+
     public function showLoginForm(Request $request)
     {
         return view('auth.login', [
