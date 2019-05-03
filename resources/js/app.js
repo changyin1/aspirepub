@@ -274,6 +274,9 @@ $(function () {
                     self.closest('.modal').modal('hide');
                     self.find('.btn-submit').attr('disabled', false);
                     $('#successModal').modal('show');
+                    if (response.redirect) {
+                        $('body').append('<input type="hidden" id="redirect" value="'+ response.redirect + '">')
+                    }
                 } else {
                     self.find('.btn-submit').attr('disabled', false).html('Submit');
                     self.find('.errors').append('<div class="alert alert-danger">Error submitting. Please try again later.</div>')
@@ -290,7 +293,11 @@ $(function () {
 
     //refresh on success modal
     $('#successModal .btn-primary').click(function (e) {
-        location.reload();
+        if ($('#redirect').val()) {
+            window.location.replace($('#redirect').val());
+        } else {
+            location.reload();
+        }
     });
 
     //handle ajax forms

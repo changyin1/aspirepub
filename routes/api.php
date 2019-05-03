@@ -23,6 +23,9 @@ Route::middleware(['auth:api'])->group(function(){
     Route::get('availability', 'Api\AvailabilityController@get');
     Route::post('/call/accept', 'Api\AvailabilityController@claimCall')->name('claimCall');
 
+    Route::post('/admin/users/create', 'Admin\RegisterController@register')->name('createUser');
+    Route::post('/admin/user/delete', 'AdminController@deleteUser')->name('deleteUser');
+
     Route::post('/admin/clients/create', 'Admin\ClientController@Create')->name('createClient');
 
     Route::post('/admin/companies/create', 'Admin\CompanyController@Create')->name('createCompany');

@@ -42,6 +42,9 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::post('admin/import-process', 'AdminController@processImport')->name('admin/import-process');
 
     Route::get('/admin/users', 'AdminController@users')->name('admin/users');
+    Route::get('/admin/users/{id}', 'AdminController@editUser')->name('admin/users/edit');
+    Route::post('/admin/users/update/{id}', 'AdminController@updateUser')->name('admin/users/update');
+
     Route::get('/admin/clients', 'Admin\ClientController@index')->name('admin/clients');
     Route::get('/admin/clients/{id}', 'Admin\ClientController@show')->name('admin/clients/show');
     Route::post('/admin/clients/edit/{id}', 'Admin\ClientController@edit')->name('admin/clients/edit');

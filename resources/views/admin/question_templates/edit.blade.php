@@ -48,5 +48,5 @@
         </div>
     </div>
     @include('admin/modals/add_question_modal')
-    @include('admin/modals/alert_modal', ['title' => 'Removing question from template', 'formRoute' => route('addQuestionToTemplate'), 'hiddenValues' => ['template_id' => $data['template']->id]])
+    @include('admin/modals/alert_modal', ['title' => 'Removing question from template', 'formRoute' => route('addQuestionToTemplate'), 'hiddenValues' => ['template_id' => $data['template']->id], 'modalId' => 'removeQuestionFromTemplateModal'])
 @endsection

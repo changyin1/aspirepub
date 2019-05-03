@@ -9,6 +9,8 @@ use App\Http\Requests\CsvImportRequest;
 use App\CsvData;
 use App\Question;
 use Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -24,6 +26,49 @@ class AdminController extends Controller
         return view('admin.users', [
             'data' => $data
         ]);
+    }
+
+    public function editUser($id) {
+        $data['user'] = User::findorfail($id);
+        $data['save'] = false;
+        return view('admin.users.edit', [
+            'data' => $data,
+        ]);
+    }
+
+    public function updateUser($id, Request $request) {
+        $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$id],
+            'role' => ['required', 'string', Rule::in(['admin', 'coach', 'call_specialist'])]
+        ]);
+
+        if ($request->password) {
+            $this->validate($request, [
+                'password' => ['required', 'string', 'min:6'],
+            ]);
+        }
+        $user = User::findorfail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->password) {
+            $user->password = Hash::make($request['password']);
+        }
+        $user->role = $request->role;
+        $user->save();
+
+        $data = [
+            'user' => $user,
+            'save' => true
+        ];
+        return view('admin.users.edit', [
+            'data' => $data,
+        ]);
+    }
+
+    public function deleteUser(Request $request) {
+        $user = User::findorfail($request->user_id)->delete();
+        return response()->json(['success' => true, 'redirect' => Route('admin/users')]);
     }
 
     public function uploadQuestions() {

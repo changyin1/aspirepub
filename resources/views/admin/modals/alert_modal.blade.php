@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="removeQuestionFromTemplateModal" tabindex="-1" role="dialog" aria-labelledby="removeQuestionFromTemplateModal"
+<div class="modal fade" id="{{$modalId}}" tabindex="-1" role="dialog" aria-labelledby="removeQuestionFromTemplateModal"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
