@@ -76,6 +76,13 @@ class Call extends Model
         return $week;
     }
 
+    public function assignmentDate() {
+        $monthDay = Carbon::parse($this->due_date)->format('Y-m');
+        $day = Carbon::parse($this->due_date)->subDays(7)->format('d');
+
+        return $monthDay . '-' . $day;
+    }
+
     public function due() {
         if ($this->completed_at) {
             return 1;

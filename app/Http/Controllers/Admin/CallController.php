@@ -74,6 +74,12 @@ class CallController extends Controller
             ]);
             throw $error;
         }
+        if (!$request->calls) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'calls' => ['No calls selected'],
+            ]);
+            throw $error;
+        }
 
         $call_ids = explode(',', $request->calls);
         if ($request->type == 'coach') {
@@ -95,11 +101,18 @@ class CallController extends Controller
 
                     if ($request->specialists) {
                         foreach($request->specialists as $specialist_id) {
-                            $callAssignment = new CallAssignment;
-                            $callAssignment->call_id = $call_id;
-                            $callAssignment->specialist_id = $specialist_id;
+                            //check if call specialist is available
+                            $call = Call::where('id', $call_id)->first();
+                            $date = $call->assignmentDate();
+                            $available = Availability::where('available', 1)->where('user_id', $specialist_id)->where('date', $date)->first();
 
-                            $callAssignment->save();
+                            if ($available) {
+                                $callAssignment = new CallAssignment;
+                                $callAssignment->call_id = $call_id;
+                                $callAssignment->specialist_id = $specialist_id;
+
+                                $callAssignment->save();
+                            }
                         }
                     }
 
@@ -113,7 +126,7 @@ class CallController extends Controller
     }
 
     public function getAvailable(Request $request) {
-        if(!in_array($request->week, [1, 2, 3, 4])) {
+        if(!in_array($request->week, [0, 1, 2, 3, 4])) {
             $error = \Illuminate\Validation\ValidationException::withMessages([
                 'week' => ['Invalid Week'],
             ]);
@@ -129,20 +142,32 @@ class CallController extends Controller
         }
 
         $scheduleYearMonth = substr($schedule->start_date, 0,7);
-        $scheduleDay = $request->week * 7 - 6;
 
-        $date = $scheduleYearMonth . '-' . sprintf('%02d', $scheduleDay);
+        if ($request->week == 0) {
+            $dates = [];
+            for ($i = 1; $i <= 4; $i++) {
+                $scheduleDay = $i * 7 - 6;
+                $dates[] = $scheduleYearMonth . '-' . sprintf('%02d', $scheduleDay);
+            }
+            $available = Availability::where('available', 1)->whereIn('date', $dates)->get();
+        } else {
+            $scheduleDay = $request->week * 7 - 6;
 
-        $available = Availability::where('available', 1)->where('date', '=', $date)->get();
+            $date = $scheduleYearMonth . '-' . sprintf('%02d', $scheduleDay);
+
+            $available = Availability::where('available', 1)->where('date', '=', $date)->get();
+        }
 
         if ($available->isEmpty()) {
             return response()->json(['success' => true, 'results' => []]);
         }
 
         $results = [];
-        foreach ($available as $key => $specialist) {
+        foreach ($available as $specialist) {
             $user = User::where('id', $specialist->user_id)->first();
-            $results[$key] = ['id' => $user->id, 'text' => $user->name];
+            if (!in_array(['id' => $user->id, 'text' => $user->name], $results)) {
+                $results[] = ['id' => $user->id, 'text' => $user->name];
+            }
         }
         return response()->json(['success' => true, 'results' => $results]);
     }

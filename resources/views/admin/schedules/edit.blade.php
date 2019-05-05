@@ -29,7 +29,8 @@
                                 <input type="hidden" id="availability-url" value="{{route('getAvailable')}}">
                                 <label class="control-label select-label" for="week">Week</label>
                                 <select class="week" name="week" data-placeholder="Week" id="week-select" style="width: 97%">
-                                    <option value="1" selected>1</option>
+                                    <option value="0" selected>All</option>
+                                    <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
@@ -47,6 +48,7 @@
                             <form id="assign-specialist-form" class="assign-form ajax" data-type="specialist"
                                   action="{{route('assignCalls')}}" method="post">
                                 @csrf
+                                <div class="errors"></div>
                                 <div class="form-group" style="margin-bottom:0">
                                     <select class="specialists" name="specialists[]" multiple="multiple"
                                             data-placeholder="No Specialist Selected" style="width: 95%">
@@ -72,6 +74,45 @@
                             </form>
                         </div>
                     </div>
+                    <table class="data-table hidden" data-week="0" data-searchable="false">
+                        <thead>
+                        <tr>
+                            <th><input class="checkbox-all" type="checkbox"></th>
+                            <th>#</th>
+                            <th>Client</th>
+                            <th>Due Date</th>
+                            <th>Completed</th>
+                            <th>Assigned</th>
+                            <th>Completed By</th>
+                            <th>Coach</th>
+                            <th>Edit</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($data['sortedCalls'] as $calls)
+                            @foreach($calls as $call)
+                                <tr class="checkbox-row">
+                                    <td><input class="checkbox" type="checkbox" name="call-id" value="{{$call->id}}"></td>
+                                    <td>{{$call->id}}</td>
+                                    <td>{{$call->client_name()}}</td>
+                                    <td>{{$call->due_date}}</td>
+                                    <td>{{$call->completed_at ? $call->completed_at : ''}}</td>
+                                    <td>
+                                        @foreach($call->assigned as $index => $assigned)
+                                            @if($index !== 0)
+                                                {{', '}}
+                                            @endif
+                                            {{$assigned->specialist()->name}}
+                                        @endforeach
+                                    </td>
+                                    <td>{{$call->call_specialist() ? $call->call_specialist()->name : ''}}</td>
+                                    <td>{{$call->coach() ? $call->coach()->name : ''}}</td>
+                                    <td><a href="{{route('admin/calls') . '/'.$call->id}}">Edit</a></td>
+                                </tr>
+                            @endforeach
+                        @endforeach
+                        </tbody>
+                    </table>
                     @foreach($data['sortedCalls'] as $index => $calls)
                         <table class="data-table hidden" data-week="{{$index}}" data-searchable="false">
                             <thead>
