@@ -24,15 +24,18 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/schedule/post', 'AgendaController@post');
     Route::get('/availability', 'AvailabilityController@index')->name('availability');
     Route::get('/settings', 'SettingsController@index')->name('settings');
+    Route::post('/settings/save', 'SettingsController@save')->name('saveSettings');
     Route::get('/toggle-availability/{date}/{available}', 'AvailabilityController@toggleAvailability')->name('toggle-availability');
 
     Route::get('/questions/call/{id}', 'QuestionsController@viewQuestions');
-    Route::get('/questions/score/call/{id}', 'QuestionsController@scoreQuestionsView');
-
-    Route::post('/call/score', 'QuestionsController@scoreQuestions')->name('scoreCall');
 
     Route::get('/store', 'AgendaController@upload_selector')->name('get_store');
     Route::post('/store', 'AgendaController@store_file')->name('store');
+});
+
+Route::middleware(['auth', 'coach'])->group(function() {
+    Route::get('/questions/score/call/{id}', 'QuestionsController@scoreQuestionsView')->name('scoreCallView');
+    Route::post('/call/score', 'QuestionsController@scoreQuestions')->name('scoreCall');
 });
 
 Route::middleware(['auth', 'admin'])->group(function() {

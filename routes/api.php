@@ -22,7 +22,9 @@ Route::middleware(['auth:api'])->group(function(){
     Route::post('availability', 'Api\AvailabilityController@submit');
     Route::get('availability', 'Api\AvailabilityController@get');
     Route::post('/call/accept', 'Api\AvailabilityController@claimCall')->name('claimCall');
+});
 
+Route::middleware(['auth:api', 'admin'])->group(function(){
     Route::post('/admin/users/create', 'Admin\RegisterController@register')->name('createUser');
     Route::post('/admin/user/delete', 'AdminController@deleteUser')->name('deleteUser');
 
