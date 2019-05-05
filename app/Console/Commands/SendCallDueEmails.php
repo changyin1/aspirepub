@@ -60,6 +60,6 @@ class SendCallDueEmails extends Command
             }
         }
 
-        Log::info('Sending call due emails for cals due: '. $tomorrow);
+        Log::info('Sending call due emails for calls due: '. $tomorrow);
     }
 }
