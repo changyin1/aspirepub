@@ -15,7 +15,11 @@
            <input type="hidden" name="id" value="{{$data['call']->id}}">
            <input type="hidden" id="redirect" value="{{route('schedule')}}">
            <div class="form-body">
-               {{--<input name="file" id="file" type="file">--}}
+               <div class="form-group">
+                   <label class="control-label select-label" for="link">File Link</label>
+                   <input type="text" name="link" id="link" placeholder="Drop box link">
+               </div>
+               <input name="file" id="file" type="file">
                <input type="submit" value="Mark Call As Done">
            </div>
        </form>

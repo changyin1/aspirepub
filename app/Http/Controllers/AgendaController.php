@@ -73,17 +73,17 @@ class AgendaController extends Controller
 
     public function store_file(Request $request) {
         //dd($request);
-        $file = $request->file('recording');
-        $recordingFileName = 'test_' . time() . '.' . $file->getClientOriginalExtension();        
+        $file = $request->file('file');
+        $recordingFileName = 'call_' . $request->id . '_' . time() . '.' . $file->getClientOriginalExtension();
 
         $s3 = \Storage::disk('s3');
         $filePath = '/recordings/' . $recordingFileName;
         $s3->put($filePath, file_get_contents($file), 'public');
 
         $recording = new Recording;
-        $recording->call_id = 1;    
+        $recording->call_id = $request->id;
         $recording->filename = $recordingFileName;
-        $recording->path = 'https://s3-us-west-2.amazonaws.com/aspiremarketing/recordings/';
+        $recording->path = 'https://s3-us-east-2.amazonaws.com/aspiremarketing/recordings/';
         $recording->save();
         /*
         $my_file = 'test_import.csv';
@@ -100,6 +100,28 @@ class AgendaController extends Controller
     public function completeCall(Request $request) {
         $user = Auth::user();
         $call = Call::findorfail($request->id);
+
+        if ($request->link) {
+            $recording = new Recording;
+            $recording->call_id = $request->id;
+            $recording->filename = $request->link;
+            $recording->path = 'link';
+            $recording->save();
+        } elseif ($request->file('file')) {
+            $file = $request->file('file');
+            $recordingFileName = 'call_' . $request->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+
+            $s3 = \Storage::disk('s3');
+            $filePath = '/recordings/' . $recordingFileName;
+            $s3->put($filePath, file_get_contents($file), 'public');
+
+            $recording = new Recording;
+            $recording->call_id = $request->id;
+            $recording->filename = $recordingFileName;
+            $recording->path = 'https://s3-us-east-2.amazonaws.com/aspiremarketing/recordings/';
+            $recording->save();
+        }
+
         $now = Carbon::now();
         $call->completed_at = $now;
         $call->save();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Recording;
 use App\Score;
 use Illuminate\Http\Request;
 use \App\QuestionTemplate;
@@ -27,6 +28,14 @@ class QuestionsController extends Controller
 
     public function scoreQuestionsView($id) {
         $call = Call::where('id', $id)->with('schedule')->first();
+        $recording = Recording::where('call_id', $id)->first();
+        if ($recording) {
+            if ($recording->path == 'link') {
+                $link = $recording->filename;
+            } else {
+                $link = $recording->path . $recording->filename;
+            }
+        }
         $template_id = $call->schedule->questionstemplates_id;
         $qt = QuestionTemplate::findorfail($template_id);
 
@@ -34,7 +43,8 @@ class QuestionsController extends Controller
             'call' => $call,
             'template' => $qt,
             'questions' => $qt->allQuestions(),
-            'scores' => $call->scores()
+            'scores' => $call->scores(),
+            'recording' => $link
         ];
 
         return view('questions.score_questions', [
