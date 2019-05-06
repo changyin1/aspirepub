@@ -27,7 +27,7 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/settings/save', 'SettingsController@save')->name('saveSettings');
     Route::get('/toggle-availability/{date}/{available}', 'AvailabilityController@toggleAvailability')->name('toggle-availability');
 
-    Route::get('/questions/call/{id}', 'QuestionsController@viewQuestions');
+    Route::get('/questions/call/{id}', 'QuestionsController@viewQuestions')->name('viewQuestions');
 
     Route::get('/store', 'AgendaController@upload_selector')->name('get_store');
     Route::post('/store', 'AgendaController@store_file')->name('store');

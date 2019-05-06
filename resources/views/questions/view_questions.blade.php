@@ -10,12 +10,15 @@
            @endforeach
        </div>
        <h4 class="form-heading">Upload Call Recording</h4>
-       <form method="post" action="/store" enctype="multipart/form-data">
+       <form class="ajax" method="post" action="{{route('completeCall')}}" enctype="multipart/form-data">
            @csrf
+           <input type="hidden" name="id" value="{{$data['call']->id}}">
+           <input type="hidden" id="redirect" value="{{route('schedule')}}">
            <div class="form-body">
-               <input name="file" id="file" type="file">
-               <input type="submit" value="submit">
+               {{--<input name="file" id="file" type="file">--}}
+               <input type="submit" value="Mark Call As Done">
            </div>
        </form>
    </div>
+   @include('admin.modals.success_modal')
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CallAssignment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
 use App\Call;
@@ -96,4 +97,13 @@ class AgendaController extends Controller
         return redirect('/store');
     }
 
+    public function completeCall(Request $request) {
+        $user = Auth::user();
+        $call = Call::findorfail($request->id);
+        $now = Carbon::now();
+        $call->completed_at = $now;
+        $call->save();
+
+        return response()->json(['success' => true]);
+    }
 }

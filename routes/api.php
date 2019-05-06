@@ -22,6 +22,7 @@ Route::middleware(['auth:api'])->group(function(){
     Route::post('availability', 'Api\AvailabilityController@submit');
     Route::get('availability', 'Api\AvailabilityController@get');
     Route::post('/call/accept', 'Api\AvailabilityController@claimCall')->name('claimCall');
+    Route::post('/call/complete', 'AgendaController@completeCall')->name('completeCall');
 });
 
 Route::middleware(['auth:api', 'admin'])->group(function(){
