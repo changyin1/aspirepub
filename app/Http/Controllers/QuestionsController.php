@@ -29,6 +29,7 @@ class QuestionsController extends Controller
     public function scoreQuestionsView($id) {
         $call = Call::where('id', $id)->with('schedule')->first();
         $recording = Recording::where('call_id', $id)->first();
+        $link = '';
         if ($recording) {
             if ($recording->path == 'link') {
                 $link = $recording->filename;
