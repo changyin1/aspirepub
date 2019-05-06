@@ -29,6 +29,7 @@
                 <input type="hidden" id="week-select" value="{{$data['call']->week()}}">
                 <input type="hidden" id="availability-url" value="{{route('getAvailable')}}">
                 <input type="hidden" id="id" name="id" value="{{$data['call']->id}}">
+                <input type="hidden" id="redirect" value="{{route('admin/schedules/edit', ['id' => $data['call']->schedule->id])}}">
                 <div class="form-body">
                     <div class="form-group">
                         <select class="coach" name="coach" data-placeholder="Coach" style="width: 66.67%">

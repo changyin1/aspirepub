@@ -15,7 +15,7 @@ use App\Http\Controllers\Controller;
 class CallController extends Controller
 {
     public function show($id) {
-        $call = Call::where('id', $id)->first();
+        $call = Call::findorfail($id);
         $user = new User();
         $coaches = $user->hasRole('coach');
         $assignedIds = CallAssignment::where('call_id', $id)->get();
