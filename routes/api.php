@@ -38,6 +38,8 @@ Route::middleware(['auth:api', 'admin'])->group(function(){
     Route::post('/admin/categories/create', 'Admin\CategoryController@Create')->name('createCategory');
 
     Route::post('/admin/schedule/delete', 'Admin\ScheduleController@Delete')->name('deleteSchedule');
+    Route::post('/admin/schedule/duplicate', 'Admin\ScheduleController@Duplicate')->name('duplicateSchedule');
+    Route::post('/admin/schedule/add', 'Admin\ScheduleController@addCalls')->name('addCalls');
 
     Route::post('/admin/questions/create', 'Admin\QuestionController@Create')->name('createQuestion');
 
@@ -48,6 +50,7 @@ Route::middleware(['auth:api', 'admin'])->group(function(){
     Route::post('/admin/availability', 'Admin\CallController@getAvailable')->name('getAvailable');
     Route::post('/admin/calls/assign', 'Admin\CallController@assign')->name('assignCall');
     Route::post('/admin/calls/mass-assign', 'Admin\CallController@multiAssign')->name('assignCalls');
+    Route::post('/admin/calls/delete', 'Admin\CallController@delete')->name('deleteCall');
     Route::post('/admin/schedule/create', 'Admin\ScheduleController@create')->name('createSchedule');
     Route::post('/admin/schedule/modify', 'Admin\ScheduleController@modify')->name('modifySchedule');
 });

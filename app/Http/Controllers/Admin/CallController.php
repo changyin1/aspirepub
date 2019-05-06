@@ -171,4 +171,15 @@ class CallController extends Controller
         }
         return response()->json(['success' => true, 'results' => $results]);
     }
+
+    public function delete(Request $request) {
+        $call = Call::findorfail($request->call_id);
+        $call->delete();
+
+        $assignments = CallAssignment::where('call_id', $request->call_id)->get();
+        foreach ($assignments as $assignment) {
+            $assignment->delete();
+        }
+        return response()->json(['success' => true]);
+    }
 }

@@ -29,7 +29,7 @@
                        </div>
                        <div class="agenda-item-detail">
                            <span>Phone Number</span>
-                           <span class="black-text">123-456-7890</span>
+                           <span class="black-text">{{$call['client']->phone_number}}</span>
                        </div>
                        <div class="agenda-item-detail">
                            <span>Call Amount</span>

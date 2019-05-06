@@ -31,6 +31,10 @@
                             <label class="control-label" for="reservation_contact">Reservation Contact</label>
                         </div>
                         <div class="form-group">
+                            <input name="phone" id="phone" class="form-control" type="text" value="">
+                            <label class="control-label" for="phone">Phone Number</label>
+                        </div>
+                        <div class="form-group">
                             <input name="cancellation_email" id="cancellation_email" class="form-control" type="text" value="">
                             <label class="control-label" for="cancellation_email">Cancellation Email</label>
                         </div>

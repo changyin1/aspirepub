@@ -50,9 +50,10 @@
                     </div>
                 </div>
                 <input type="submit" class="btn btn-primary btn-submit" value="Save">
-                <input type="submit" class="btn btn-danger btn-delete" value="Delete">
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteCallModal">Delete Call</button>
             </form>
             @endif
         </div>
     </div>
+    @include('admin/modals/alert_modal', ['title' => 'Delete Call: '.$data['call']->id, 'formRoute' => route('deleteCall'), 'hiddenValues' => ['call_id' => $data['call']->id], 'modalId' => 'deleteCallModal'])
 @endsection

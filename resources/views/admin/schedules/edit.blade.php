@@ -42,7 +42,16 @@
                 </div>
                 @if($data['sortedCalls'])
                     <br>
-                    <h4>Calls</h4>
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>Calls</h4>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-primary btn-submit" data-toggle="modal" data-target="#duplicateScheduleModal">Duplicate Schedule</button>
+                        </div>
+
+                    </div>
+                    <br>
                     <div class="row">
                         <div class="col-6">
                             <form id="assign-specialist-form" class="assign-form ajax" data-type="specialist"
@@ -72,6 +81,12 @@
                                 </div>
                                 <input class="btn btn-primary btn-submit" type="submit" value="Assign Coach">
                             </form>
+                        </div>
+                    </div>
+                <br>
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="btn btn-primary btn-submit" data-toggle="modal" data-target="#addCallModal">Add Calls</button>
                         </div>
                     </div>
                     <table class="data-table hidden" data-week="0" data-searchable="false">
@@ -157,4 +172,6 @@
         </div>
     </div>
     @include('admin/modals/alert_modal', ['title' => 'Delete Schedule: '.$data['schedule']->id, 'formRoute' => route('deleteSchedule'), 'hiddenValues' => ['schedule_id' => $data['schedule']->id], 'modalId' => 'deleteScheduleModal'])
+    @include('admin/modals/duplicate_schedule_modal')
+    @include('admin/modals/add_call_modal')
 @endsection

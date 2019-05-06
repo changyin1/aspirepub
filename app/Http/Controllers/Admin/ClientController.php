@@ -94,6 +94,7 @@ class ClientController extends Controller
         }
 
         $client->name = $request->name;
+        $client->phone_number = $request->phone;
         $client->city = $request->city;
         $client->country = $request->country;
         $client->reservation_contact = $request->reservation_contact;
@@ -161,6 +162,7 @@ class ClientController extends Controller
 
         $client = new Client;
         $client->name = $request->name;
+        $client->phone_number = $request->phone;
         $client->city = $request->city;
         $client->country = $request->country;
         $client->reservation_contact = $request->reservation_contact;

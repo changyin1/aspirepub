@@ -30,6 +30,10 @@
                         <label class="control-label" for="country">Country</label>
                     </div>
                     <div class="form-group">
+                        <input name="phone" id="phone" class="form-control" type="text" value="{{$data['client']->phone_number}}">
+                        <label class="control-label" for="phone">Phone Number</label>
+                    </div>
+                    <div class="form-group">
                         <input name="reservation_contact" id="reservation_contact" class="form-control" type="text" value="{{$data['client']->reservation_contact}}">
                         <label class="control-label" for="reservation_contact">Reservation Contact</label>
                     </div>

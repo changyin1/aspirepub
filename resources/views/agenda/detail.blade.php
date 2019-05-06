@@ -20,7 +20,7 @@
                                    </div>
                                    <div class="agenda-item-detail">
                                        <span>Phone Number</span>
-                                       <span class="black-text">123-456-7890</span>
+                                       <span class="black-text">{{$data['call']['client']->phone_number}}</span>
                                    </div>
                                    <div class="agenda-item-detail">
                                        <span>Call Amount</span>
@@ -75,15 +75,15 @@
                    <div class="form-group form-row">
                        <label class="col-md-4 control-label" for="Contact">Phone Number</label>
                        <div class="col-md-4">
-                           123-456-7890
+                           {{$data['call']['client']->phone_number}}
                        </div>
                    </div>
-                   <div class="form-group form-row">
-                       <label class="col-md-4 control-label" for="Contact">Call Amount</label>
-                       <div class="col-md-4">
-                           $15.00
-                       </div>
-                   </div>
+                   {{--<div class="form-group form-row">--}}
+                       {{--<label class="col-md-4 control-label" for="Contact">Call Amount</label>--}}
+                       {{--<div class="col-md-4">--}}
+                           {{--$15.00--}}
+                       {{--</div>--}}
+                   {{--</div>--}}
                    <div class="form-group form-row">
                        <label class="col-md-4 control-label" for="Contact">Status</label>
                        <div class="col-md-4">

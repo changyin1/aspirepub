@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Call;
 use App\Client;
 use App\Http\Requests\CreateScheduleRequest;
+use App\Http\Requests\DuplicateScheduleRequest;
 use App\QuestionTemplate;
 use App\Schedule;
 use App\User;
@@ -89,6 +90,14 @@ class ScheduleController extends Controller
 
     }
 
+    public function duplicate(DuplicateScheduleRequest $request) {
+        $schedule = Schedule::findorfail($request->schedule_id);
+        $startDate = Carbon::createFromFormat('d/m/Y', '01/'. $request->month .'/' . $request->year);
+        $endDate = Carbon::createFromFormat('d/m/Y', '28/'. $request->month .'/' . $request->year);
+        $schedule->duplicate($startDate, $endDate);
+        return response()->json(['success' => true]);
+    }
+
     public function modify(CreateScheduleRequest $request) {
         $request->validate([
             'schedule_id' => 'required'
@@ -157,5 +166,23 @@ class ScheduleController extends Controller
 
         $schedule->delete();
         return response()->json(['success' => true, 'redirect' => Route('admin/schedules')]);
+    }
+
+    public function addCalls(Request $request) {
+        if (!in_array($request->week, [1, 2, 3, 4])) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'week' => ['Invalid week selected'],
+            ]);
+            throw $error;
+        }
+        if ($request->number <= 0) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'calls' => ['Must submit at least 1 call'],
+            ]);
+            throw $error;
+        }
+        $schedule = Schedule::findorfail($request->schedule_id);
+        $schedule->addCalls($request->number, $request->week);
+        return response()->json(['success' => true]);
     }
 }
