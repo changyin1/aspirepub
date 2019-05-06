@@ -37,7 +37,7 @@
                        </div>
                    </div>
                    <div class="agenda-item-footer">
-                       @if($data['user']->role == 'call_specialist')
+                       @if($data['user']->role == 'call_specialist' || $data['user']-> role == 'admin')
                            @if($call->completed_at)
                                <div class="due-date success">Completed: {{date_format(date_create($call->completed_at), 'Y-m-d')}}
                            @elseif($call->due_date <= \Carbon\Carbon::now()->addDays(1))
@@ -49,8 +49,13 @@
                            @endif
                            <a href="/schedule/detail/{{$call['id']}}">View Details</a>
                            </div>
-                       @else
-                           <div class="due-date"><a href="{{route('scoreCallView', ['id' => $call['id']])}}">Score Call</a></div>
+                       @endif
+                       @if($data['user']->role == 'coach' || $data['user']-> role == 'admin')
+                           @if($call->completed_at)
+                               <div class="due-date"><a href="{{route('scoreCallView', ['id' => $call['id']])}}">Score Call</a></div>
+                           @else
+                               <div class="due-date">Call not yet completed</div>
+                           @endif
                        @endif
                    </div>
                </div>
