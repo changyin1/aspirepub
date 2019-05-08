@@ -50,7 +50,7 @@ class Schedule extends Model
             $newCall = new Call;
             $newCall->client_id = $this->client_id;
             $newCall->schedule_id = $this->id;
-            $dueDate = Carbon::parse($this->start_date)->addDays(7 * ($i % 4));
+            $dueDate = Carbon::parse($this->start_date)->addDays(7 * ($i % 4 + 1));
             $newCall->due_date = $dueDate->toDateTimeString();
             $newCall->save();
         }
