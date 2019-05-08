@@ -111,7 +111,10 @@ class Call extends Model
         $scores = Score::where('call_id', $this->id)->get();
         $scoreArray = [];
         foreach ($scores as $score) {
-            $scoreArray[$score->question_id] = $score->score;
+            $scoreArray[$score->question_id] = [
+                'score' => $score->score,
+                'note' => $score->note
+            ];
         }
 
         return $scoreArray;
