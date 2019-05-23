@@ -26,8 +26,8 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <input name="question" id="question" class="form-control" type="text" value="{{$data['question']->question}}">
-                        <label class="control-label" for="question">Question</label>
+                        <label class="control-label textarea-label" for="question">Question</label>
+                        <textarea name="question" id="question" class="form-control" rows="5">{{$data['question']->question}}</textarea>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-6">
@@ -63,5 +63,4 @@
             </form>
         </div>
     </div>
-    @include('admin/modals/alert_modal', ['title' => 'Deleting Question', 'formRoute' => '/test', 'hiddenValues' => []])
 @endsection
