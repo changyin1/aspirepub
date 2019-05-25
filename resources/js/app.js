@@ -102,6 +102,10 @@ $(function () {
                     }
                 }
             });
+        } else if ($(this).hasClass('searchable')) {
+            $(this).select2({
+                placeholder: placeholder
+            });
         } else {
             $(this).select2({
                 minimumResultsForSearch: Infinity,

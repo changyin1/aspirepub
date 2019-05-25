@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="addQuestionToTemplateModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionToTemplateModal"
+<div class="modal fade" id="addQuestionToTemplateModal" role="dialog" aria-labelledby="addQuestionToTemplateModal"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -15,7 +15,7 @@
                 <div class="modal-body">
                     <div class="errors"></div>
                     <div class="form-group">
-                        <select class="question" name="question" data-placeholder="Question" style="width: 100%">
+                        <select class="question searchable" name="question" data-placeholder="Question" style="width: 100%">
                             <option></option>
                             @foreach($data['questions'] as $question)
                                 <option value="{{$question->id}}">{{$question->question}}</option>

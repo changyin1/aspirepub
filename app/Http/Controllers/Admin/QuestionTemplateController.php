@@ -24,7 +24,7 @@ class QuestionTemplateController extends Controller
 
     public function template($id) {
         $template = QuestionTemplate::where('id', $id)->first();
-        $questions = Question::where('active', true);
+        $questions = Question::where('active', true)->get();
         foreach($template->questions as $question) {
             $questions->where('id', '!=', $question->question->id);
         }
