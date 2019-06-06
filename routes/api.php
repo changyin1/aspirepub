@@ -46,6 +46,7 @@ Route::middleware(['auth:api', 'admin'])->group(function(){
     Route::post('/admin/question_templates/create', 'Admin\QuestionTemplateController@Create')->name('createQuestionTemplate');
     Route::post('/admin/question_templates/order', 'Admin\QuestionTemplateController@updateOrder')->name('admin/question_templates/order');
     Route::post('/admin/question_templates/addQuestion', 'Admin\QuestionTemplateController@addQuestionToTemplate')->name('addQuestionToTemplate');
+    Route::post('/admin/question_templates/removeQuestion', 'Admin\QuestionTemplateController@removeQuestionFromTemplate')->name('removeQuestionFromTemplate');
 
     Route::post('/admin/availability', 'Admin\CallController@getAvailable')->name('getAvailable');
     Route::post('/admin/calls/assign', 'Admin\CallController@assign')->name('assignCall');

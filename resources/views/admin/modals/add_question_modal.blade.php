@@ -15,10 +15,40 @@
                 <div class="modal-body">
                     <div class="errors"></div>
                     <div class="form-group">
-                        <select class="question searchable" name="question" data-placeholder="Question" style="width: 100%">
+                        <select class="client" name="client" data-placeholder="Client" style="width: 100%">
+                            <option></option>
+                            <option value=" ">Any</option>
+                            @foreach($data['clients'] as $client)
+                                <option value="{{$client->id}}">{{$client->name}}</option>
+                            @endforeach
+                        </select>
+                        <label class="control-label select-label" for="client">Client</label>
+                    </div>
+                    <div class="form-group">
+                        <select class="company" name="company" data-placeholder="Company" style="width: 100%">
+                            <option></option>
+                            <option value=" ">Any</option>
+                            @foreach($data['companies'] as $company)
+                                <option value="{{$company->id}}">{{$company->name}}</option>
+                            @endforeach
+                        </select>
+                        <label class="control-label select-label" for="company">Company</label>
+                    </div>
+                    <div class="form-group">
+                        <select class="region" name="region" data-placeholder="Region" style="width: 100%">
+                            <option></option>
+                            <option value=" ">Any</option>
+                            @foreach($data['regions'] as $region)
+                                <option value="{{$region->id}}">{{$region->name}}</option>
+                            @endforeach
+                        </select>
+                        <label class="control-label select-label" for="region">Region</label>
+                    </div>
+                    <div class="form-group">
+                        <select class="question searchable" name="question[]" multiple="multiple" data-placeholder="Question" style="width: 100%">
                             <option></option>
                             @foreach($data['questions'] as $question)
-                                <option value="{{$question->id}}">{{$question->question}}</option>
+                                <option value="{{$question->id}}" client="{{$question->client}}" company="{{$question->company}}" region="{{$question->region}}">{{$question->question}}</option>
                             @endforeach
                         </select>
                         <label class="control-label select-label" for="question">Question</label>

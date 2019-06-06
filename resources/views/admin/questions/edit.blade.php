@@ -55,6 +55,48 @@
                             <input name="weight" id="weight" class="form-control" type="number" value="{{$data['question']->weight}}">
                             <label class="control-label" for="weight">Weight</label>
                         </div>
+                        <div class="form-group col-6">
+                            <select class="type" name="client" data-placeholder="Client" style="width: 100%">
+                                <option></option>
+                                <option value="0">None</option>
+                                @foreach($data['clients'] as $client)
+                                    <option value="{{$client->id}}"
+                                            @if($data['question']->client == $client->id)
+                                            selected
+                                            @endif
+                                    >{{$client->name}}</option>
+                                @endforeach
+                            </select>
+                            <label class="control-label select-label" for="client">Client</label>
+                        </div>
+                        <div class="form-group col-6">
+                            <select class="type" name="company" data-placeholder="Company" style="width: 100%">
+                                <option></option>
+                                <option value="0">None</option>
+                                @foreach($data['companies'] as $company)
+                                    <option value="{{$company->id}}"
+                                            @if($data['question']->company == $company->id)
+                                            selected
+                                            @endif
+                                    >{{$company->name}}</option>
+                                @endforeach
+                            </select>
+                            <label class="control-label select-label" for="company">Company</label>
+                        </div>
+                        <div class="form-group col-6">
+                            <select class="type" name="region" data-placeholder="Region" style="width: 100%">
+                                <option></option>
+                                <option value="0">None</option>
+                                @foreach($data['regions'] as $region)
+                                    <option value="{{$region->id}}"
+                                            @if($data['question']->region == $region->id)
+                                            selected
+                                            @endif
+                                    >{{$region->name}}</option>
+                                @endforeach
+                            </select>
+                            <label class="control-label select-label" for="region">Region</label>
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary btn-submit" value="Save">

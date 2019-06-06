@@ -11,7 +11,6 @@
                 @else
                     <thead>
                     <tr>
-                        <th>#</th>
                         <th>Question</th>
                         <th>Type</th>
                         <th>Weight</th>
@@ -25,14 +24,13 @@
                     <tbody>
                     @foreach($data['template']->questions as $question)
                         <tr data-id="{{$question->id}}">
-                            <td>{{$question->question->id}}</td>
                             <td>{{$question->question->question}}</td>
                             <td>{{$question->question->type}}</td>
                             <td>{{$question->question->weight}}</td>
                             <td class="order">{{$question->order}}</td>
                             <td><a href="{{route('admin/questions') . '/'.$question->question->id}}">Edit</a></td>
                             @if($data['edit'])
-                            <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeQuestionFromTemplateModal">
+                            <td><button type="button" data-question="{{$question->question->id}}" class="btn btn-danger removeQuestionFromTemplate" data-toggle="modal" data-target="#removeQuestionFromTemplateModal">
                                     Remove
                                 </button></td>
                             @endif
@@ -43,10 +41,10 @@
             </table>
             <br>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addQuestionToTemplateModal">
-                Add a question
+                Add questions
             </button>
         </div>
     </div>
     @include('admin/modals/add_question_modal')
-    @include('admin/modals/alert_modal', ['title' => 'Removing question from template', 'formRoute' => route('addQuestionToTemplate'), 'hiddenValues' => ['template_id' => $data['template']->id], 'modalId' => 'removeQuestionFromTemplateModal'])
+    @include('admin/modals/alert_modal', ['title' => 'Removing question from template', 'formRoute' => route('removeQuestionFromTemplate'), 'hiddenValues' => ['template_id' => $data['template']->id, 'question' => '0'], 'modalId' => 'removeQuestionFromTemplateModal'])
 @endsection

@@ -35,11 +35,11 @@
                     </div>
                     <div class="form-group">
                         <input name="reservation_contact" id="reservation_contact" class="form-control" type="text" value="{{$data['client']->reservation_contact}}">
-                        <label class="control-label" for="reservation_contact">Reservation Contact</label>
+                        <label class="control-label" for="reservation_contact">Reservation Contacts (enter multiple emails separated by ,)</label>
                     </div>
                     <div class="form-group">
                         <input name="cancellation_email" id="cancellation_email" class="form-control" type="text" value="{{$data['client']->cancellation_email}}">
-                        <label class="control-label" for="cancellation_email">Cancellation Email</label>
+                        <label class="control-label" for="cancellation_email">Cancellation Emails (enter multiple emails separated by ,)</label>
                     </div>
                     <div class="form-group">
                         <select class="company" name="company" data-placeholder="Company" style="width: 100%">

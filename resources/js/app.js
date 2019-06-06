@@ -104,7 +104,8 @@ $(function () {
             });
         } else if ($(this).hasClass('searchable')) {
             $(this).select2({
-                placeholder: placeholder
+                placeholder: placeholder,
+                matcher: matchCustom
             });
         } else {
             $(this).select2({
@@ -113,6 +114,64 @@ $(function () {
             });
         }
     });
+
+    function matchCustom(params, data) {
+        // If there are no search terms, return all of the data
+        if ($.trim(params.term) === '') {
+            //check filters
+            if ($('.client').val() && $('.client').val() !== " ") {
+                if (!data.element.attributes.client || data.element.attributes.client.value != $('.client').val()) {
+                    return null;
+                }
+            }
+            if ($('.company').val() && $('.company').val() !== " ") {
+                if (!data.element.attributes.company || data.element.attributes.company.value != $('.company').val()) {
+                    return null;
+                }
+            }
+            if ($('.region').val() && $('.region').val() !== " ") {
+                if (!data.element.attributes.region || data.element.attributes.region.value != $('.region').val()) {
+                    return null;
+                }
+            }
+            return data;
+        }
+
+        // Do not display the item if there is no 'text' property
+        if (typeof data.text === 'undefined') {
+            return null;
+        }
+
+        // `params.term` should be the term that is used for searching
+        // `data.text` is the text that is displayed for the data object
+        if (data.text.indexOf(params.term) > -1) {
+            //check filters
+            if ($('.client').val() && $('.client').val() !== " ") {
+                if (!data.element.attributes.client || data.element.attributes.client.value != $('.client').val()) {
+                    return null;
+                }
+            }
+            if ($('.company').val() && $('.company').val() !== " ") {
+                if (!data.element.attributes.company || data.element.attributes.company.value != $('.company').val()) {
+                    return null;
+                }
+            }
+            if ($('.region').val() && $('.region').val() !== " ") {
+                if (!data.element.attributes.region || data.element.attributes.region.value != $('.region').val()) {
+                    return null;
+                }
+            }
+
+            var modifiedData = $.extend({}, data, true);
+
+            // You can return modified objects from here
+            // This includes matching the `children` how you want in nested data sets
+            return modifiedData;
+        }
+
+        // Return `null` if the term should not be displayed
+        return null;
+    }
 
     //calendar js
     $('#calendar').fullCalendar({
@@ -388,4 +447,8 @@ $(function () {
             $(this).find('.checkbox').prop('checked', !$(this).find('.checkbox').prop('checked'))
         }
     });
+
+    $('.removeQuestionFromTemplate').click(function(e) {
+        $('input[name="question"]').val($(this).data('question'));
+    })
 });

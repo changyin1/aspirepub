@@ -34,15 +34,19 @@ class CallObserver
         if($call->isDirty('completed_at')) {
             $client = Client::where('client_id', $call->client);
             $coach = User::where('id', $call->coach);
-            try {
-                Mail::to($client->reservation_contact)->send(new CallPosted($client, $call));
-            } catch (Exception $e) {
+            foreach ($client->reservationContacts() as $contact) {
+                try {
+                    Mail::to(trim($contact))->send(new CallPosted($client, $call));
+                } catch (Exception $e) {
 
+                }
             }
-            try {
-                Mail::to($client->cancellation_email)->send(new CancelReservation($client));
-            } catch (Exception $e) {
+            foreach ($client->cancellationEmails() as $email) {
+                try {
+                    Mail::to(trim($email))->send(new CallPosted($client, $call));
+                } catch (Exception $e) {
 
+                }
             }
             try {
                 Mail::to($coach->email)->send(new CallScoreDue($coach, $call));

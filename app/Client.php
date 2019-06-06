@@ -41,4 +41,15 @@ class Client extends Model
     public function category() {
         return $this->belongsTo('App\Category');
     }
+
+    public function reservationContacts() {
+        $contacts = explode(',', $this->reservation_contact);
+        return $contacts;
+
+    }
+
+    public function cancellationEmails() {
+        $emails = explode(',', $this->cancellation_email);
+        return $emails;
+    }
 }
