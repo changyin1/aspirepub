@@ -110,7 +110,8 @@ $(function () {
         } else {
             $(this).select2({
                 minimumResultsForSearch: Infinity,
-                placeholder: placeholder
+                placeholder: placeholder,
+                allowClear: true
             });
         }
     });
@@ -450,5 +451,51 @@ $(function () {
 
     $('.removeQuestionFromTemplate').click(function(e) {
         $('input[name="question"]').val($(this).data('question'));
-    })
+    });
+
+    $('#viewCustomAgentModal').on('click', '.btn-add', function(e) {
+        e.preventDefault();
+        var form = $(this).parents('form');
+        var currentEntry = form.find('.form-group:last');
+        var newEntry = $(currentEntry.clone()).appendTo($(this).parents('.modal-body'));
+        newEntry.find('input').val('');
+        form.find('.form-group:not(:last) .btn-add')
+            .removeClass('btn-add').addClass('btn-remove')
+            .removeClass('btn-success').addClass('btn-danger')
+            .html('-');
+    }).on('click', '.btn-remove', function(e) {
+        e.preventDefault();
+        $(this).parents('.form-group').remove();
+        return false;
+    }).on('click', '.btn-remove-agent', function(e) {
+        e.preventDefault();
+
+        if (confirm('Removing agent, are you sure?')) {
+            let form = $(this).parents('form')
+            form.find('.errors').html('');
+            let url = form.attr('action');
+            let data = {
+                'type': 'remove',
+                'id': $(this).parents('.agent-item').data('agentid')
+            };
+            let self = $(this);
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: data,
+                success: function (response) {
+                    if (response.success) {
+                        self.parents('.form-group').remove();
+                    } else {
+                        self.parents('form').find('.errors').append('<div class="alert alert-danger">Error submitting. Please try again later.</div>')
+                    }
+                },
+                error: function (response) {
+                    $.each(response.responseJSON.errors, function (e, error) {
+                        self.parents('form').find('.errors').append('<div class="alert alert-danger">' + error[0] + '</div>')
+                    });
+                }
+            });
+        }
+    });
 });

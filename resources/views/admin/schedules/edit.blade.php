@@ -87,6 +87,7 @@
                     <div class="row">
                         <div class="col-6">
                             <button class="btn btn-primary btn-submit" data-toggle="modal" data-target="#addCallModal">Add Calls</button>
+                            <button class="btn btn-primary btn-submit" data-toggle="modal" data-target="#viewCustomAgentModal">Add/Remove Custom Agents</button>
                         </div>
                     </div>
                     <table class="data-table hidden" data-week="0" data-searchable="false">
@@ -174,4 +175,5 @@
     @include('admin/modals/alert_modal', ['title' => 'Delete Schedule: '.$data['schedule']->id, 'formRoute' => route('deleteSchedule'), 'hiddenValues' => ['schedule_id' => $data['schedule']->id], 'modalId' => 'deleteScheduleModal'])
     @include('admin/modals/duplicate_schedule_modal')
     @include('admin/modals/add_call_modal')
+    @include('admin/modals/view_custom_agent_modal')
 @endsection

@@ -30,6 +30,16 @@ class Schedule extends Model
         return $this->belongsTo('App\QuestionTemplate', 'questionstemplates_id');
     }
 
+    public function customAgents()
+    {
+        return $this->hasMany('App\CustomAgent', 'schedule');
+    }
+
+    public function customAgentsNotContacted()
+    {
+        return $this->customAgents()->where('contacted', '=', 0);
+    }
+
     public function client_name() {
         if ($this->client) {
             return $this->client->name;
@@ -50,7 +60,7 @@ class Schedule extends Model
             $newCall = new Call;
             $newCall->client_id = $this->client_id;
             $newCall->schedule_id = $this->id;
-            $dueDate = Carbon::parse($this->start_date)->addDays(7 * ($i % 4 + 1));
+            $dueDate = Carbon::parse($this->start_date)->addDays(7 * ($i % 4) - 1);
             $newCall->due_date = $dueDate->toDateTimeString();
             $newCall->save();
         }
@@ -64,7 +74,7 @@ class Schedule extends Model
             $newCall = new Call;
             $newCall->client_id = $this->client_id;
             $newCall->schedule_id = $this->id;
-            $dueDate = Carbon::parse($this->start_date)->addDays(7 * ($week));
+            $dueDate = Carbon::parse($this->start_date)->addDays(7 * ($week) - 1);
             $newCall->due_date = $dueDate->toDateTimeString();
             $newCall->save();
         }

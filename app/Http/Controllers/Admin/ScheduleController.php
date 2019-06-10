@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Call;
 use App\Client;
+use App\CustomAgent;
 use App\Http\Requests\CreateScheduleRequest;
 use App\Http\Requests\DuplicateScheduleRequest;
 use App\QuestionTemplate;
@@ -183,6 +184,46 @@ class ScheduleController extends Controller
         }
         $schedule = Schedule::findorfail($request->schedule_id);
         $schedule->addCalls($request->number, $request->week);
+        return response()->json(['success' => true]);
+    }
+
+    public function modifyAgents(Request $request) {
+        if (!in_array($request->type, ['add', 'remove'])) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'type' => ['Invalid request type'],
+            ]);
+            throw $error;
+        }
+
+        if ($request->type == 'remove') {
+            if (!$request->id) {
+                $error = \Illuminate\Validation\ValidationException::withMessages([
+                    'id' => ['Invalid agent'],
+                ]);
+                throw $error;
+            }
+            $agent = CustomAgent::findorfail($request->id);
+            $agent->delete();
+        }
+
+        if ($request->type == 'add') {
+            if (!$request->name) {
+                $error = \Illuminate\Validation\ValidationException::withMessages([
+                    'name' => ['You must submit a valid name'],
+                ]);
+                throw $error;
+            }
+            Schedule::findorfail($request->schedule_id);
+            foreach($request->name as $name) {
+                if ($name != '') {
+                    $agent = new CustomAgent();
+                    $agent->schedule = $request->schedule_id;
+                    $agent->agent_name = $name;
+                    $agent->save();
+                }
+            }
+        }
+
         return response()->json(['success' => true]);
     }
 }

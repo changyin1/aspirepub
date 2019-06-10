@@ -40,12 +40,14 @@
                        @if($data['user']->role == 'call_specialist' || $data['user']-> role == 'admin')
                            @if($call->completed_at)
                                <div class="due-date success">Completed: {{date_format(date_create($call->completed_at), 'Y-m-d')}}
-                           @elseif($call->due_date <= \Carbon\Carbon::now()->addDays(1))
+                           @elseif($call->due_date <= \Carbon\Carbon::now()->subDays(2))
+                               <div class="due-date danger"><span><i class="fas fa-exclamation-circle"></i> PAST DUE</span>
+                           @elseif($call->due_date <= \Carbon\Carbon::now()->subDays(1))
                                <div class="due-date danger"><span><i class="fas fa-exclamation-circle"></i> Due Tomorrow</span>
-                           @elseif($call->due_date <= \Carbon\Carbon::now()->addDays(7))
+                           @elseif($call->due_date <= \Carbon\Carbon::now()->addDays(6))
                                <div class="due-date caution"><span><i class="fas fa-exclamation-circle"></i> Due This Week</span>
                            @else
-                               <div class="due-date">Due Date: {{$call->due_date}}
+                               <div class="due-date">Due Date: {{date_format(date_sub(date_create($call->due_date), date_interval_create_from_date_string("1 day")), 'Y-m-d')}}
                            @endif
                            <a href="/schedule/detail/{{$call['id']}}">View Details</a>
                            </div>

@@ -30,12 +30,14 @@
                                <div class="agenda-item-footer">
                                    @if($data['call']->completed_at)
                                        <div class="due-date success">Completed: {{date_format(date_create($data['call']->completed_at), 'Y-m-d')}}
-                                   @elseif($data['call']->due_date <= \Carbon\Carbon::now()->addDays(1))
+                                   @elseif($data['call']->due_date <= \Carbon\Carbon::now()->subDays(2))
+                                       <div class="due-date danger"><span><i class="fas fa-exclamation-circle"></i> PAST DUE</span>
+                                   @elseif($data['call']->due_date <= \Carbon\Carbon::now()->subDays(1))
                                        <div class="due-date danger"><span><i class="fas fa-exclamation-circle"></i> Due Tomorrow</span>
-                                   @elseif($data['call']->due_date <= \Carbon\Carbon::now()->addDays(7))
+                                   @elseif($data['call']->due_date <= \Carbon\Carbon::now()->addDays(6))
                                        <div class="due-date caution"><span><i class="fas fa-exclamation-circle"></i> Due This Week</span>
                                    @else
-                                       <div class="due-date">Due Date: {{$data['call']->due_date}}
+                                       <div class="due-date">Due Date: {{date_format(date_sub(date_create($data['call']->due_date), date_interval_create_from_date_string("1 day")), 'Y-m-d')}}
                                    @endif
                                        <a href="/schedule">Hide Details</a>
                                    </div>
@@ -97,7 +99,7 @@
                    <div class="form-group form-row">
                        <label class="col-md-4 control-label" for="Contact">Due Date</label>
                        <div class="col-md-4">
-                           {{$data['call']['schedule']->end_date}}
+                           {{$data['call']->due_date}}
                        </div>
                    </div>
                    <form action="/schedule/post" method="post" class="form-horizontal">

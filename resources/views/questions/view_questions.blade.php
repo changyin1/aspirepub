@@ -15,6 +15,17 @@
            <input type="hidden" name="id" value="{{$data['call']->id}}">
            <input type="hidden" id="redirect" value="{{route('schedule')}}">
            <div class="form-body">
+               @if(!$data['call']->schedule->customAgentsNotContacted->isEmpty())
+                   <div class="form-group">
+                       <label class="control-label select-label" for="agent">Custom Agent</label>
+                       <select class="agent" name="agent" data-placeholder="Custom Agent" style="width: 95%">
+                           <option></option>
+                           @foreach($data['call']->schedule->customAgentsNotContacted as $agent)
+                               <option value="{{$agent->id}}">{{$agent->agent_name}}</option>
+                           @endforeach
+                       </select>
+                   </div>
+               @endif
                <div class="form-group">
                    <label class="control-label select-label" for="link">File Link</label>
                    <input type="text" name="link" id="link" placeholder="Drop box link">

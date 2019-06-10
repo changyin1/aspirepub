@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CallAssignment;
+use App\CustomAgent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
@@ -100,6 +101,14 @@ class AgendaController extends Controller
     public function completeCall(Request $request) {
         $user = Auth::user();
         $call = Call::findorfail($request->id);
+
+        if ($request->agent) {
+            $agent = CustomAgent::where('id', $request->agent)->first();
+            if ($agent) {
+                $agent->contacted = true;
+                $agent->save();
+            }
+        }
 
         if ($request->link) {
             $recording = new Recording;

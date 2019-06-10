@@ -40,6 +40,7 @@ Route::middleware(['auth:api', 'admin'])->group(function(){
     Route::post('/admin/schedule/delete', 'Admin\ScheduleController@Delete')->name('deleteSchedule');
     Route::post('/admin/schedule/duplicate', 'Admin\ScheduleController@Duplicate')->name('duplicateSchedule');
     Route::post('/admin/schedule/add', 'Admin\ScheduleController@addCalls')->name('addCalls');
+    Route::post('/admin/schedule/agents', 'Admin\ScheduleController@modifyAgents')->name('modifyAgents');
 
     Route::post('/admin/questions/create', 'Admin\QuestionController@Create')->name('createQuestion');
 

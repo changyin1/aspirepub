@@ -72,7 +72,8 @@ class Call extends Model
 
     public function week() {
         $day = Carbon::parse($this->due_date)->format('d');
-        $week = ($day - 1) / 7;
+        $offset = $day % 7;
+        $week = ($day - $offset) / 7;
         return $week;
     }
 

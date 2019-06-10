@@ -15,7 +15,11 @@ form {
     border-bottom: 1px solid grey;
     border-radius: 0;
     padding-left: 0;
-    &:focus + label {
+    &.inline-block {
+      width: 90%;
+      display: inline-block;
+    }
+    &:focus + label{
       transform: translateY(-125%);
       color: grey;
       font-size: .8em;
