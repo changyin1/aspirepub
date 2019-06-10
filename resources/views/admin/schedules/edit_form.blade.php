@@ -30,6 +30,32 @@
             </select>
             <label class="control-label select-label" for="month">Question Template</label>
         </div>
+        <div class="form-group">
+            <select class="language" name="language" data-placeholder="Language" style="width: 66.67%">
+                <option></option>
+                @foreach($data['languages'] as $language)
+                    <option value="{{$language->language}}"
+                            @if($data['schedule']->language == $language->language)
+                            selected
+                            @endif
+                    >{{$language->language}}</option>
+                @endforeach
+            </select>
+            <label class="control-label select-label" for="client">Language</label>
+        </div>
+        <div class="form-group">
+            <select class="type" name="type" data-placeholder="Call Type" style="width: 66.67%">
+                <option></option>
+                @foreach($data['types'] as $type)
+                    <option value="{{$type->id}}"
+                            @if($data['schedule']->call_type == $type->id)
+                            selected
+                            @endif
+                    >{{$type->type}}</option>
+                @endforeach
+            </select>
+            <label class="control-label select-label" for="client">Call Type</label>
+        </div>
         <div class="form-row">
             <div class="form-group col-4">
                 <select class="month" name="month" data-placeholder="Month" style="width: 100%">
@@ -52,6 +78,10 @@
         <div class="form-group" style="width: 66.67%">
             <input name="calls" id="calls" class="form-control" type="number" value="{{$data['schedule']->calls}}">
             <label class="control-label" for="calls">Calls</label>
+        </div>
+        <div class="form-group">
+            <label class="textarea-label" for="notes">Notes</label>
+            <textarea class="form-control" name="notes" rows="5" placeholder="Type notes here...">{{$data['schedule']->notes}}</textarea>
         </div>
         <input type="submit" data-message="Once you have finalized you can no longer edit are you sure you want to finalize this schedule?" class="btn btn-primary btn-submit submit-alert" data-field="finalized" value="Finalize">
         <input type="submit" class="btn btn-primary btn-submit" value="Save">

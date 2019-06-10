@@ -89,6 +89,9 @@ class Schedule extends Model
         $new->client_id = $this->client_id;
         $new->calls = $this->calls;
         $new->questionstemplates_id = $this->questionstemplates_id;
+        $new->language = $this->language;
+        $new->notes = $this->notes;
+        $new->call_type = $this->call_type;
         $new->finalized = true;
 
         $new->save();
@@ -100,7 +103,7 @@ class Schedule extends Model
             $copyCall->client_id = $call->client_id;
             $copyCall->schedule_id = $new->id;
             $copyCall->coach = $this->coach;
-            $dueDate = Carbon::parse($start)->addDays(7 * ($call->week()));
+            $dueDate = Carbon::parse($start)->addDays(7 * ($call->week()) - 1);
             $copyCall->due_date = $dueDate->toDateTimeString();
             $copyCall->save();
 

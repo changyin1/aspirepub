@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\CallType;
 use App\Client;
 use App\QuestionTemplate;
 use Illuminate\Foundation\Http\FormRequest;
@@ -36,12 +37,21 @@ class CreateScheduleRequest extends FormRequest
         foreach ($templates as $template) {
             $templateIds[] = $template->id;
         }
+
+        $types = CallType::all();
+        $typeIds = [];
+        foreach ($types as $type) {
+            $typeIds[] = $type->id;
+        }
+
         return [
             'month' => 'required|integer|between:1,12',
             'year' => 'required|integer',
             'client' => 'required|in:' . implode(',', $clientIds),
             'calls' => 'required|Min:1',
             'template' => 'required|in:' . implode(',', $templateIds),
+            'language' => 'required',
+            'type' => 'required|in:' . implode(',', $typeIds),
         ];
     }
 }

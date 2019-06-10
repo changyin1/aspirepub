@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Call;
+use App\CallType;
 use App\Client;
 use App\CustomAgent;
 use App\Http\Requests\CreateScheduleRequest;
 use App\Http\Requests\DuplicateScheduleRequest;
+use App\Language;
 use App\QuestionTemplate;
 use App\Schedule;
 use App\User;
@@ -21,10 +23,14 @@ class ScheduleController extends Controller
         $schedules = Schedule::all();
         $clients = Client::all();
         $templates = QuestionTemplate::all();
+        $types = CallType::all();
+        $languages = Language::all();
         $data = [
             'schedules' => $schedules,
             'clients' => $clients,
-            'templates' => $templates
+            'templates' => $templates,
+            'types' => $types,
+            'languages' => $languages
         ];
         return view('admin.schedules', [
             'data' => $data
@@ -51,6 +57,8 @@ class ScheduleController extends Controller
         $templates = QuestionTemplate::all();
         $user = new User();
         $coaches = $user->hasRole('coach');
+        $languages = Language::all();
+        $types = CallType::all();
 
         $edit = !$schedule->finalized;
 
@@ -61,6 +69,8 @@ class ScheduleController extends Controller
             'sortedCalls' => $sortedCalls,
             'edit' => $edit,
             'coaches' => $coaches,
+            'types' => $types,
+            'languages' => $languages
         ];
 
         return view('admin.schedules.edit', [
@@ -85,6 +95,9 @@ class ScheduleController extends Controller
         $schedule->client_id = $request->client;
         $schedule->calls = $request->calls;
         $schedule->questionstemplates_id = $request->template;
+        $schedule->notes = $request->notes ? $request->notes : '';
+        $schedule->language = $request->language;
+        $schedule->call_type = $request->type;
 
         $schedule->save();
         return response()->json(['success' => true]);
@@ -134,6 +147,9 @@ class ScheduleController extends Controller
         $schedule->calls = $request->calls;
         $schedule->questionstemplates_id = $request->template;
         $schedule->finalized = $request->finalized;
+        $schedule->notes = $request->notes ? $request->notes : '';
+        $schedule->language = $request->language;
+        $schedule->call_type = $request->type;
 
         $schedule->save();
 
