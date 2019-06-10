@@ -17,7 +17,7 @@
                <div class="agenda-item" data-item="{{$call->due()}}">
                    <div class="agenda-item-header row">
                        <div class="col-11">{{$call['client']->name}} | {{$call['client']->city}}</div>
-                       @if(!$call->claimed())
+                       @if(!$call->claimed() && $data['user']->role != 'coach')
                        <div class="col-1 align-right"><button class="btn btn-success claim-call-btn" data-call="{{$call->id}}" data-url="{{route('claimCall')}}">Accept</button></div>
                        @endif
                    </div>
@@ -54,7 +54,7 @@
                        @endif
                        @if($data['user']->role == 'coach' || $data['user']-> role == 'admin')
                            @if($call->completed_at)
-                               <div class="due-date"><a href="{{route('scoreCallView', ['id' => $call['id']])}}">Score Call</a></div>
+                               <div class="due-date success"><a href="{{route('scoreCallView', ['id' => $call['id']])}}">Score Call</a></div>
                            @else
                                <div class="due-date">Call not yet completed</div>
                            @endif

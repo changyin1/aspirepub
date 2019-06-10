@@ -17,7 +17,11 @@ class AgendaController extends Controller
     public function index(Request $request){
     	$user = Auth::user();
         $data['user'] = $user;
-        $calls = Call::with('client', 'schedule')->where('call_specialist', $user->id)->orWhere('coach', $user->id)->orderBy('due_date', 'asc')->get();
+        if ($user->role == 'coach') {
+            $calls = Call::with('client', 'schedule')->where('coach', $user->id)->orderBy('due_date', 'asc')->get();
+        } else {
+            $calls = Call::with('client', 'schedule')->where('call_specialist', $user->id)->orWhere('coach', $user->id)->orderBy('due_date', 'asc')->get();
+        }
 
         //get assigned calls
         $assigned = Call::join('call_assignments', function($join) use ($user) {
@@ -101,7 +105,7 @@ class AgendaController extends Controller
     public function completeCall(Request $request) {
         $user = Auth::user();
         $call = Call::findorfail($request->id);
-
+        $agent = null;
         if ($request->agent) {
             $agent = CustomAgent::where('id', $request->agent)->first();
             if ($agent) {
@@ -133,6 +137,7 @@ class AgendaController extends Controller
 
         $now = Carbon::now();
         $call->completed_at = $now;
+        $call->agent_name = $agent ? $agent->name : '';
         $call->save();
 
         return response()->json(['success' => true]);
