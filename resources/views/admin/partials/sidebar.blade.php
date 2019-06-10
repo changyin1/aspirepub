@@ -2,6 +2,9 @@
     <h2>Dashboard</h2>
     <ul>
         <li>
+            <a href="{{route('admin/settings')}}" class="{{ (strpos(Route::currentRouteName(), 'admin/settings') === 0) ? 'active' : '' }}">Call Settings</a>
+        </li>
+        <li>
             <a href="{{route('admin/clients')}}" class="{{ (strpos(Route::currentRouteName(), 'admin/clients') === 0) ? 'active' : '' }}">Clients</a>
             @if(strpos(Route::currentRouteName(), 'admin/clients') === 0   ||
                 strpos(Route::currentRouteName(), 'admin/companies') === 0 ||

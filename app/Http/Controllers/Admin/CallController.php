@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Availability;
 use App\Call;
 use App\CallAssignment;
+use App\CallType;
 use App\Http\Controllers\AvailabilityController;
+use App\Language;
 use App\User;
 use App\Schedule;
 use Carbon\Carbon;
@@ -181,5 +183,131 @@ class CallController extends Controller
             $assignment->delete();
         }
         return response()->json(['success' => true]);
+    }
+
+    public function settings() {
+        $types = CallType::all();
+        $languages = Language::all();
+        $data = [
+            'types' => $types,
+            'languages' => $languages
+        ];
+        return view('admin.calls.settings', [
+            'data' => $data
+        ]);
+    }
+
+    public function createCallType(Request $request) {
+        if(!$request->type) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'type' => ['Type name is required'],
+            ]);
+            throw $error;
+        }
+
+        if(!$request->price) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'price' => ['Type price is required'],
+            ]);
+            throw $error;
+        }
+
+        $type = new CallType();
+        $type->type = $request->type;
+        $type->price = $request->price;
+        $type->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function createLanguage(Request $request) {
+        if ($request->language) {
+            $language = new Language();
+            $language->language = $request->language;
+            $language->save();
+
+        } else {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'language' => ['Invalid Language'],
+            ]);
+            throw $error;
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    public function showLanguage($id) {
+        $language = Language::findorfail($id);
+        $data = [
+            'language' => $language,
+            'save' => false
+        ];
+
+        return view('admin.calls.language', [
+            'data' => $data
+        ]);
+    }
+
+    public function editLanguage(Request $request) {
+        $language = Language::findorfail($request->id);
+        if (!$request->language) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'language' => ['Invalid Language'],
+            ]);
+            throw $error;
+        }
+
+        $language->language = $request->language;
+        $language->save();
+
+        $data = [
+            'language' => $language,
+            'save' => true
+        ];
+
+        return view('admin.calls.language', [
+            'data' => $data
+        ]);
+    }
+
+    public function showCallType($id) {
+        $type = CallType::findorfail($id);
+        $data = [
+            'type' => $type,
+            'save' => false
+        ];
+
+        return view('admin.calls.type', [
+            'data' => $data
+        ]);
+    }
+
+    public function editCallType(Request $request) {
+        $type = CallType::findorfail($request->id);
+        if (!$request->language) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'type' => ['Type is required'],
+            ]);
+            throw $error;
+        }
+        if (!$request->price) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'price' => ['Price is required'],
+            ]);
+            throw $error;
+        }
+
+        $type->type = $request->type;
+        $type->price = $request->price;
+        $type->save();
+
+        $data = [
+            'type' => $type,
+            'save' => true
+        ];
+
+        return view('admin.calls.type', [
+            'data' => $data
+        ]);
     }
 }

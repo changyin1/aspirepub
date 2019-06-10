@@ -69,6 +69,7 @@ Route::middleware(['auth', 'admin'])->group(function() {
 
     Route::get('/admin/calls/', 'Admin\CallController@show')->name('admin/calls');
     Route::get('/admin/calls/{id}', 'Admin\CallController@show')->name('admin/calls/show');
+    Route::get('/admin/settings', 'Admin\CallController@settings')->name('admin/settings');
 
     Route::get('/admin/questions', 'Admin\QuestionController@index')->name('admin/questions');
     Route::get('/admin/questions/{id}', 'Admin\QuestionController@show')->name('admin/questions/show');
@@ -76,5 +77,10 @@ Route::middleware(['auth', 'admin'])->group(function() {
 
     Route::get('/admin/question_templates', 'Admin\QuestionTemplateController@index')->name('admin/question_templates');
     Route::get('/admin/question_templates/{id}', 'Admin\QuestionTemplateController@template')->name('admin/question_templates/edit');
+
+    Route::get('/admin/language/{id}', 'Admin\CallController@showLanguage')->name('admin/language');
+    Route::post('/admin/language/edit/{id}', 'Admin\CallController@editLanguage')->name('admin/language/edit');
+    Route::get('/admin/call/type/{id}', 'Admin\CallController@showCallType')->name('admin/call/type');
+    Route::post('/admin/call/type/edit/{id}', 'Admin\CallController@editCallType')->name('admin/call/type/edit');
 });
 

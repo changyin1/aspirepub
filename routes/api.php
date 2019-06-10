@@ -55,4 +55,8 @@ Route::middleware(['auth:api', 'admin'])->group(function(){
     Route::post('/admin/calls/delete', 'Admin\CallController@delete')->name('deleteCall');
     Route::post('/admin/schedule/create', 'Admin\ScheduleController@create')->name('createSchedule');
     Route::post('/admin/schedule/modify', 'Admin\ScheduleController@modify')->name('modifySchedule');
+
+    Route::post('/admin/call/language/create', 'Admin\CallController@createLanguage')->name('createLanguage');
+    Route::post('/admin/call/type/create', 'Admin\CallController@createCallType')->name('createCallType');
+
 });
