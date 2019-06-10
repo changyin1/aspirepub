@@ -54,7 +54,7 @@
                        @endif
                        @if($data['user']->role == 'coach' || $data['user']-> role == 'admin')
                            @if($call->completed_at)
-                               <div class="due-date success"><a href="{{route('scoreCallView', ['id' => $call['id']])}}">Score Call</a></div>
+                               <div class="due-date success"><a href="{{route('scoreCallView', ['id' => $call['id']])}}">Score Call Due: {{date_format(date_sub(date_create($call->due_date), date_interval_create_from_date_string("1 day")), 'Y-m-d')}}</a></div>
                            @else
                                <div class="due-date">Call not yet completed</div>
                            @endif

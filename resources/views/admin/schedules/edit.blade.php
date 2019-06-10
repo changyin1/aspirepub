@@ -23,8 +23,8 @@
                             <div class="detail">{{Carbon\Carbon::parse($data['schedule']->start_date)->format('M-d-Y')}}</div>
                             <div class="detail">{{$data['schedule']->calls}}</div>
                             <div class="detail">{{$data['schedule']->template_name()}}</div>
-                            <div class="detail">{{$data['schedule']->language}}</div>
-                            <div class="detail">{{$data['schedule']->callType->type}}</div>
+                            <div class="detail">{{$data['schedule']->language ? $data['schedule']->language : 'N/A'}}</div>
+                            <div class="detail">{{$data['schedule']->callType ? $data['schedule']->callType->type : 'N/A'}}</div>
                         </div>
                         @if($data['sortedCalls'])
                         <div class="col-6 offset-1">
