@@ -16,7 +16,6 @@ class AddLanguageAndTypeToSchedule extends Migration
         Schema::table('schedules', function (Blueprint $table) {
             $table->unsignedInteger('call_type');
             $table->string('language');
-            $table->foreign('call_type')->references('id')->on('call_types');
         });
     }
 
