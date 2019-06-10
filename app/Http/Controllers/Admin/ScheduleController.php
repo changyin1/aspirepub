@@ -108,7 +108,11 @@ class ScheduleController extends Controller
         $schedule = Schedule::findorfail($request->schedule_id);
         $startDate = Carbon::createFromFormat('d/m/Y', '01/'. $request->month .'/' . $request->year);
         $endDate = Carbon::createFromFormat('d/m/Y', '28/'. $request->month .'/' . $request->year);
-        $schedule->duplicate($startDate, $endDate);
+        $assignments = false;
+        if ($request->maintainAssignees) {
+            $assignments = true;
+        }
+        $schedule->duplicate($startDate, $endDate, $assignments);
         return response()->json(['success' => true]);
     }
 

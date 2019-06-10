@@ -28,6 +28,10 @@
                             <input name="year" id="year" class="form-control" type="number" value="2019">
                             <label class="control-label" for="year">Year</label>
                         </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="maintainAssignees">
+                            <label class="control-label">Keep call assignments (coaches)</label>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

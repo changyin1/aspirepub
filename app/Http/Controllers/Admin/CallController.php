@@ -48,21 +48,26 @@ class CallController extends Controller
             throw $error;
         }
 
+        $call->coach = $request->coach;
+        $call->save();
+
         CallAssignment::where('call_id', $request->id)->delete();
 
-        foreach($request->specialists as $specialist_id) {
-            $specialist = User::where('id', $specialist_id)->first();
-            if (!$specialist || !$specialist->hasRole('call_specialist')) {
-                $error = \Illuminate\Validation\ValidationException::withMessages([
-                    'specialists' => ['You have selected an invalid user'],
-                ]);
-                throw $error;
-            }
-            $callAssignment = new CallAssignment;
-            $callAssignment->call_id = $request->id;
-            $callAssignment->specialist_id = $specialist_id;
+        if ($request->specialists) {
+            foreach($request->specialists as $specialist_id) {
+                $specialist = User::where('id', $specialist_id)->first();
+                if (!$specialist || !$specialist->hasRole('call_specialist')) {
+                    $error = \Illuminate\Validation\ValidationException::withMessages([
+                        'specialists' => ['You have selected an invalid user'],
+                    ]);
+                    throw $error;
+                }
+                $callAssignment = new CallAssignment;
+                $callAssignment->call_id = $request->id;
+                $callAssignment->specialist_id = $specialist_id;
 
-            $callAssignment->save();
+                $callAssignment->save();
+            }
         }
 
         return response()->json(['success' => true]);

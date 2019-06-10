@@ -40,6 +40,11 @@ class Schedule extends Model
         return $this->customAgents()->where('contacted', '=', 0);
     }
 
+    public function callType()
+    {
+        return $this->belongsTo('App\CallType', 'call_type');
+    }
+
     public function client_name() {
         if ($this->client) {
             return $this->client->name;
@@ -82,7 +87,7 @@ class Schedule extends Model
         return true;
     }
 
-    public function duplicate($start, $end) {
+    public function duplicate($start, $end, $assign) {
         $new = new Schedule;
         $new->start_date = $start;
         $new->end_date = $end;
@@ -102,7 +107,9 @@ class Schedule extends Model
             $copyCall = new Call;
             $copyCall->client_id = $call->client_id;
             $copyCall->schedule_id = $new->id;
-            $copyCall->coach = $this->coach;
+            if ($assign) {
+                $copyCall->coach = $this->coach;
+            }
             $dueDate = Carbon::parse($start)->addDays(7 * ($call->week()) - 1);
             $copyCall->due_date = $dueDate->toDateTimeString();
             $copyCall->save();

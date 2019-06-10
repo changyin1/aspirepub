@@ -15,12 +15,16 @@
                             <div class="detail-name">Start Date:</div>
                             <div class="detail-name">Calls:</div>
                             <div class="detail-name">Question Template</div>
+                            <div class="detail-name">Language:</div>
+                            <div class="detail-name">Call Type:</div>
                         </div>
                         <div class="col-3">
                             <div class="detail">{{$data['schedule']->client_name()}}</div>
                             <div class="detail">{{Carbon\Carbon::parse($data['schedule']->start_date)->format('M-d-Y')}}</div>
                             <div class="detail">{{$data['schedule']->calls}}</div>
                             <div class="detail">{{$data['schedule']->template_name()}}</div>
+                            <div class="detail">{{$data['schedule']->language}}</div>
+                            <div class="detail">{{$data['schedule']->callType->type}}</div>
                         </div>
                         @if($data['sortedCalls'])
                         <div class="col-6 offset-1">
