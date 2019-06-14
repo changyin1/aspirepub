@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Availability extends Model
 {
     protected $fillable = [
-        'user_id', 'date', 'available'
+        'user_id', 'date', 'available', 'max_calls'
     ];
 
     protected $table = 'availability';

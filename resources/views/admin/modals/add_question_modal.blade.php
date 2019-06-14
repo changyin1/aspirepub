@@ -48,7 +48,7 @@
                         <select class="question searchable" name="question[]" multiple="multiple" data-placeholder="Question" style="width: 100%">
                             <option></option>
                             @foreach($data['questions'] as $question)
-                                <option value="{{$question->id}}" client="{{$question->client}}" company="{{$question->company}}" region="{{$question->region}}">{{$question->question}}</option>
+                                <option value="{{$question->id}}" client="{{$question->client}}" company="{{$question->company}}" region="{{$question->region}}">{{$question->question}} (Weight: {{$question->weight}})</option>
                             @endforeach
                         </select>
                         <label class="control-label select-label" for="question">Question</label>

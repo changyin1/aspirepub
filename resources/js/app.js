@@ -107,6 +107,11 @@ $(function () {
                 placeholder: placeholder,
                 matcher: matchCustom
             });
+        } else if ($(this).hasClass('noclear')) {
+            $(this).select2({
+                minimumResultsForSearch: Infinity,
+                placeholder: placeholder,
+            });
         } else {
             $(this).select2({
                 minimumResultsForSearch: Infinity,
@@ -181,7 +186,7 @@ $(function () {
             var data = {
                 'userID': $('#user-id').val(),
                 'date': date.format(),
-                'week': getWeek(date.date())
+                'week': getWeek(date.date()),
             };
             if (date.date() % 7 == 1) {
                 $.ajax({
@@ -196,6 +201,7 @@ $(function () {
                         cell.children('div').remove();
                         if (response.available) {
                             $('.fc-day[data-week="' + response.week + '"]').addClass('available');
+                            cell.html('<span>Max Calls: ' + response.max + '</span>')
                         }
                     },
                     error: function () {
@@ -217,7 +223,8 @@ $(function () {
             var data = {
                 'date': date.format(),
                 'userID': $('#user-id').val(),
-                'available': 1
+                'available': 1,
+                'max': $('#max').val()
             };
             var $day = $(this);
             $.ajax({
@@ -235,9 +242,11 @@ $(function () {
                             $day.addClass('available');
                             console.log($('.fc-day[data-week="' + response.week + '"]'));
                             $('.fc-day[data-week="' + response.week + '"]').addClass('available');
+                            $day.html('<span>Max Calls: ' + response.max + '</span>');
                         } else {
                             $day.removeClass('available');
                             $('.fc-day[data-week="' + response.week + '"]').removeClass('available');
+                            $('.fc-day[data-week="' + response.week + '"]:first').html('');
                         }
                     } else {
                         $day.append('<div class="alert alert-danger">Error Submitting Please Try Again Later</div>');
@@ -337,9 +346,14 @@ $(function () {
                 if (response.success) {
                     self.closest('.modal').modal('hide');
                     self.find('.btn-submit').attr('disabled', false);
-                    $('#successModal').modal('show');
+                    // $('#successModal').modal('show');
                     if (response.redirect) {
                         $('body').append('<input type="hidden" id="redirect" value="'+ response.redirect + '">')
+                    }
+                    if ($('#redirect').val()) {
+                        window.location.replace($('#redirect').val());
+                    } else {
+                        location.reload();
                     }
                 } else {
                     self.find('.btn-submit').attr('disabled', false).html('Submit');
@@ -388,7 +402,11 @@ $(function () {
             success: function (response) {
                 if (response.success) {
                     self.find('.btn-submit').attr('disabled', false);
-                    $('#successModal').modal('show');
+                    if ($('#redirect').val()) {
+                        window.location.replace($('#redirect').val());
+                    } else {
+                        location.reload();
+                    }
                 } else {
                     self.find('.btn-submit').attr('disabled', false).val('Submit');
                     self.find('.errors').append('<div class="alert alert-danger">Error submitting. Please try again later.</div>')

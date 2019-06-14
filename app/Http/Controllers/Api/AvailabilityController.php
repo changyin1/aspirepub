@@ -33,10 +33,11 @@ class AvailabilityController extends Controller
 			$availability->date = $date;
 			$availability->available = 1;
 		}
+        $availability->max_calls = $request->max;
 		$availability->save();
 		
 		if ($availability->available !== NULL) {
-			return response()->json(['success' => true, 'available' => $availability->available, 'date' => $availability->date, 'week' => $weekOfMonth]);
+			return response()->json(['success' => true, 'available' => $availability->available, 'date' => $availability->date, 'week' => $weekOfMonth, 'max' => $availability->max_calls]);
 		} else {
 			return response()->json(['success' => false]);	
 		}
@@ -48,7 +49,7 @@ class AvailabilityController extends Controller
         $date = date('Y-m-d',strtotime($request->input('date')));
         $availability = Availability::where('user_id', $user_id)->where('date', $date)->first();
         if ($availability) {
-            return response()->json(['success' => true, 'available' => $availability->available, 'week' => $request->input('week')]);
+            return response()->json(['success' => true, 'available' => $availability->available, 'week' => $request->input('week'), 'max' => $availability->max_calls]);
         } else {
             return response()->json(['success' => true, 'available' => 0, 'week' => $request->input('week')]);
         }

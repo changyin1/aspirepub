@@ -32,6 +32,7 @@ class AvailabilityController extends Controller
     	$availability = Availability::firstOrCreate(
 			['user_id' => $user->id], ['date' => $date]
 		);
+    	$availability->max_calls = $request->max;
 		$availability->available = $available;
 		$availability->save();
     }
