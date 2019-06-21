@@ -12,7 +12,6 @@
             <form id="create-schedule-form" class="modal-form" action="{{route('createSchedule')}}" method="post">
                 @csrf
                 <div class="modal-body">
-                    <div class="errors"></div>
                     <div class="form-body">
                         <div class="form-group">
                             <select class="client" name="client" data-placeholder="Client" style="width: 100%">
@@ -74,6 +73,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <div class="errors"></div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <input type="submit" class="btn btn-primary btn-submit">
                 </div>
