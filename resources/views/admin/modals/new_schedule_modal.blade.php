@@ -51,6 +51,10 @@
                             <label class="control-label select-label" for="language">Language</label>
                         </div>
                         <div class="form-group">
+                            {{--<label class="control-label" for="notes">Notes</label>--}}
+                            <textarea class="form-control" name="notes" rows="5" placeholder="Type notes here..."></textarea>
+                        </div>
+                        <div class="form-group">
                             <select class="month" name="month" data-placeholder="Month" style="width: 100%">
                                 <option></option>
                                 @foreach(range(1,12) as $month)
@@ -58,11 +62,6 @@
                                 @endforeach
                             </select>
                             <label class="control-label select-label" for="month">Month</label>
-                        </div>
-                        <div class="form-group">
-                            {{--<label class="control-label" for="notes">Notes</label>--}}
-                            <textarea class="form-control" name="notes" rows="5" placeholder="Type notes here..."></textarea>
-                        </div>
                         </div>
                         <div class="form-group">
                             <input name="year" id="year" class="form-control" type="number" value="2019">
