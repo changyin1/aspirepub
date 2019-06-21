@@ -50,7 +50,6 @@ class CreateScheduleRequest extends FormRequest
             'client' => 'required|in:' . implode(',', $clientIds),
             'calls' => 'required|Min:1',
             'template' => 'required|in:' . implode(',', $templateIds),
-            'language' => 'required',
             'type' => 'required|in:' . implode(',', $typeIds),
         ];
     }
