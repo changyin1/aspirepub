@@ -3,18 +3,30 @@
 @section('content')
    <div class="agenda-page mt-4">
        <h2>Call Agenda for {{$data['user']->name ?? ''}}</h2>
+       @if($data['user']->role != 'coach')
        <div class="form-group">
            <label for="view">View</label>
-           <select name="view" id="agenda-view">
+           <select name="view" class="noclear" id="agenda-view">
                <option value="1">All</option>
                <option value="2">Due This Week</option>
                <option value="3">Due Tomorrow</option>
            </select>
        </div>
+       @endif
+       @if($data['user']->role != 'call_specialist')
+       <div class="form-group">
+           <label for="view2">View</label>
+           <select name="view2" class="noclear" id="agenda-view-2">
+               <option value="1">All</option>
+               <option value="2">Completed</option>
+               <option value="3">Not Completed</option>
+           </select>
+       </div>
+       @endif
        <hr class="gray"/>
        <div class="agenda-list">
            @foreach($data['calls'] as $call)
-               <div class="agenda-item" data-item="{{$call->due()}}">
+               <div class="agenda-item" data-item="{{$call->due()}}" data-completed="{{$call->completed_at ? '2' : '3'}}">
                    <div class="agenda-item-header row">
                        <div class="col-11">{{$call['client']->name}} | {{$call['client']->city}}</div>
                        @if(!$call->claimed() && $data['user']->role != 'coach')
@@ -72,6 +84,14 @@
                } else {
                    $('.agenda-item').hide();
                    $('.agenda-item[data-item="'+ $(this).val()  +'"]').show();
+               }
+           });
+           $('#agenda-view-2').on('change', function (){
+               if ($(this).val() == 1) {
+                   $('.agenda-item').show();
+               } else {
+                   $('.agenda-item').hide();
+                   $('.agenda-item[data-completed="'+ $(this).val()  +'"]').show();
                }
            });
            $('.claim-call-btn').click(function (e) {

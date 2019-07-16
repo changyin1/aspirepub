@@ -34,7 +34,7 @@
                             <td><input class="checkbox" type="checkbox" name="schedule-id" value="{{$schedule->id}}"></td>
                             <td>{{$schedule->id}}</td>
                             <td>{{$schedule->client_name()}}</td>
-                            <td>{{date_format($schedule->start_date, 'F Y')}}</td>
+                            <td>{{date_format($schedule->start_date, 'Y-m')}}</td>
                             <td>{{$schedule->template_name()}}</td>
                             <td>{{$schedule->calls}}</td>
                             <td>{{$schedule->finalized ? 'Yes' : 'No'}}</td>

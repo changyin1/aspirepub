@@ -16,30 +16,15 @@
            <input type="hidden" name="callId" value="{{$data['call']->id}}">
            <div class="form-body">
                @foreach ($data['questions'] as $question)
-                   @if ($question->type == 'Yes/No')
-                       <div class="form-group">
-                           <label class="control-label" for="{{$question->id}}">{{$question->question}}</label>
-                           <select name="score[{{$question->id}}]" id="{{$question->id}}" class="form-control" type="select" data-placeholder="Yes or No">
-                               <option></option>
-                               <option value="1" {{isset($data['scores'][$question->id]) && $data['scores'][$question->id]['score'] == 1 ? 'selected' : ''}}>Yes</option>
-                               <option value="0" {{isset($data['scores'][$question->id]) && $data['scores'][$question->id]['score'] == 0 ? 'selected' : ''}}>No</option>
-                           </select>
-                       </div>
-                   @else
                    <div class="form-group">
                        <label class="control-label" for="{{$question->id}}">{{$question->question}}</label>
-                       <select name="score[{{$question->id}}]" id="{{$question->id}}" class="form-control" type="select" data-placeholder="Score">
+                       <select name="score[{{$question->id}}]" id="{{$question->id}}" class="form-control" type="select" data-placeholder="Yes or No">
                            <option></option>
-                           @foreach (range(0, $question->weight) as $i)
-                               <option value="{{$i}}" {{isset($data['scores'][$question->id]) && $data['scores'][$question->id]['score'] == $i ? 'selected' : ''}}>{{$i}}</option>
-                           @endforeach
+                           <option value="1" {{isset($data['scores'][$question->id]) && $data['scores'][$question->id]['score'] == 1 ? 'selected' : ''}}>Yes</option>
+                           <option value="0" {{isset($data['scores'][$question->id]) && $data['scores'][$question->id]['score'] == 0 ? 'selected' : ''}}>No</option>
+                           <option value="-1" {{isset($data['scores'][$question->id]) && $data['scores'][$question->id]['score'] == 0 ? 'selected' : ''}}>N/A</option>
                        </select>
                    </div>
-                   @endif
-                       <div class="form-group">
-                           <label class="control-label" for="call-notes-{{$question->id}}">Call Notes</label>
-                           <textarea class="form-control" id="call-notes-{{$question->id}}" name="notes[{{$question->id}}]" rows="5" placeholder="Type notes here...">{{isset($data['scores'][$question->id]) ? $data['scores'][$question->id]['note'] : ''}}</textarea>
-                       </div>
                @endforeach
                <div class="form-group">
                    <label class="control-label" for="call-notes">Notes</label>
