@@ -289,12 +289,6 @@ class CallController extends Controller
 
     public function editCallType(Request $request) {
         $type = CallType::findorfail($request->id);
-        if (!$request->language) {
-            $error = \Illuminate\Validation\ValidationException::withMessages([
-                'type' => ['Type is required'],
-            ]);
-            throw $error;
-        }
         if (!$request->price) {
             $error = \Illuminate\Validation\ValidationException::withMessages([
                 'price' => ['Price is required'],
