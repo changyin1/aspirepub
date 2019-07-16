@@ -68,6 +68,17 @@ class Schedule extends Model
             $dueDate = Carbon::parse($this->start_date)->addDays(7 * ($i % 4) - 1);
             $newCall->due_date = $dueDate->toDateTimeString();
             $newCall->save();
+
+            $qt = QuestionTemplate::where('id', $this->questionstemplates_id)->first();
+            $questions = TemplateQuestion::where('template_id', $qt->id)->get();
+            foreach ($questions as $question) {
+                $newScore = new Score;
+                $newScore->call_id = $newCall->id;
+                $newScore->question_id = $question->id;
+                $newScore->score = 0;
+
+                $newScore->save();
+            }
         }
 
         return true;
@@ -113,6 +124,17 @@ class Schedule extends Model
             $dueDate = Carbon::parse($start)->addDays(7 * ($call->week()) - 1);
             $copyCall->due_date = $dueDate->toDateTimeString();
             $copyCall->save();
+
+            $qt = QuestionTemplate::where('id', $this->questionstemplates_id)->first();
+            $questions = TemplateQuestion::where('template_id', $qt->id)->all();
+            foreach ($questions as $question) {
+                $newScore = new Score;
+                $newScore->call_id = $copyCall->id;
+                $newScore->question_id = $question->id;
+                $newScore->score = 0;
+
+                $newScore->save();
+            }
 
             $assignments = CallAssignment::where('call_id', $call->id)->get();
             foreach($assignments as $assignment) {

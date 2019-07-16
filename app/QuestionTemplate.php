@@ -21,7 +21,7 @@ class QuestionTemplate extends Model
 
     public function allQuestions()
     {
-        return Question::join('template_questions', 'questions.id', '=', 'template_questions.question_id')->where('template_questions.template_id', $this->id)->get();
+        return Question::join('template_questions', 'questions.id', '=', 'template_questions.question_id')->where('template_questions.template_id', $this->id)->where('questions.active', true)->get();
     }
     public function client()
     {

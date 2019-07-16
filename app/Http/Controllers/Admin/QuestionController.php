@@ -10,6 +10,7 @@ use App\Question;
 use App\Region;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\TemplateQuestion;
 
 class QuestionController extends Controller
 {
@@ -136,9 +137,37 @@ class QuestionController extends Controller
             $question->region = $request->region;
         }
 
-        $question->question = $request->question;
-        $question->type = $request->type;
-        $question->weight = $request->weight;
+        $templates = $question->templates();
+
+        if ($question->question != $request->question || $question->type = $request->type || $question->weight = $request->weight) {
+
+            $updateQuestion = new Question();
+            $updateQuestion->question = $request->question;
+            $updateQuestion->type = $request->type;
+            $updateQuestion->weight = $request->weight;
+            $updateQuestion->client = $request->client;
+            $updateQuestion->company = $request->company;
+            $updateQuestion->region = $request->region;
+            $updateQuestion->previous_question = $question->id;
+
+            $updateQuestion->save();
+
+            $question->active = false;
+
+            $templateQuestions = TemplateQuestion::where('question_id', $question->id)->get();
+            foreach($templateQuestions as $templateQuestion) {
+                $templateQuestion->active = false;
+                $templateQuestion->save();
+
+                $newTemplateQuestion = new TemplateQuestion;
+                $newTemplateQuestion->template_id = $templateQuestion->template_id;
+                $newTemplateQuestion->question_id = $updateQuestion->id;
+                $newTemplateQuestion->active = true;
+                $newTemplateQuestion->order = $templateQuestion->order;
+
+                $newTemplateQuestion->save();
+            };
+        }
 
         $question->save();
 
@@ -146,10 +175,8 @@ class QuestionController extends Controller
         $companies = Company::all();
         $regions = Region::all();
 
-        $templates = $question->templates();
-
         $data = [
-            'question' => $question,
+            'question' => $updateQuestion,
             'templates' => $templates,
             'clients' => $clients,
             'companies' => $companies,

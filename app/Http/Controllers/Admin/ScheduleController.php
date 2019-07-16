@@ -96,7 +96,7 @@ class ScheduleController extends Controller
         $schedule->calls = $request->calls;
         $schedule->questionstemplates_id = $request->template;
         $schedule->notes = $request->notes ? $request->notes : '';
-        $schedule->language = $request->language;
+        $schedule->language = $request->language ? $request->language : 'English';
         $schedule->call_type = $request->type;
 
         $schedule->save();
@@ -152,7 +152,7 @@ class ScheduleController extends Controller
         $schedule->questionstemplates_id = $request->template;
         $schedule->finalized = $request->finalized;
         $schedule->notes = $request->notes ? $request->notes : '';
-        $schedule->language = $request->language;
+        $schedule->language = $request->language ? $request->language : 'English';
         $schedule->call_type = $request->type;
 
         $schedule->save();
