@@ -78,7 +78,7 @@ class ScheduleController extends Controller
         ]);
     }
 
-    public function create(CreateScheduleRequest $request) {
+    public function create(CreateScheduleRequest $request, QuestionTemplate $template) {
         $startDate = Carbon::createFromFormat('d/m/Y', '01/'. $request->month .'/' . $request->year);
         $endDate = Carbon::createFromFormat('d/m/Y', '28/'. $request->month .'/' . $request->year);
 
@@ -100,19 +100,27 @@ class ScheduleController extends Controller
         $schedule->call_type = $request->type;
 
         $schedule->save();
+
+        $template = $template->where('id', $request->template)->first();
+        $template->active = true;
+        $template->save();
+
         return response()->json(['success' => true]);
 
     }
 
     public function duplicate(DuplicateScheduleRequest $request) {
-        $schedule = Schedule::findorfail($request->schedule_id);
         $startDate = Carbon::createFromFormat('d/m/Y', '01/'. $request->month .'/' . $request->year);
         $endDate = Carbon::createFromFormat('d/m/Y', '28/'. $request->month .'/' . $request->year);
         $assignments = false;
         if ($request->maintainAssignees) {
             $assignments = true;
         }
-        $schedule->duplicate($startDate, $endDate, $assignments);
+        $schedule_ids = explode(',', $request->schedule_id);
+        foreach ($schedule_ids as $schedule_id) {
+            $schedule = Schedule::findorfail($schedule_id);
+            $schedule->duplicate($startDate, $endDate, $assignments);
+        }
         return response()->json(['success' => true]);
     }
 

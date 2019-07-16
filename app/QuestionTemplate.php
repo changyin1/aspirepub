@@ -4,10 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Schedule;
+use Illuminate\Database\Eloquent\Builder;
 
 class QuestionTemplate extends Model
 {
     protected $table = 'questions_templates';
+
+    protected static function boot() {
+        parent::boot();
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('template_name', 'asc');
+        });
+    }
 
     public function questionCount()
     {
@@ -33,11 +41,11 @@ class QuestionTemplate extends Model
     }
 
     public function used() {
-        $edit = true;
+        $edit = false;
         $schedules = Schedule::where('questionstemplates_id', $this->id)->get();
         foreach ($schedules as $schedule) {
             if($schedule->start_date->isPast()) {
-                $edit = false;
+                $edit = true;
             }
         }
         return $edit;

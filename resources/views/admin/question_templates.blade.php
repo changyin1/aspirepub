@@ -29,7 +29,7 @@
                             <td>{{$template->id}}</td>
                             <td>{{$template->template_name}}</td>
                             <td>{{$template->questionCount()}}</td>
-                            <td>{{$template->used() ? 'Yes' : 'No'}}</td>
+                            <td>{{$template->active ? 'Yes' : 'No'}}</td>
                         </tr>
                     @endforeach
                     </tbody>

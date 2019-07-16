@@ -61,11 +61,11 @@ class Schedule extends Model
 
     public function finalize() {
         $numberOfCalls = $this->calls;
-        for($i = 1; $i <= $numberOfCalls; $i++) {
+        for($i = 0; $i < $numberOfCalls; $i++) {
             $newCall = new Call;
             $newCall->client_id = $this->client_id;
             $newCall->schedule_id = $this->id;
-            $dueDate = Carbon::parse($this->start_date)->addDays(7 * ($i % 4) - 1);
+            $dueDate = Carbon::parse($this->start_date)->addDays(7 * ($i % 4 + 1) - 1);
             $newCall->due_date = $dueDate->toDateTimeString();
             $newCall->save();
 
@@ -126,7 +126,7 @@ class Schedule extends Model
             $copyCall->save();
 
             $qt = QuestionTemplate::where('id', $this->questionstemplates_id)->first();
-            $questions = TemplateQuestion::where('template_id', $qt->id)->all();
+            $questions = TemplateQuestion::where('template_id', $qt->id)->get();
             foreach ($questions as $question) {
                 $newScore = new Score;
                 $newScore->call_id = $copyCall->id;

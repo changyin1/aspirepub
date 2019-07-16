@@ -69,6 +69,7 @@ class QuestionTemplateController extends Controller
         $template = new QuestionTemplate;
         $template->template_name = $request->name;
         $template->client_id = 0;
+        $template->active = false;
 
         $template->save();
         return response()->json(['success' => true]);

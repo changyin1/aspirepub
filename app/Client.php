@@ -3,12 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Client extends Model
 {
 	protected $fillable = [
         'name', 'city', 'country', 'reservation_contact', 'cancellation_email'
     ];
+
+    protected static function boot() {
+        parent::boot();
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('name', 'asc');
+        });
+    }
 
     public function users()
     {

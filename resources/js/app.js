@@ -335,7 +335,14 @@ $(function () {
         e.preventDefault();
         let self = $(this);
         let url = $(this).attr('action');
-        let data = $(this).serialize();
+        let data = $(this).serializeArray();
+        if (self.hasClass('duplicate-form') && $('#schedule_id').val() == 'null') {
+            var schedules = [];
+            $.each($("input[name='schedule-id']:checked"), function(){
+                schedules.push($(this).val());
+            });
+            data.push({name: 'schedule_id', value: schedules});
+        }
         self.find('.errors').html('');
         self.find('.btn-submit').attr('disabled', true).html('Submitting');
         $.ajax({

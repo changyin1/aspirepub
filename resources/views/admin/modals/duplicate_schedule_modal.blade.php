@@ -9,12 +9,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="create-schedule-form" class="modal-form" action="{{route('duplicateSchedule')}}" method="post">
+            <form id="create-schedule-form" class="modal-form duplicate-form" action="{{route('duplicateSchedule')}}" method="post">
                 @csrf
                 <div class="modal-body">
                     <div class="errors"></div>
                     <div class="form-body">
-                        <input type="hidden" name="schedule_id" value="{{$data['schedule']->id}}">
+                        <input type="hidden" id="schedule_id" name="schedule_id" value="{{array_key_exists('schedule', $data) ? $data['schedule']->id : 'null'}}">
                         <div class="form-group">
                             <select class="month" name="month" data-placeholder="Month" style="width: 100%">
                                 <option></option>

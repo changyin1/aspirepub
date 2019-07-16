@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class CustomAgent extends Model
 {
@@ -12,5 +13,10 @@ class CustomAgent extends Model
         'agent_name','schedule','contacted'
     ];
 
-
+    protected static function boot() {
+        parent::boot();
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('agent_name', 'asc');
+        });
+    }
 }
