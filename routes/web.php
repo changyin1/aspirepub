@@ -82,5 +82,9 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::post('/admin/language/edit/{id}', 'Admin\CallController@editLanguage')->name('admin/language/edit');
     Route::get('/admin/call/type/{id}', 'Admin\CallController@showCallType')->name('admin/call/type');
     Route::post('/admin/call/type/edit/{id}', 'Admin\CallController@editCallType')->name('admin/call/type/edit');
+
+    Route::get('/admin/reports', 'Admin\ReportController@index')->name('admin/reports');
+    Route::get('/admin/reports/incomplete/{date?}', 'Admin\ReportController@incomplete')->name('admin/reports/incomplete');
+    Route::get('/admin/reports/unscored/{date?}', 'Admin\ReportController@unscored')->name('admin/reports/unscored');
 });
 

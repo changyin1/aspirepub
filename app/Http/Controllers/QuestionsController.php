@@ -56,6 +56,9 @@ class QuestionsController extends Controller
     public function scoreQuestions(Request $request) {
         $call = Call::findorfail($request->callId);
         $scores = $request->score;
+        $now = Carbon::now();
+        $call->scored_at = $now;
+        $call->save();
 
         if ($request->note) {
             $call->coach_notes = $request->note;

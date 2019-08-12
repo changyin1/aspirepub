@@ -32,6 +32,9 @@
         <li><a href="{{route('admin/question_templates')}}" class="{{ (strpos(Route::currentRouteName(), 'admin/question_templates') === 0) ? 'active' : '' }}">Question Templates</a>
         </li>
         <li>
+            <a href="{{route('admin/reports')}}" class="{{ (strpos(Route::currentRouteName(), 'admin/reports') === 0) ? 'active' : '' }}">Reports</a>
+        </li>
+        <li>
             <a href="{{route('admin/users')}}" class="{{ (strpos(Route::currentRouteName(), 'admin/users') === 0) ? 'active' : '' }}">Users</a>
         </li>
     </ul>
