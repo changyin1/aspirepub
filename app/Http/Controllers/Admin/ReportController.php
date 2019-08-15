@@ -103,13 +103,20 @@ class ReportController extends Controller
         $toBeCompleted = [
             'all' => Call::whereNull('completed_at')->get(),
             'week' => Call::whereNull('completed_at')->where('due_date', $thisWeek)->get(),
-            'month' => Call::whereNull('completed_at')->where('due_date', $thisMonth . '7')->orWhere('due_date', $thisMonth . '14')->orWhere('due_date', $thisMonth . '21')->orWhere('due_date', $thisMonth . '28')->get(),
+            'month' => Call::whereNull('completed_at')
+                ->where(function ($q) use ($thisMonth) {
+                    $q->where('due_date', $thisMonth . '7')->orWhere('due_date', $thisMonth . '14')->orWhere('due_date', $thisMonth . '21')->orWhere('due_date', $thisMonth . '28');
+                }),
         ];
 
         $toBeScored = [
             'all' => Call::whereNull('scored_at')->WhereNotNull('completed_at'),
             'week' => Call::whereNull('scored_at')->WhereNotNull('completed_at')->where('due_date', $thisWeek)->get(),
-            'month' => Call::whereNull('scored_at')->WhereNotNull('completed_at')->where('due_date', $thisMonth . '7')->orWhere('due_date', $thisMonth . '14')->orWhere('due_date', $thisMonth . '21')->orWhere('due_date', $thisMonth . '28')->get(),
+            'month' => Call::whereNull('scored_at')
+                ->WhereNotNull('completed_at')
+                ->where(function ($q) use ($thisMonth) {
+                    $q->where('due_date', $thisMonth . '7')->orWhere('due_date', $thisMonth . '14')->orWhere('due_date', $thisMonth . '21')->orWhere('due_date', $thisMonth . '28');
+                }),
         ];
 
         $data = [
