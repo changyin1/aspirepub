@@ -7,7 +7,11 @@
             <h5>Client</h5>
             <p><a href="{{route('admin/clients') . '/'.$data['call']->client_id}}">{{$data['call']->client_name()}}</a></p>
             <h5>Schedule</h5>
+            @if($data['call']->schedule)
             <p><a href="{{route('admin/schedules') . '/' .$data['call']->schedule->id}}}">{{$data['call']->schedule->id}}</a></p>
+            @else
+            <p>This call's schedule has been deleted</p>
+            @endif
             <h5>Completed</h5>
             <p>{{$data['call']->completed_at ? $data['call']->completed_at . ' by : ' . $data['call']->call_specialist()->name : 'Not complete'}}</p>
             <h5>Due Date</h5>
@@ -25,11 +29,13 @@
             <form id="edit-schedule-form" class="edit-form ajax" action="{{route('assignCall')}}" method="post">
                 @csrf
                 <div class="errors" style="width: 66.67%"></div>
+                @if($data['call']->schedule)
                 <input type="hidden" id="schedule-id" value="{{$data['call']->schedule->id}}">
+                <input type="hidden" id="redirect" value="{{route('admin/schedules/edit', ['id' => $data['call']->schedule->id])}}">
+                @endif
                 <input type="hidden" id="week-select" value="{{$data['call']->week()}}">
                 <input type="hidden" id="availability-url" value="{{route('getAvailable')}}">
                 <input type="hidden" id="id" name="id" value="{{$data['call']->id}}">
-                <input type="hidden" id="redirect" value="{{route('admin/schedules/edit', ['id' => $data['call']->schedule->id])}}">
                 <div class="form-body">
                     <div class="form-group">
                         <select class="coach" name="coach" data-placeholder="Coach" style="width: 66.67%">
