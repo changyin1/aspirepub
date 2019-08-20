@@ -35,6 +35,13 @@ require('./bootstrap');
 // });
 
 $(function () {
+    //date picker
+    $('.datepicker').flatpickr();
+    $('.datepicker-time').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+    });
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -42,11 +49,17 @@ $(function () {
         }
     });
     $("input").change(function () {
-        "" != $(this).val() ? $(this).parent().addClass("filled") : $(this).parent().removeClass("filled")
-    }),
-        $("input").each(function () {
-            "" != $(this).val() ? $(this).parent().addClass("filled") : $(this).parent().removeClass("filled")
-        })
+        if (!$(this).hasClass('no-anim')) {
+            "" != $(this).val() ? $(this).parent().addClass("filled") : $(this).parent().removeClass("filled");
+        }
+    });
+
+    $("input").each(function () {
+        if (!$(this).hasClass('no-anim')) {
+            "" != $(this).val() ? $(this).parent().addClass("filled") : $(this).parent().removeClass("filled");
+        }
+    });
+
     $('.unmask').on('mousedown', function () {
         var $input = $(this).next('input')[0];
         if ($input.type == "password") {
@@ -60,7 +73,7 @@ $(function () {
         $input.type = "password";
     });
 
-    $('select').each(function () {
+    $('form-group select').each(function () {
         var placeholder = $(this).data('placeholder');
         if ($(this).hasClass('city')) {
             $(this).select2({

@@ -146,7 +146,7 @@
                            <div class="form-group form-row">
                                <div class="col-md-4">
                                    {{--<input class="btn btn-primary" type="submit" value="POST CALL">--}}
-                                   <a class="btn btn-primary" target="_blank" href="{{route('viewQuestions', ['id' => $data['call']->id])}}">VIEW QUESTIONS</a>
+                                   <a class="btn btn-primary" target="_blank" href="{{route('viewQuestions', ['id' => $data['call']->id])}}">SUBMIT CALL COMPLETION</a>
                                </div>
                            </div>
                        </fieldset>

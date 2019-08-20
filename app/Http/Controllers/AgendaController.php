@@ -136,8 +136,13 @@ class AgendaController extends Controller
         }
 
         $now = Carbon::now();
-        $call->completed_at = $now;
-        $call->agent_name = $agent ? $agent->name : '';
+        $call->completed_at = $request->call_completed_at ? date_format(date_create($request->call_completed_at), 'Y-m-d H:i:s') : $now;
+        $call->agent_name = $agent ? $agent->name : $request->call_receiver;
+        $call->reservation_made = $request->reservation_made ? true : false;
+        $call->arrival_date = date_format(date_create($request->reservation_start), 'Y-m-d');
+        $call->departure_date = date_format(date_create($request->reservation_end), 'Y-m-d');
+        $call->reservation_confirmation = $request->confirmation_number;
+        $call->aspire_card_used = $request->card_used ? true : false;
         $call->save();
 
         return response()->json(['success' => true]);

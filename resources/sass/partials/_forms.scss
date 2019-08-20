@@ -30,6 +30,9 @@ form {
       position: relative;
       top: 0;
     }
+    &.checkbox-label {
+      width: auto;
+    }
     position: absolute;
     width: 100%;
     text-align: left;
