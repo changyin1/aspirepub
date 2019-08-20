@@ -36,11 +36,13 @@ require('./bootstrap');
 
 $(function () {
     //date picker
-    $('.datepicker').flatpickr();
-    $('.datepicker-time').flatpickr({
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-    });
+    if ($.isFunction(window.flatpickr)) {
+        $('.datepicker').flatpickr();
+        $('.datepicker-time').flatpickr({
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+        });
+    }
 
     $.ajaxSetup({
         headers: {
