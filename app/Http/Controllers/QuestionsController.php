@@ -7,6 +7,7 @@ use App\Score;
 use Illuminate\Http\Request;
 use \App\QuestionTemplate;
 use App\Call;
+use Carbon\Carbon;
 
 class QuestionsController extends Controller
 {
@@ -65,6 +66,16 @@ class QuestionsController extends Controller
             $call->save();
         }
 
+        if ($request->engagement) {
+            $call->call_score = $request->engagement;
+            $call->save();
+        }
+
+        if ($request->agent) {
+            $call->agent_name = $request->agent;
+            $call->save();
+        }
+
         foreach ($scores as $question => $score) {
             if (isset($score)) {
                 $checkScore = Score::where([
@@ -73,14 +84,12 @@ class QuestionsController extends Controller
                 ])->first();
                 if ($checkScore) {
                     $checkScore->score = $score;
-                    $checkScore->note = $request->notes[$question];
                     $checkScore->save();
                 } else {
                     $newScore = new Score;
                     $newScore->call_id = $call->id;
                     $newScore->question_id = $question;
                     $newScore->score = $score;
-                    $newScore->note = $request->notes[$question];
                     $newScore->save();
                 }
             }

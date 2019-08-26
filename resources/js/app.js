@@ -50,6 +50,7 @@ $(function () {
             'Authorization': 'Bearer ' + $('meta[name="api_token"]').attr('content'),
         }
     });
+
     $("input").change(function () {
         if (!$(this).hasClass('no-anim')) {
             "" != $(this).val() ? $(this).parent().addClass("filled") : $(this).parent().removeClass("filled");
