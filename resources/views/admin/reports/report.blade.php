@@ -18,6 +18,7 @@
                     <th>Due Date</th>
                     <th>Assigned</th>
                     <th>Coach</th>
+                    <th>Reservation Cancel</th>
                     <th>Edit</th>
                 </tr>
                 </thead>
@@ -37,6 +38,7 @@
                             @endforeach
                         </td>
                         <td>{{$call->coach() ? $call->coach()->name : ''}}</td>
+                        <td>{{$call->reservationToBeCancelled() ? '<span class="alert">Needs to be cancelled!</span>' : ''}}</td>
                         <td><a href="{{route('admin/calls') . '/'.$call->id}}">Edit</a></td>
                     </tr>
                 @endforeach

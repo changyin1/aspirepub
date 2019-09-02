@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use \App\QuestionTemplate;
 use App\Call;
 use Carbon\Carbon;
+use App\ScheduleAttachment;
 
 class QuestionsController extends Controller
 {
@@ -15,11 +16,13 @@ class QuestionsController extends Controller
         $call = Call::where('id', $id)->with('schedule')->first();
         $template_id = $call->schedule->questionstemplates_id;
     	$qt = QuestionTemplate::findorfail($template_id);
+        $attachments = ScheduleAttachment::where('schedule_id', $call->schedule->id)->get();
 
     	$data = [
     	    'call' => $call,
             'template' => $qt,
-            'questions' => $qt->allQuestions()
+            'questions' => $qt->allQuestions(),
+            'attachments' => $attachments,
         ];
 
     	return view('questions.view_questions', [

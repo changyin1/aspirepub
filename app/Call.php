@@ -120,4 +120,16 @@ class Call extends Model
 
         return $scoreArray;
     }
+
+    public function reservationToBeCancelled() {
+        if ($this->reservation_made && !$this->cancelation_confirmation) {
+            $reservationMadeTime = Carbon::parse($this->completed_at);
+            $now = Carbon::now();
+            if ($reservationMadeTime->addHour(18) < $now) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

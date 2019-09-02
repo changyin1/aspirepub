@@ -83,6 +83,25 @@
             <label class="textarea-label" for="notes">Notes</label>
             <textarea class="form-control" name="notes" rows="5" placeholder="Type notes here...">{{$data['schedule']->notes}}</textarea>
         </div>
+        <div class="form-group">
+            Enter Blank to Delete All Attachments
+        </div>
+        <div class="form-group">
+            <label class="control-label select-label" for="link1">File Link 1</label>
+            <input type="text" name="link[1]" id="link1" class="no-anim" placeholder="Drop box link" value="{{count($data['links']) > 0 ? $data['links'][0]->attachment_link_address : ''}}">
+        </div>
+        <div class="form-group">
+            <label class="control-label select-label" for="link2">File Link 2</label>
+            <input type="text" name="link[2]" id="link2" class="no-anim" placeholder="Drop box link" value="{{count($data['links']) > 1 ? $data['links'][1]->attachment_link_address : ''}}">
+        </div>
+        <div class="form-group">
+            <input class="no-anim" name="file1" id="file1" type="file">
+            <label class="control-label select-label" for="file1">Attachment 1</label>
+        </div>
+        <div class="form-group">
+            <input class="no-anim" name="file2" id="file2" type="file">
+            <label class="control-label select-label" for="file2">Attachment 2</label>
+        </div>
         <input type="submit" data-message="Once you have finalized you can no longer edit are you sure you want to finalize this schedule?" class="btn btn-primary btn-submit submit-alert" data-field="finalized" value="Finalize">
         <input type="submit" class="btn btn-primary btn-submit" value="Save">
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteScheduleModal">

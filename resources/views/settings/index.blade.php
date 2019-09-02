@@ -36,17 +36,17 @@
                        <input name="post-code" id="post-code" class="form-control" type="text">
                        <label class="control-label" for="post-code">Postal Code</label>
                    </div>
-                   <div class="form-group">
-                       <div class="form-row">
-                           <select class="city" name="city" data-placeholder="City"></select>
-                           <select class="state" name="state" data-placeholder="State">
-                               <option></option>
-                               @foreach($states as $key => $state)
-                                   <option value="{{$state}}">{{$key}}</option>
-                               @endforeach
-                           </select>
-                       </div>
-                   </div>
+                   {{--<div class="form-group">--}}
+                       {{--<div class="form-row">--}}
+                           {{--<select class="city" name="city" data-placeholder="City"></select>--}}
+                           {{--<select class="state" name="state" data-placeholder="State">--}}
+                               {{--<option></option>--}}
+                               {{--@foreach($states as $key => $state)--}}
+                                   {{--<option value="{{$state}}">{{$key}}</option>--}}
+                               {{--@endforeach--}}
+                           {{--</select>--}}
+                       {{--</div>--}}
+                   {{--</div>--}}
                    <div class="form-group">
                        <input type="submit" class="btn btn-primary" value="Save">
                    </div>

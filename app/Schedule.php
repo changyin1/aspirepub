@@ -45,6 +45,11 @@ class Schedule extends Model
         return $this->belongsTo('App\CallType', 'call_type');
     }
 
+    public function attachments()
+    {
+        return $this->hasMany('App\ScheduleAttachment');
+    }
+
     public function client_name() {
         if ($this->client) {
             return $this->client->name;

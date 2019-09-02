@@ -10,6 +10,11 @@
            {{--@endforeach--}}
        {{--</div>--}}
        <h4 class="form-heading">Upload Call Recording</h4>
+       @if($data['attachments'])
+           @foreach($data['attachments'] as $key => $attachment)
+               <a href="{{$attachment->attachment_link_address}}"><p class="btn btn-primary">Schedule Attachment {{$key}}</p></a>
+           @endforeach
+       @endif
        <form class="ajax" method="post" action="{{route('completeCall')}}" enctype="multipart/form-data">
            @csrf
            <input type="hidden" name="id" value="{{$data['call']->id}}">

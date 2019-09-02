@@ -41,7 +41,7 @@ class AgendaController extends Controller
         $user = Auth::user();
         $data['user'] = $user;
         $data['call'] = Call::with('client', 'schedule')->find($id);
-       //dd($data);
+
         return view('agenda.detail', [
             'data' => $data
         ]);

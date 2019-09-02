@@ -11,6 +11,7 @@ use App\Http\Requests\DuplicateScheduleRequest;
 use App\Language;
 use App\QuestionTemplate;
 use App\Schedule;
+use App\ScheduleAttachment;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -59,6 +60,7 @@ class ScheduleController extends Controller
         $coaches = $user->hasRole('coach');
         $languages = Language::all();
         $types = CallType::all();
+        $links = ScheduleAttachment::where('schedule_id', $id)->get();
 
         $edit = !$schedule->finalized;
 
@@ -70,7 +72,8 @@ class ScheduleController extends Controller
             'edit' => $edit,
             'coaches' => $coaches,
             'types' => $types,
-            'languages' => $languages
+            'languages' => $languages,
+            'links' => $links,
         ];
 
         return view('admin.schedules.edit', [
@@ -164,6 +167,48 @@ class ScheduleController extends Controller
         $schedule->call_type = $request->type;
 
         $schedule->save();
+
+        if ($request->link) {
+            foreach($schedule->attachments() as $oldAttachment) {
+                $oldAttachment->delete();
+            }
+            foreach ($request->link as $link) {
+                if ($link) {
+                    $attachment = new ScheduleAttachment();
+                    $attachment->attachment_link_address = $link;
+                    $attachment->schedule_id = $schedule->id;
+                    $attachment->save();
+                }
+            }
+        }
+
+        if ($request->file('file1')) {
+            $file = $request->file('file1');
+            $fileName = 'schedule_attachment_' . $request->schedule_id . '_' . time() . '.' . $file->getClientOriginalExtension();
+
+            $s3 = \Storage::disk('s3');
+            $filePath = '/attachments/' . $fileName;
+            $s3->put($filePath, file_get_contents($file), 'public');
+
+            $attachment = new ScheduleAttachment();
+            $attachment->attachment_link_address = 'https://s3-us-east-2.amazonaws.com/aspiremarketing/attachments/' . $fileName;
+            $attachment->schedule_id = $schedule->id;
+            $attachment->save();
+        }
+
+        if ($request->file('file2')) {
+            $file = $request->file('file2');
+            $recordingFileName = 'schedule_attachment_' . $request->schedule_id . '_' . time() . '.' . $file->getClientOriginalExtension();
+
+            $s3 = \Storage::disk('s3');
+            $filePath = '/attachments/' . $recordingFileName;
+            $s3->put($filePath, file_get_contents($file), 'public');
+
+            $attachment = new ScheduleAttachment();
+            $attachment->attachment_link_address = 'https://s3-us-east-2.amazonaws.com/aspiremarketing/attachments/' . $fileName;
+            $attachment->schedule_id = $schedule->id;
+            $attachment->save();
+        }
 
         if ($schedule->finalized) {
             try {
