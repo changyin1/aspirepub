@@ -6,6 +6,7 @@ use App\Availability;
 use App\Call;
 use App\CallAssignment;
 use App\CallType;
+use App\CustomAgent;
 use App\Http\Controllers\AvailabilityController;
 use App\Language;
 use App\User;
@@ -26,10 +27,13 @@ class CallController extends Controller
             $assigned[] = User::where('id', $assignId->specialist_id)->first();
         }
 
+        $agents = CustomAgent::where('schedule', $call->schedule->id)->get();
+
         $data = [
             'call' => $call,
             'coaches' => $coaches,
             'assigned' => $assigned,
+            'agents' => $agents,
             'save' => false
         ];
 
@@ -49,6 +53,7 @@ class CallController extends Controller
         }
 
         $call->coach = $request->coach;
+        $call->custom_agent_id = $request->agent;
         $call->save();
 
         CallAssignment::where('call_id', $request->id)->delete();
@@ -74,7 +79,7 @@ class CallController extends Controller
     }
 
     public function multiAssign(Request $request) {
-        $types = ['coach', 'specialist'];
+        $types = ['coach', 'specialist', 'agent'];
         if (!in_array($request->type, $types)) {
             $error = \Illuminate\Validation\ValidationException::withMessages([
                 'type' => ['You cannot assign calls to that user type'],
@@ -94,6 +99,18 @@ class CallController extends Controller
                 try {
                     $call = Call::where('id', $call_id)->first();
                     $call->coach = $request->coach;
+                    $call->save();
+                } catch (Exception $e) {
+                    // do something if one failed?
+                }
+            }
+        }
+
+        if ($request->type == 'agent') {
+            foreach($call_ids as $call_id) {
+                try {
+                    $call = Call::where('id', $call_id)->first();
+                    $call->custom_agent_id = $request->agent;
                     $call->save();
                 } catch (Exception $e) {
                     // do something if one failed?

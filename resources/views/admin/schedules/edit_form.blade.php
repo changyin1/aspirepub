@@ -1,4 +1,4 @@
-<form id="edit-schedule-form" class="edit-form ajax" action="{{route('modifySchedule')}}" method="post">
+<form id="edit-schedule-form" class="edit-form" action="{{route('modifySchedule')}}" method="post">
     @csrf
     <div class="errors" style="width: 66.67%"></div>
     <div class="form-body">

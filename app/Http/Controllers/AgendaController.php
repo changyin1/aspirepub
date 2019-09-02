@@ -105,6 +105,7 @@ class AgendaController extends Controller
     public function completeCall(Request $request) {
         $user = Auth::user();
         $call = Call::findorfail($request->id);
+
         $agent = null;
         if ($request->agent) {
             $agent = CustomAgent::where('id', $request->agent)->first();
@@ -145,6 +146,7 @@ class AgendaController extends Controller
         $call->aspire_card_used = $request->card_used ? true : false;
         $call->save();
 
-        return response()->json(['success' => true]);
+        return redirect('/schedule');
+//        return response()->json(['success' => true]);
     }
 }

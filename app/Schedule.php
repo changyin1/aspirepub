@@ -118,6 +118,7 @@ class Schedule extends Model
         $new->save();
 
         $calls = Call::where('schedule_id', $this->id)->get();
+        $agents = CustomAgent::where('schedule', $this->id)->get();
 
         foreach($calls as $call) {
             $copyCall = new Call;
@@ -148,6 +149,13 @@ class Schedule extends Model
                 $newAssignment->specialist_id = $assignment->specialist_id;
                 $newAssignment->save();
             }
+        }
+
+        foreach($agents as $agent) {
+            $newAgent = new CustomAgent();
+            $newAgent->agent_name = $agent->agent_name;
+            $newAgent->schedule = $new->id;
+            $newAgent->save();
         }
         return true;
     }

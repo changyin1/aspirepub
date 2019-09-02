@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\CustomAgent;
 
 class Call extends Model
 {
@@ -14,6 +15,11 @@ class Call extends Model
     protected $casts = [
         'arrival_date' => 'date',
         'departure_date' => 'date'
+    ];
+
+    protected $attributes = [
+        'reservation_made' => false,
+        'aspire_card_used' => false,
     ];
 
     public function coach()
@@ -131,5 +137,14 @@ class Call extends Model
         }
 
         return false;
+    }
+
+    public function customAgentName() {
+        if ($this->custom_agent_id) {
+            $agent = CustomAgent::where('id', $this->custom_agent_id)->first();
+            return $agent->agent_name;
+        }
+
+        return null;
     }
 }

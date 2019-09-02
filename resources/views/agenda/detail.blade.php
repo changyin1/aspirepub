@@ -16,7 +16,7 @@
                                <div class="agenda-item-details">
                                    <div class="agenda-item-detail">
                                        <span>Contact</span>
-                                       <span class="black-text">Contact Name</span>
+                                       <span class="black-text">{{$data['call']->custom_agent_id ? $data['call']->customAgentName() : ''}}</span>
                                    </div>
                                    <div class="agenda-item-detail">
                                        <span>Phone Number</span>

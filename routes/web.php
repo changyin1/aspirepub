@@ -31,6 +31,8 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('/store', 'AgendaController@upload_selector')->name('get_store');
     Route::post('/store', 'AgendaController@store_file')->name('store');
+
+    Route::post('/call/complete', 'AgendaController@completeCall')->name('completeCall');
 });
 
 Route::middleware(['auth', 'coach'])->group(function() {
@@ -66,6 +68,7 @@ Route::middleware(['auth', 'admin'])->group(function() {
 
     Route::get('/admin/schedules', 'Admin\ScheduleController@index')->name('admin/schedules');
     Route::get('/admin/schedules/{id}', 'Admin\ScheduleController@edit')->name('admin/schedules/edit');
+    Route::post('/admin/schedule/modify', 'Admin\ScheduleController@modify')->name('modifySchedule');
 
     Route::get('/admin/calls/', 'Admin\CallController@show')->name('admin/calls');
     Route::get('/admin/calls/{id}', 'Admin\CallController@show')->name('admin/calls/show');
@@ -86,5 +89,7 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/admin/reports', 'Admin\ReportController@index')->name('admin/reports');
     Route::get('/admin/reports/incomplete/{date?}', 'Admin\ReportController@incomplete')->name('admin/reports/incomplete');
     Route::get('/admin/reports/unscored/{date?}', 'Admin\ReportController@unscored')->name('admin/reports/unscored');
+
+    Route::post('/admin/schedule/agents', 'Admin\ScheduleController@modifyAgents')->name('modifyAgents');
 });
 

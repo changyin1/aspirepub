@@ -216,12 +216,13 @@ class ScheduleController extends Controller
             } catch (\Exception $e) {
                 $schedule->finalized  = 0;
                 $schedule->save();
-                var_dump($e);
-                return response()->json(['success' => false]);
+                return redirect('/admin/schedules/'.$schedule->id);
+//                return response()->json(['success' => false]);
             }
 
         }
-        return response()->json(['success' => true]);
+        return redirect('/admin/schedules/'.$schedule->id);
+//        return response()->json(['success' => true]);
     }
 
     public function delete(Request $request) {
@@ -298,5 +299,19 @@ class ScheduleController extends Controller
         }
 
         return response()->json(['success' => true]);
+    }
+
+    public function getAgents(Request $request) {
+        $schedule = Schedule::where('id', $request->schedule)->first();
+
+        $agents = CustomAgent::where('schedule', $schedule->id)->get();
+
+        $results = [];
+
+        foreach ($agents as $agent) {
+            $results[] = ['id' => $agent->id, 'text' => $agent->agent_name];
+        }
+
+        return response()->json(['success' => true, 'results' => $results]);
     }
 }

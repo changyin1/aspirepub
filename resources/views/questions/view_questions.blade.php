@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('content')
-   <div class="questions-page mt-4">
+   <div class="questions-page my-4">
        <h2>Call: {{$data['call']->id}} Question Template: {{$data['template']->template_name ?? ''}}</h2>
        <hr class="gray"/>
        {{--<div class="questions-list">--}}
@@ -15,7 +15,7 @@
                <a href="{{$attachment->attachment_link_address}}"><p class="btn btn-primary">Schedule Attachment {{$key}}</p></a>
            @endforeach
        @endif
-       <form class="ajax" method="post" action="{{route('completeCall')}}" enctype="multipart/form-data">
+       <form method="post" action="{{route('completeCall')}}" enctype="multipart/form-data">
            @csrf
            <input type="hidden" name="id" value="{{$data['call']->id}}">
            <input type="hidden" id="redirect" value="{{route('schedule')}}">

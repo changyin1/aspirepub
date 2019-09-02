@@ -76,7 +76,7 @@ $(function () {
         $input.type = "password";
     });
 
-    $('form-group select').each(function () {
+    $('.form-group select').each(function () {
         var placeholder = $(this).data('placeholder');
         if ($(this).hasClass('city')) {
             $(this).select2({
@@ -115,6 +115,26 @@ $(function () {
                 language: {
                     noResults: function (params) {
                         return "No Available Specialists Found";
+                    }
+                }
+            });
+        } else if ($(this).hasClass('agent')) {
+            $(this).select2({
+                minimumResultsForSearch: Infinity,
+                placeholder: placeholder,
+                ajax: {
+                    type: 'post',
+                    url: $('#agents-url').val(),
+                    data: function () {
+                        return {
+                            schedule: $('#schedule-id').val()
+                        };
+                    },
+                    cache: true
+                },
+                language: {
+                    noResults: function (params) {
+                        return "No Available Agents Found";
                     }
                 }
             });

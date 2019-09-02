@@ -55,6 +55,19 @@
                         </select>
                         <label class="control-label select-label" for="specialist">Specialists</label>
                     </div>
+                    <div class="form-group">
+                        <select class="agents" name="agent" data-placeholder="Agent" style="width: 66.67%">
+                            <option></option>
+                            @foreach($data['agents'] as $agent)
+                                <option value="{{$agent->id}}"
+                                        @if($data['call']->custom_agent_id == $agent->id)
+                                        selected
+                                        @endif
+                                >{{$agent->agent_name}}</option>
+                            @endforeach
+                        </select>
+                        <label class="control-label select-label" for="agent">Agent</label>
+                    </div>
                 </div>
                 <input type="submit" class="btn btn-primary btn-submit" value="Save">
                 <button class="btn btn-danger" data-toggle="modal" data-target="#deleteCallModal">Delete Call</button>
