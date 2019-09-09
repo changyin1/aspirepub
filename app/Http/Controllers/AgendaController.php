@@ -116,8 +116,7 @@ class AgendaController extends Controller
         }
 
         $recording = Recording::where('call_id', $call->id)->first();
-        var_dump($request->file('file'));
-        die();
+
         if ($request->link) {
             if ($recording == null) {
                 $recording = new Recording;

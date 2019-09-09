@@ -215,10 +215,8 @@ class ScheduleController extends Controller
             try {
                 $schedule->finalize();
             } catch (\Exception $e) {
-                var_dump($e);
                 $schedule->finalized  = 0;
                 $schedule->save();
-                die();
                 return redirect('/admin/schedules/'.$schedule->id);
 //                return response()->json(['success' => false]);
             }
