@@ -168,10 +168,11 @@ class ScheduleController extends Controller
 
         $schedule->save();
 
+        foreach($schedule->attachments() as $oldAttachment) {
+            $oldAttachment->delete();
+        }
+
         if ($request->link) {
-            foreach($schedule->attachments() as $oldAttachment) {
-                $oldAttachment->delete();
-            }
             foreach ($request->link as $link) {
                 if ($link) {
                     $attachment = new ScheduleAttachment();
@@ -191,7 +192,7 @@ class ScheduleController extends Controller
             $s3->put($filePath, file_get_contents($file), 'public');
 
             $attachment = new ScheduleAttachment();
-            $attachment->attachment_link_address = 'https://s3-us-east-2.amazonaws.com/aspiremarketing/attachments/' . $fileName;
+            $attachment->attachment_link_address = 'https://aspire-uploads.s3.us-east-2.amazonaws.com/attachments/' . $fileName;
             $attachment->schedule_id = $schedule->id;
             $attachment->save();
         }
@@ -205,7 +206,7 @@ class ScheduleController extends Controller
             $s3->put($filePath, file_get_contents($file), 'public');
 
             $attachment = new ScheduleAttachment();
-            $attachment->attachment_link_address = 'https://s3-us-east-2.amazonaws.com/aspiremarketing/attachments/' . $fileName;
+            $attachment->attachment_link_address = 'https://aspire-uploads.s3.us-east-2.amazonaws.com/attachments/' . $fileName;
             $attachment->schedule_id = $schedule->id;
             $attachment->save();
         }
@@ -214,8 +215,10 @@ class ScheduleController extends Controller
             try {
                 $schedule->finalize();
             } catch (\Exception $e) {
+                var_dump($e);
                 $schedule->finalized  = 0;
                 $schedule->save();
+                die();
                 return redirect('/admin/schedules/'.$schedule->id);
 //                return response()->json(['success' => false]);
             }

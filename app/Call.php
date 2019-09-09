@@ -20,6 +20,7 @@ class Call extends Model
     protected $attributes = [
         'reservation_made' => false,
         'aspire_card_used' => false,
+        'custom_agent_id' => 0,
     ];
 
     public function coach()

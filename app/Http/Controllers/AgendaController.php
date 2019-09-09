@@ -88,7 +88,7 @@ class AgendaController extends Controller
         $recording = new Recording;
         $recording->call_id = $request->id;
         $recording->filename = $recordingFileName;
-        $recording->path = 'https://s3-us-east-2.amazonaws.com/aspiremarketing/recordings/';
+        $recording->path = 'https://aspire-uploads.s3.us-east-2.amazonaws.com/recordings/';
         $recording->save();
         /*
         $my_file = 'test_import.csv';
@@ -115,9 +115,14 @@ class AgendaController extends Controller
             }
         }
 
+        $recording = Recording::where('call_id', $call->id)->first();
+        var_dump($request->file('file'));
+        die();
         if ($request->link) {
-            $recording = new Recording;
-            $recording->call_id = $request->id;
+            if ($recording == null) {
+                $recording = new Recording;
+                $recording->call_id = $request->id;
+            }
             $recording->filename = $request->link;
             $recording->path = 'link';
             $recording->save();
@@ -129,10 +134,12 @@ class AgendaController extends Controller
             $filePath = '/recordings/' . $recordingFileName;
             $s3->put($filePath, file_get_contents($file), 'public');
 
-            $recording = new Recording;
-            $recording->call_id = $request->id;
+            if ($recording == null) {
+                $recording = new Recording;
+                $recording->call_id = $request->id;
+            }
             $recording->filename = $recordingFileName;
-            $recording->path = 'https://s3-us-east-2.amazonaws.com/aspiremarketing/recordings/';
+            $recording->path = 'https://aspire-uploads.s3.us-east-2.amazonaws.com/recordings/';
             $recording->save();
         }
 

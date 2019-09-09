@@ -12,7 +12,7 @@
        <h4 class="form-heading">Upload Call Recording</h4>
        @if($data['attachments'])
            @foreach($data['attachments'] as $key => $attachment)
-               <a href="{{$attachment->attachment_link_address}}"><p class="btn btn-primary">Schedule Attachment {{$key}}</p></a>
+               <a target="_blank" href="{{$attachment->attachment_link_address}}"><p class="btn btn-primary">Schedule Attachment {{$key}}</p></a>
            @endforeach
        @endif
        <form method="post" action="{{route('completeCall')}}" enctype="multipart/form-data">
@@ -63,7 +63,10 @@
                    <input type="checkbox" class="no-anim" name="card_used" id="card_used" @if($data['call']->aspire_card_used){{'checked'}}@endif>
                    <label class="control-label select-label checkbox-label" for="card_used">Aspire Credit Card Used</label>
                </div>
-               <input name="file" id="file" type="file">
+               <div class="form-group">
+                   <label class="control-label select-label" for="file">Upload Call Recording</label>
+                   <input class="no-anim" name="file" id="file" type="file">
+               </div>
                <button class="btn btn-primary">Submit call as completed</button>
            </div>
        </form>
