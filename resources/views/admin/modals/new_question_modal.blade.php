@@ -55,6 +55,16 @@
                             <label class="control-label select-label" for="region">Region</label>
                         </div>
                         <div class="form-group">
+                            <select class="type" name="category" data-placeholder="Category" style="width: 100%">
+                                <option></option>
+                                <option value=" ">Any</option>
+                                @foreach($data['categories'] as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                            <label class="control-label select-label" for="category">Category</label>
+                        </div>
+                        <div class="form-group">
                             <input name="weight" id="weight" class="form-control" type="number" value="10">
                             <label class="control-label" for="weight">Weight</label>
                         </div>

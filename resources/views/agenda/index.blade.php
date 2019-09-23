@@ -26,7 +26,7 @@
        <hr class="gray"/>
        <div class="agenda-list">
            @foreach($data['calls'] as $call)
-               <div class="agenda-item" data-item="{{$call->due()}}" data-completed="{{$call->completed_at ? '2' : '3'}}">
+               <div class="agenda-item" data-id="{{$call->id}}" data-item="{{$call->due()}}" data-completed="{{$call->completed_at ? '2' : '3'}}">
                    <div class="agenda-item-header row">
                        <div class="col-11">{{$call['client']->name}} | {{$call['client']->city}}</div>
                        @if(!$call->claimed() && $data['user']->role != 'coach')
@@ -45,7 +45,13 @@
                        </div>
                        <div class="agenda-item-detail">
                            <span>Call Amount</span>
-                           <span class="black-text">$15.00</span>
+                           <span class="black-text">
+                               @if($data['user']->role == 'call_specialist' || $data['user']-> role == 'admin')
+                                   {{$call->callerAmount()}}
+                               @elseif($data['user']->role == 'coach' || $data['user']-> role == 'admin')
+                                   {{$call->coachAmount()}}
+                               @endif
+                           </span>
                        </div>
                    </div>
                    <div class="agenda-item-footer">

@@ -16,7 +16,11 @@
                                <div class="agenda-item-details">
                                    <div class="agenda-item-detail">
                                        <span>Contact</span>
-                                       <span class="black-text">{{$data['call']->custom_agent_id ? $data['call']->customAgentName() : ''}}</span>
+                                       <span class="black-text">
+                                           @foreach($data['call']->schedule->customAgents as $agent)
+                                               {{$agent->agent_name}},
+                                           @endforeach
+                                       </span>
                                    </div>
                                    <div class="agenda-item-detail">
                                        <span>Phone Number</span>
@@ -24,7 +28,7 @@
                                    </div>
                                    <div class="agenda-item-detail">
                                        <span>Call Amount</span>
-                                       <span class="black-text">$15.00</span>
+                                       <span class="black-text">{{$data['call']->callerAmount()}}</span>
                                    </div>
                                </div>
                                <div class="agenda-item-footer">
@@ -60,6 +64,14 @@
                        <label class="col-md-4 control-label" for="Contact">Client</label>
                        <div class="col-md-4">
                            {{$data['call']['client']->name}}
+                       </div>
+                   </div>
+                   <div class="form-group form-row">
+                       <label class="col-md-4 control-label" for="Contact">Contacts</label>
+                       <div class="col-md-4">
+                           @foreach($data['call']->schedule->customAgents as $agent)
+                               {{$agent->agent_name}} <br>
+                           @endforeach
                        </div>
                    </div>
                    <div class="form-group form-row">
@@ -143,12 +155,14 @@
                                    {{--</label>--}}
                                {{--</div>--}}
                            {{--</div>--}}
-                           <div class="form-group form-row">
-                               <div class="col-md-4">
-                                   {{--<input class="btn btn-primary" type="submit" value="POST CALL">--}}
-                                   <a class="btn btn-primary" target="_blank" href="{{route('viewQuestions', ['id' => $data['call']->id])}}">SUBMIT CALL COMPLETION</a>
+                           @if($data['call']->canBeSubmitted())
+                               <div class="form-group form-row">
+                                   <div class="col-md-4">
+                                       {{--<input class="btn btn-primary" type="submit" value="POST CALL">--}}
+                                       <a class="btn btn-primary" target="_blank" href="{{route('viewQuestions', ['id' => $data['call']->id])}}">SUBMIT CALL COMPLETION</a>
+                                   </div>
                                </div>
-                           </div>
+                           @endif
                        </fieldset>
                        <input type="hidden" name="call_id" value="{{$data['call']->id}}">
                    </form>

@@ -4,15 +4,16 @@
    <div class="questions-page mt-4">
        <h2>Questions for call: {{$data['call']->id}} Question Template: {{$data['template']->template_name ?? ''}}</h2>
        <hr class="gray"/>
-       @if($data['recording'])
-
-       <audio controls>
-           <source src="{{$data['recording']}}" type="audio/ogg">
-           <source src="{{$data['recording']}}" type="audio/mpeg">
-           Your browser does not support the audio element.
-       </audio>
-       <a class="ml-4" target="_blank" href="{{$data['recording']}}">Direct Link to Recording</a>
-       @endif
+       @foreach($data['recordings'] as $recording)
+        <div>
+            <audio controls>
+                <source src="{{$recording}}" type="audio/ogg">
+                <source src="{{$recording}}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <a class="ml-4" target="_blank" href="{{$recording}}">Direct Link to Recording</a>
+        </div>
+       @endforeach
        <form method="post" action="{{route('scoreCall')}}">
            @csrf
            <input type="hidden" name="callId" value="{{$data['call']->id}}">

@@ -27,6 +27,10 @@
                             <label class="control-label" for="password">Password</label>
                         </div>
                         <div class="form-group">
+                            <input type="checkbox" id="grandfathered" name="grandfathered">
+                            <label class="control-label" for="grandfathered">Grandfathered In</label>
+                        </div>
+                        <div class="form-group">
                             <select class="role" name="role" data-placeholder="Role" style="width: 100%">
                                 <option></option>
                                 <option value="admin">Admin</option>

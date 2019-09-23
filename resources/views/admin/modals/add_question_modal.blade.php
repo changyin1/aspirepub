@@ -45,10 +45,20 @@
                         <label class="control-label select-label" for="region">Region</label>
                     </div>
                     <div class="form-group">
+                        <select class="category" name="category" data-placeholder="Category" style="width: 100%">
+                            <option></option>
+                            <option value=" ">Any</option>
+                            @foreach($data['categories'] as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
+                        </select>
+                        <label class="control-label select-label" for="category">Category</label>
+                    </div>
+                    <div class="form-group">
                         <select class="question searchable" name="question[]" multiple="multiple" data-placeholder="Question" style="width: 100%">
                             <option></option>
                             @foreach($data['questions'] as $question)
-                                <option value="{{$question->id}}" client="{{$question->client}}" company="{{$question->company}}" region="{{$question->region}}">{{$question->question}} (Weight: {{$question->weight}})</option>
+                                <option value="{{$question->id}}" client="{{$question->client}}" company="{{$question->company}}" region="{{$question->region}}" category="{{$question->category}}">{{$question->question}} (Weight: {{$question->weight}})</option>
                             @endforeach
                         </select>
                         <label class="control-label select-label" for="question">Question</label>

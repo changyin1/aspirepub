@@ -168,7 +168,7 @@ class ScheduleController extends Controller
 
         $schedule->save();
 
-        foreach($schedule->attachments() as $oldAttachment) {
+        foreach($schedule->attachments as $oldAttachment) {
             $oldAttachment->delete();
         }
 

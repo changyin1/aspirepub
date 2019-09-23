@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'status', 'languages', 'city', 'country'
+        'name', 'email', 'password', 'role', 'status', 'languages', 'city', 'country', 'grandfathered'
     ];
 
     /**
@@ -47,6 +47,9 @@ class User extends Authenticatable
 
     public function hasRole($role)
     {
+        if ($role == 'call_specialist' || $role == 'coach') {
+            return (User::where('role', $role)->orWhere('role', 'specialist_and_coach')->get());
+        }
         return User::where('role', $role)->get();
     }
 }

@@ -12,7 +12,7 @@
        <h4 class="form-heading">Upload Call Recording</h4>
        @if($data['attachments'])
            @foreach($data['attachments'] as $key => $attachment)
-               <a target="_blank" href="{{$attachment->attachment_link_address}}"><p class="btn btn-primary">Schedule Attachment {{$key}}</p></a>
+               <a target="_blank" href="{{$attachment->attachment_link_address}}"><p class="btn btn-primary">Schedule Attachment {{$key + 1}}</p></a>
            @endforeach
        @endif
        <form method="post" action="{{route('completeCall')}}" enctype="multipart/form-data">
@@ -23,7 +23,7 @@
                @if(!$data['call']->schedule->customAgentsNotContacted->isEmpty())
                    <div class="form-group">
                        <label class="control-label select-label" for="agent">Custom Agent</label>
-                       <select class="agent" name="agent" data-placeholder="Custom Agent" style="width: 95%">
+                       <select class="custom_agent" name="agent" data-placeholder="Custom Agent" style="width: 95%">
                            <option></option>
                            @foreach($data['call']->schedule->customAgentsNotContacted as $agent)
                                <option value="{{$agent->id}}">{{$agent->agent_name}}</option>
@@ -31,10 +31,10 @@
                        </select>
                    </div>
                @endif
-               <div class="form-group">
-                   <label class="control-label select-label" for="link">File Link</label>
-                   <input type="text" name="link" id="link" class="no-anim" placeholder="Drop box link">
-               </div>
+               {{--<div class="form-group">--}}
+                   {{--<label class="control-label select-label" for="link">File Link</label>--}}
+                   {{--<input type="text" name="link" id="link" class="no-anim" placeholder="Drop box link">--}}
+               {{--</div>--}}
                <div class="form-group">
                    <label class="control-label select-label" for="call_completed_at">Call Completed Time</label>
                    <input type="text" class="datepicker-time no-anim" name="call_completed_at" id="call_completed_at" value="{{$data['call']->completed_at}}">
@@ -64,10 +64,12 @@
                    <label class="control-label select-label checkbox-label" for="card_used">Aspire Credit Card Used</label>
                </div>
                <div class="form-group">
-                   <label class="control-label select-label" for="file">Upload Call Recording</label>
-                   <input class="no-anim" name="file" id="file" type="file">
+                   <label class="control-label select-label" for="file">Upload Call Recording (CTRL Click to select multiple files</label>
+                   <input class="no-anim" name="file[]" id="file" type="file" multiple>
                </div>
-               <button class="btn btn-primary">Submit call as completed</button>
+               @if($data['call']->canBeSubmitted())
+                   <button class="btn btn-primary">Submit call as completed</button>
+               @endif
            </div>
        </form>
    </div>

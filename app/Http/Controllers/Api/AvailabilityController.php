@@ -15,11 +15,11 @@ class AvailabilityController extends Controller
         $user = Auth::user();
 		$user_id = $user->id;
 
-		// store date as 1st of the week e.g. week 2 stored as the 8th
+		// store date as due date of the week e.g. week 2 stored as the 14th
     	$date = date('Y-m-d',strtotime($request->input('date')));
     	$weekOfMonth = $this->weekOfMonth($request->input('date'));
         list($y, $m, $d) = explode('-', date('Y-m-d', strtotime($date)));
-    	$date = date('Y-m-d',strtotime($y . '-' . $m . '-' . ($weekOfMonth * 7 - 6)));
+    	$date = date('Y-m-d',strtotime($y . '-' . $m . '-' . ($weekOfMonth * 7)));
     	$availability = Availability::where('user_id', $user_id)->where('date', $date)->first();
 		if ($availability) {
 			if($availability->available == 0) {

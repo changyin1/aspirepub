@@ -17,6 +17,7 @@
                             <div class="detail-name">Question Template</div>
                             <div class="detail-name">Language:</div>
                             <div class="detail-name">Call Type:</div>
+                            <div class="detail-name">Custom Agents:</div>
                         </div>
                         <div class="col-3">
                             <div class="detail">{{$data['schedule']->client_name()}}</div>
@@ -25,6 +26,11 @@
                             <div class="detail">{{$data['schedule']->template_name()}}</div>
                             <div class="detail">{{$data['schedule']->language ? $data['schedule']->language : 'N/A'}}</div>
                             <div class="detail">{{$data['schedule']->callType ? $data['schedule']->callType->type : 'N/A'}}</div>
+                            <div class="detail">
+                                @foreach($data['schedule']->customAgents as $agent)
+                                    {{$agent->agent_name}}
+                                @endforeach
+                            </div>
                         </div>
                         @if($data['sortedCalls'])
                         <div class="col-6 offset-1">
@@ -91,22 +97,6 @@
                 <br>
                     <div class="row">
                         <div class="col-6">
-                            <form id="assign-agent-form" class="assign-form ajax" data-type="agent"
-                                  action="{{route('assignCalls')}}" method="post">
-                                @csrf
-                                <div class="errors"></div>
-                                <div class="form-group" style="margin-bottom:0">
-                                    <select class="agent" name="agent" data-placeholder="No Custom Agent Selected" style="width: 95%">
-                                    </select>
-                                    <label class="control-label select-label" for="agent">Custom Agents</label>
-                                </div>
-                                <input class="btn btn-primary btn-submit" type="submit" value="Assign Custom Agent">
-                            </form>
-                        </div>
-                    </div>
-                <br>
-                    <div class="row">
-                        <div class="col-6">
                             <button class="btn btn-primary btn-submit" data-toggle="modal" data-target="#addCallModal">Add Calls</button>
                             <button class="btn btn-primary btn-submit" data-toggle="modal" data-target="#viewCustomAgentModal">Add/Remove Custom Agents</button>
                         </div>
@@ -122,7 +112,6 @@
                             <th>Assigned</th>
                             <th>Completed By</th>
                             <th>Coach</th>
-                            <th>Custom Agent</th>
                             <th>Edit</th>
                         </tr>
                         </thead>
@@ -145,7 +134,6 @@
                                     </td>
                                     <td>{{$call->call_specialist() ? $call->call_specialist()->name : ''}}</td>
                                     <td>{{$call->coach() ? $call->coach()->name : ''}}</td>
-                                    <td>{{$call->custom_agent_id ? $call->customAgentName() : ''}}</td>
                                     <td><a href="{{route('admin/calls') . '/'.$call->id}}">Edit</a></td>
                                 </tr>
                             @endforeach
@@ -164,7 +152,6 @@
                                 <th>Assigned</th>
                                 <th>Completed By</th>
                                 <th>Coach</th>
-                                <th>Custom Agent</th>
                                 <th>Edit</th>
                             </tr>
                             </thead>
@@ -186,7 +173,6 @@
                                     </td>
                                     <td>{{$call->call_specialist() ? $call->call_specialist()->name : ''}}</td>
                                     <td>{{$call->coach() ? $call->coach()->name : ''}}</td>
-                                    <td>{{$call->custom_agent_id ? $call->customAgentName() : ''}}</td>
                                     <td><a href="{{route('admin/calls') . '/'.$call->id}}">Edit</a></td>
                                 </tr>
                             @endforeach

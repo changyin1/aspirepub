@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\Client;
 use App\Company;
 use App\Http\Requests\EditQuestionRequest;
@@ -19,11 +20,13 @@ class QuestionController extends Controller
         $clients = Client::all();
         $companies = Company::all();
         $regions = Region::all();
+        $categories = Category::all();
         $data = [
             'questions' => $questions,
             'clients' => $clients,
             'companies' => $companies,
-            'regions' => $regions
+            'regions' => $regions,
+            'categories' => $categories,
         ];
         return view('admin.questions', [
             'data' => $data
@@ -59,12 +62,22 @@ class QuestionController extends Controller
                 throw $error;
             }
         }
+        if ($request->category) {
+            $category = Category::where('id', $request->category)->first();
+            if (!$category) {
+                $error = \Illuminate\Validation\ValidationException::withMessages([
+                    'category' => ['That category does not exist.'],
+                ]);
+                throw $error;
+            }
+        }
         $question->question = $request->question;
         $question->type = $request->type;
         $question->weight = $request->weight;
         $question->client = $request->client;
         $question->company = $request->company;
         $question->region = $request->region;
+        $question->category = $request->category;
         $question->active = true;
 
         $question->save();
@@ -77,6 +90,7 @@ class QuestionController extends Controller
         $clients = Client::all();
         $companies = Company::all();
         $regions = Region::all();
+        $categories = Category::all();
 
         $data = [
             'question' => $question,
@@ -84,6 +98,7 @@ class QuestionController extends Controller
             'clients' => $clients,
             'companies' => $companies,
             'regions' => $regions,
+            'categories' => $categories,
             'save' => false
         ];
 
@@ -136,6 +151,16 @@ class QuestionController extends Controller
             }
             $question->region = $request->region;
         }
+        if ($request->category) {
+            $category = Category::where('id', $request->category)->first();
+            if (!$category) {
+                $error = \Illuminate\Validation\ValidationException::withMessages([
+                    'category' => ['That category does not exist.'],
+                ]);
+                throw $error;
+            }
+            $question->category = $request->category;
+        }
 
         $templates = $question->templates();
 
@@ -148,6 +173,7 @@ class QuestionController extends Controller
             $updateQuestion->client = $request->client;
             $updateQuestion->company = $request->company;
             $updateQuestion->region = $request->region;
+            $updateQuestion->category = $request->category;
             $updateQuestion->previous_question = $question->id;
 
             $updateQuestion->save();
@@ -174,6 +200,7 @@ class QuestionController extends Controller
         $clients = Client::all();
         $companies = Company::all();
         $regions = Region::all();
+        $categories = Category::all();
 
         $data = [
             'question' => $updateQuestion,
@@ -181,6 +208,7 @@ class QuestionController extends Controller
             'clients' => $clients,
             'companies' => $companies,
             'regions' => $regions,
+            'categories' => $categories,
             'save' => true
         ];
         return view('admin.questions.edit', [

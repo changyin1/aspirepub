@@ -32,13 +32,15 @@ class QuestionsController extends Controller
 
     public function scoreQuestionsView($id) {
         $call = Call::where('id', $id)->with('schedule')->first();
-        $recording = Recording::where('call_id', $id)->first();
-        $link = '';
-        if ($recording) {
-            if ($recording->path == 'link') {
-                $link = $recording->filename;
-            } else {
-                $link = $recording->path . $recording->filename;
+        $recordings = Recording::where('call_id', $id)->get();
+        $links = [];
+        if (!$recordings->isEmpty()) {
+            foreach ($recordings as $recording) {
+                if ($recording->path == 'link') {
+                    $links[] = $recording->filename;
+                } else {
+                    $links[] = $recording->path . $recording->filename;
+                }
             }
         }
         $template_id = $call->schedule->questionstemplates_id;
@@ -49,7 +51,7 @@ class QuestionsController extends Controller
             'template' => $qt,
             'questions' => $qt->allQuestions(),
             'scores' => $call->scores(),
-            'recording' => $link
+            'recordings' => $links
         ];
 
         return view('questions.score_questions', [
@@ -101,8 +103,17 @@ class QuestionsController extends Controller
         $template_id = $call->schedule->questionstemplates_id;
         $qt = QuestionTemplate::findorfail($template_id);
 
-        $recording = Recording::where('call_id', $call->id)->first();
-        $link = '';
+        $recordings = Recording::where('call_id', $call->id)->get();
+        $links = [];
+        if (!$recordings->isEmpty()) {
+            foreach ($recordings as $recording) {
+                if ($recording->path == 'link') {
+                    $links[] = $recording->filename;
+                } else {
+                    $links[] = $recording->path . $recording->filename;
+                }
+            }
+        }
         if ($recording) {
             if ($recording->path == 'link') {
                 $link = $recording->filename;
@@ -116,7 +127,7 @@ class QuestionsController extends Controller
             'template' => $qt,
             'questions' => $qt->allQuestions(),
             'scores' => $call->scores(),
-            'recording' => $link
+            'recordings' => $links
         ];
 
         return view('questions.score_questions', [

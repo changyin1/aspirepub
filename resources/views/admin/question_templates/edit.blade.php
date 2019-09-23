@@ -40,11 +40,15 @@
                 @endif
             </table>
             <br>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newQuestionModal">
+                Create New Question
+            </button>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addQuestionToTemplateModal">
                 Add questions
             </button>
         </div>
     </div>
+    @include('admin.modals.new_question_modal')
     @include('admin/modals/add_question_modal')
     @include('admin/modals/alert_modal', ['title' => 'Removing question from template', 'formRoute' => route('removeQuestionFromTemplate'), 'hiddenValues' => ['template_id' => $data['template']->id, 'question' => '0'], 'modalId' => 'removeQuestionFromTemplateModal'])
 @endsection

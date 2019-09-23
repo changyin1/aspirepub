@@ -44,7 +44,11 @@
                             <select class="language" name="language" data-placeholder="Language" style="width: 100%">
                                 <option></option>
                                 @foreach($data['languages'] as $language)
-                                    <option value="{{$language->language}}">{{$language->language}}</option>
+                                    <option value="{{$language->language}}"
+                                            @if ($language->language == 'English')
+                                                selected
+                                            @endif
+                                    >{{$language->language}}</option>
                                 @endforeach
                             </select>
                             <label class="control-label select-label" for="language">Language</label>

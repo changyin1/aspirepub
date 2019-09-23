@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 class CallType extends Model
 {
     protected $fillable = [
-        'type', 'price'
+        'type', 'caller_amount', 'coach_amount', 'grandfather_amount'
     ];
 
     protected static function boot() {

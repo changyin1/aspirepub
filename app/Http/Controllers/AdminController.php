@@ -51,6 +51,7 @@ class AdminController extends Controller
         $user = User::findorfail($id);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->grandfathered = $request->grandfathered ? true : false;
         if ($request->password) {
             $user->password = Hash::make($request['password']);
         }

@@ -24,6 +24,7 @@ class RegisterController extends Controller
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'role' => $request['role'],
+            'grandfathered' => $request['grandfathered'] ? true : false,
             'api_token' => Str::random(60),
         ]);
 

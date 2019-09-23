@@ -21,8 +21,16 @@
                     <label class="control-label" for="type">Call Type</label>
                 </div>
                 <div class="form-group">
-                    <input name="price" id="price" class="form-control" price="text" value="{{$data['type']->price}}">
-                    <label class="control-label" for="price">Type price</label>
+                    <input name="caller_amount" id="caller_amount" class="form-control" type="text" value="{{$data['type']->caller_amount}}">
+                    <label class="control-label" for="caller_amount">Caller Amount</label>
+                </div>
+                <div class="form-group">
+                    <input name="coach_amount" id="coach_amount" class="form-control" type="text" value="{{$data['type']->coach_amount}}">
+                    <label class="control-label" for="coach_amount">Coach Amount</label>
+                </div>
+                <div class="form-group">
+                    <input name="grandfather_amount" id="grandfather_amount" class="form-control" type="text" value="{{$data['type']->grandfather_amount}}">
+                    <label class="control-label" for="grandfather_amount">Grandfather Amount</label>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary btn-submit" value="Save">

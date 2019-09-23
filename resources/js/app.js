@@ -176,6 +176,11 @@ $(function () {
                     return null;
                 }
             }
+            if ($('.category').val() && $('.category').val() !== " ") {
+                if (!data.element.attributes.category || data.element.attributes.category.value != $('.category').val()) {
+                    return null;
+                }
+            }
             return data;
         }
 
@@ -224,7 +229,7 @@ $(function () {
                 'date': date.format(),
                 'week': getWeek(date.date()),
             };
-            if (date.date() % 7 == 1) {
+            if (date.date() % 7 == 0) {
                 $.ajax({
                     type: "GET",
                     url: $('#availability-url').val(),
@@ -253,7 +258,6 @@ $(function () {
             }
             ;
             if (IsDateHasEvent(date)) {
-                console.log('has event');
                 return false;
             }
             var data = {
@@ -276,9 +280,8 @@ $(function () {
                     if (response.success) {
                         if (response.available == 1) {
                             $day.addClass('available');
-                            console.log($('.fc-day[data-week="' + response.week + '"]'));
                             $('.fc-day[data-week="' + response.week + '"]').addClass('available');
-                            $day.html('<span>Max Calls: ' + response.max + '</span>');
+                            $('.fc-day[data-week="' + response.week + '"]:first').html('<span>Max Calls: ' + response.max + '</span>');
                         } else {
                             $day.removeClass('available');
                             $('.fc-day[data-week="' + response.week + '"]').removeClass('available');

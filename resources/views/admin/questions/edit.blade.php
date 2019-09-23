@@ -97,6 +97,20 @@
                             </select>
                             <label class="control-label select-label" for="region">Region</label>
                         </div>
+                        <div class="form-group col-6">
+                            <select class="category" name="category" data-placeholder="Category" style="width: 100%">
+                                <option></option>
+                                <option value=" ">Any</option>
+                                @foreach($data['categories'] as $category)
+                                    <option value="{{$category->id}}"
+                                            @if($data['question']->category == $category->id)
+                                            selected
+                                            @endif
+                                    >{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                            <label class="control-label select-label" for="category">Category</label>
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary btn-submit" value="Save">

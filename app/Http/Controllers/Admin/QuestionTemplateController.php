@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\Http\Requests\NewQuestionTemplateRequest;
 use App\Question;
 use App\Client;
@@ -35,6 +36,7 @@ class QuestionTemplateController extends Controller
         $clients = Client::all();
         $companies = Company::all();
         $regions = Region::all();
+        $categories = Category::all();
 
         //check if template already in use
         $edit = $template->used();
@@ -45,6 +47,7 @@ class QuestionTemplateController extends Controller
             'clients' => $clients,
             'companies' => $companies,
             'regions' => $regions,
+            'categories' => $categories,
             'edit' => $edit
         ];
         return view('admin.question_templates.edit', [

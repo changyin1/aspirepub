@@ -129,7 +129,6 @@ class CallController extends Controller
                             $call = Call::where('id', $call_id)->first();
                             $date = $call->assignmentDate();
                             $available = Availability::where('available', 1)->where('user_id', $specialist_id)->where('date', $date)->first();
-
                             if ($available) {
                                 $callAssignment = new CallAssignment;
                                 $callAssignment->call_id = $call_id;
@@ -142,6 +141,7 @@ class CallController extends Controller
 
                 } catch (Exception $e) {
                     // do something if one failed?
+                    var_dump($e); die();
                 }
             }
         }
@@ -170,12 +170,12 @@ class CallController extends Controller
         if ($request->week == 0) {
             $dates = [];
             for ($i = 1; $i <= 4; $i++) {
-                $scheduleDay = $i * 7 - 6;
+                $scheduleDay = $i * 7;
                 $dates[] = $scheduleYearMonth . '-' . sprintf('%02d', $scheduleDay);
             }
             $available = Availability::where('available', 1)->whereIn('date', $dates)->get();
         } else {
-            $scheduleDay = $request->week * 7 - 6;
+            $scheduleDay = $request->week * 7;
 
             $date = $scheduleYearMonth . '-' . sprintf('%02d', $scheduleDay);
 
@@ -306,15 +306,29 @@ class CallController extends Controller
 
     public function editCallType(Request $request) {
         $type = CallType::findorfail($request->id);
-        if (!$request->price) {
+        if (!$request->caller_amount) {
             $error = \Illuminate\Validation\ValidationException::withMessages([
-                'price' => ['Price is required'],
+                'caller_amount' => ['Caller amount is required'],
+            ]);
+            throw $error;
+        }
+        if (!$request->coach_amount) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'coach_amount' => ['Coach amount is required'],
+            ]);
+            throw $error;
+        }
+        if (!$request->grandfather_amount) {
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'grandfather_amount' => ['Grandfather amount is required'],
             ]);
             throw $error;
         }
 
         $type->type = $request->type;
-        $type->price = $request->price;
+        $type->caller_amount = $request->caller_amount;
+        $type->coach_amount = $request->coach_amount;
+        $type->grandfather_amount = $request->grandfather_amount;
         $type->save();
 
         $data = [

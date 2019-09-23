@@ -17,8 +17,9 @@ class AgendaController extends Controller
     public function index(Request $request){
     	$user = Auth::user();
         $data['user'] = $user;
-        if ($user->role == 'coach') {
-            $calls = Call::with('client', 'schedule')->where('coach', $user->id)->orderBy('due_date', 'asc')->get();
+
+        if ($user->role == 'coach' || $user->role == 'admin') {
+            $calls = Call::with('client', 'schedule')->where('coach', $user->id)->where('scored_at', null)->where('due_date', '>', Carbon::now()->subDays(30)->toDateString())->orderBy('due_date', 'asc')->get();
         } else {
             $calls = Call::with('client', 'schedule')->where('call_specialist', $user->id)->orWhere('coach', $user->id)->orderBy('due_date', 'asc')->get();
         }
@@ -115,36 +116,33 @@ class AgendaController extends Controller
             }
         }
 
-        $recording = Recording::where('call_id', $call->id)->first();
-
         if ($request->link) {
-            if ($recording == null) {
-                $recording = new Recording;
-                $recording->call_id = $request->id;
-            }
+            $recording = new Recording;
+            $recording->call_id = $request->id;
             $recording->filename = $request->link;
             $recording->path = 'link';
             $recording->save();
         } elseif ($request->file('file')) {
-            $file = $request->file('file');
-            $recordingFileName = 'call_' . $request->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $files = $request->file('file');
+            foreach ($files as $file) {
+                $recordingFileName = 'call_' . $request->id . '_' . time() . '.' . $file->getClientOriginalExtension();
 
-            $s3 = \Storage::disk('s3');
-            $filePath = '/recordings/' . $recordingFileName;
-            $s3->put($filePath, file_get_contents($file), 'public');
+                $s3 = \Storage::disk('s3');
+                $filePath = '/recordings/' . $recordingFileName;
+                $s3->put($filePath, file_get_contents($file), 'public');
 
-            if ($recording == null) {
                 $recording = new Recording;
                 $recording->call_id = $request->id;
+
+                $recording->filename = $recordingFileName;
+                $recording->path = 'https://aspire-uploads.s3.us-east-2.amazonaws.com/recordings/';
+                $recording->save();
             }
-            $recording->filename = $recordingFileName;
-            $recording->path = 'https://aspire-uploads.s3.us-east-2.amazonaws.com/recordings/';
-            $recording->save();
         }
 
         $now = Carbon::now();
         $call->completed_at = $request->call_completed_at ? date_format(date_create($request->call_completed_at), 'Y-m-d H:i:s') : $now;
-        $call->agent_name = $agent ? $agent->name : $request->call_receiver;
+        $call->agent_name = $agent ? $agent->name : strtolower($request->call_receiver);
         $call->reservation_made = $request->reservation_made ? true : false;
         $call->arrival_date = date_format(date_create($request->reservation_start), 'Y-m-d');
         $call->departure_date = date_format(date_create($request->reservation_end), 'Y-m-d');

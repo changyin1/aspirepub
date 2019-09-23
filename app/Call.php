@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use App\CustomAgent;
 
 class Call extends Model
 {
@@ -147,5 +146,39 @@ class Call extends Model
         }
 
         return null;
+    }
+
+    public function callerAmount() {
+        $schedule = $this->schedule;
+        if (!$schedule) {
+            return 'Schedule No Longer Exists';
+        }
+        $callType = $schedule->callType;
+        if (!$callType) {
+            $callType = CallType::where('type', 'Standard')->orWhere('type', 'Default')->first();
+        }
+        return $callType->caller_amount;
+    }
+
+    public function coachAmount() {
+        $schedule = $this->schedule();
+        if (!$schedule) {
+            return 'Schedule No Longer Exists';
+        }
+        $callType = $schedule->callType;
+        if (!$callType) {
+            $callType = CallType::where('type', 'Standard')->orWhere('type', 'Default')->first();
+        }
+        return $callType->coach_amount;
+    }
+
+    public function canBeSubmitted() {
+        if (Carbon::now()->toDateString() > $this->due_date) {
+            return true;
+        }
+        $daysToAdd = 7 - (Carbon::now()->day % 7);
+        $endOfWeek = Carbon::now()->addDays($daysToAdd)->toDateString();
+
+        return $this->due_date == $endOfWeek;
     }
 }
